@@ -1,13 +1,14 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://cals.snu.ac.kr/metadata/schema/v1.0",
+  "$id": "https://cals.snu.ac.kr/metadata/schema/v2.0",
 
   "_meta": {
     "schema_name": "서울대학교 농업생명과학대학 (CALS) 연구 데이터 통합 메타데이터 스키마",
-    "schema_name_en": "Seoul National University College of Agriculture and Life Sciences (CALS) Integrated Research Data Metadata Schema",
-    "version": "1.0.0",
-    "created_at": "2026-02-24",
+    "schema_name_en": "SNU College of Agriculture and Life Sciences — Integrated Research Data Metadata Schema",
+    "version": "2.0.0",
+    "created_at": "2026-02-25",
     "status": "draft",
+    "changelog": "v2.0 — snu_cals_labs.json 연구실별 커스텀 스키마를 바탕으로 domain_extension 블록 신설. 실험설계·생물체·도메인 확장 구조 전면 재설계.",
     "maintainer": {
       "institution": "서울대학교 농업생명과학대학",
       "url": "https://cals.snu.ac.kr/"
@@ -17,38 +18,63 @@
       "standards_incorporated": [
         {
           "standard": "DataCite Metadata Schema 4.5",
-          "role": "핵심 인용·식별 메타데이터 골격",
-          "source": "https://datacite-metadata-schema.readthedocs.io/en/4.5/"
+          "role": "핵심 인용·식별 메타데이터 골격 (필수 필드 정의)",
+          "source": "https://datacite-metadata-schema.readthedocs.io/en/4.5/",
+          "file": "standards/datacite_4_5.json"
         },
         {
-          "standard": "Harvard Dataverse Citation/Geospatial/Life Sciences Blocks",
-          "role": "연구 데이터 상세 기술 및 생명과학 확장 필드",
-          "source": "https://guides.dataverse.org/en/latest/user/appendix.html"
+          "standard": "Harvard Dataverse Citation / Geospatial / Life Sciences Blocks",
+          "role": "연구 데이터 상세 기술, 생명과학 확장, 지리 정보",
+          "source": "https://guides.dataverse.org/en/latest/user/appendix.html",
+          "file": "standards/harvard_dataverse.json"
         },
         {
           "standard": "Dublin Core DCMI Terms",
           "role": "기본 기술 요소 및 상호운용성 기반",
-          "source": "https://www.dublincore.org/specifications/dublin-core/dcmi-terms/"
+          "source": "https://www.dublincore.org/specifications/dublin-core/dcmi-terms/",
+          "file": "standards/dublin_core.json"
         },
         {
-          "standard": "AGRIS Application Profile 2.0 + AgMES 1.1",
-          "role": "농업 문헌·연구 특화 요소 (FAO, 일부 보류)",
-          "source": "https://www.fao.org/agris/"
+          "standard": "AGRIS Application Profile 2.0 + AgMES 1.1 (FAO)",
+          "role": "농업 문헌·연구 특화 요소, AGROVOC 통제어휘",
+          "source": "https://www.fao.org/agris/",
+          "file": "standards/agmes_agris_fao.json"
         },
         {
-          "standard": "한국 AI Hub 메타데이터 / 인공지능 학습용 데이터 품질관리 가이드라인 v3.1",
-          "role": "AI 학습용 농업 데이터셋 품질 및 분류 체계",
-          "source": "https://aihub.or.kr/"
+          "standard": "한국 AI Hub 인공지능 학습용 데이터 품질관리 가이드라인 v3.1",
+          "role": "AI 학습용 농업 데이터셋 품질·분류·어노테이션 체계",
+          "source": "https://aihub.or.kr/",
+          "file": "standards/aihub_kr.json"
         },
         {
           "standard": "농림축산식품부 스마트팜 데이터마켓 / 스마트팜코리아",
           "role": "IoT 센서·환경·생육 데이터 필드",
-          "source": "https://www.smartfarmkorea.net/"
+          "source": "https://www.smartfarmkorea.net/",
+          "file": "standards/smartfarm_kr.json"
         },
         {
           "standard": "Wageningen University & Research Yoda Metadata (DataCite 기반)",
-          "role": "FAIR 원칙 준수 및 농업연구 모범사례 반영",
-          "source": "https://wur.nl/en/value-creation-cooperation/collaborating-with-wur-1/wdcc/"
+          "role": "FAIR 원칙 준수, 농업연구 모범사례, DMP 연계",
+          "source": "https://wur.nl/",
+          "file": "standards/wageningen_wur.json"
+        },
+        {
+          "standard": "SNU CALS 연구실별 커스텀 메타데이터 스키마",
+          "role": "논문 Materials & Methods 역설계 기반 도메인 확장 필드",
+          "source": "https://cals.snu.ac.kr/",
+          "file": "standards/snu_cals_labs.json",
+          "labs_covered": [
+            "snu_bse_laba (LABA, 김태형)",
+            "snu_bse_bicpal (BICPAL, 김학진)",
+            "snu_plant_crop_science (작물생명과학, 이석하)",
+            "snu_plant_horticulture (식물공장·원예, 전창후)",
+            "snu_forest_lidar_carbon (산림원격탐사·탄소)",
+            "snu_abc_plant_micro (식물미생물·생물방제)",
+            "snu_food_microbiology_safety (식품미생물안전성, 강동현)",
+            "snu_rse_rural_water_ict (농업수자원·ICT, 최진용)",
+            "snu_are_agricultural_economics (농업·자원경제학)",
+            "snu_food_animal_biotech (동물생명공학·유전체)"
+          ]
         }
       ]
     },
@@ -58,38 +84,47 @@
       "person_identifier": "ORCID (https://orcid.org/)",
       "organization_identifier": "ROR (https://ror.org/)",
       "funder_identifier": "Crossref Funder Registry",
-      "geographic_country": "ISO 3166-1",
-      "language": "ISO 639-1 / BCP 47",
-      "date": "ISO 8601"
+      "geographic_country": "ISO 3166-1 alpha-2",
+      "language": "IETF BCP 47 / ISO 639-1",
+      "date": "ISO 8601",
+      "coordinate_system": "WGS84 (EPSG:4326) 기본, 국내 측지계 EPSG:5186 병기 가능"
+    },
+    "obligation_legend": {
+      "M": "Mandatory — 반드시 입력",
+      "R": "Recommended — 강력 권장 (상호운용성·검색성)",
+      "O": "Optional — 선택 입력",
+      "C": "Conditional — 특정 조건 충족 시 필수"
     }
   },
 
-  "title": "CALS 연구 데이터 메타데이터 스키마 v1.0",
-  "description": "서울대학교 농업생명과학대학 연구 데이터 통합관리 플랫폼 메타데이터 스키마",
+  "title": "CALS 연구 데이터 메타데이터 스키마 v2.0",
   "type": "object",
   "required": ["identifier", "title", "creator", "publisher", "publication_year", "resource_type", "cals_research"],
 
   "properties": {
 
     "identifier": {
+      "_datacite": "Property 1 (M)",
+      "_dc": "dc:identifier",
+      "obligation": "M",
       "type": "object",
-      "description": "데이터셋 고유 식별자",
-      "_source": "DataCite Property 1",
+      "description": "데이터셋 고유 식별자. DOI 권장, 미발급 시 CALS 내부 ID 사용.",
       "required": ["value", "type"],
       "properties": {
-        "value": {"type": "string", "description": "식별자 값 (예: DOI, 내부 ID)"},
+        "value": {"type": "string", "description": "식별자 값", "example": "10.xxxx/cals.2026.001"},
         "type": {
           "type": "string",
           "enum": ["DOI", "Handle", "URL", "CALS-Internal"],
-          "description": "식별자 유형"
+          "default": "CALS-Internal"
         },
         "alternate_identifiers": {
           "type": "array",
+          "description": "대체 식별자 (DataCite Property 11)",
           "items": {
             "type": "object",
             "properties": {
               "value": {"type": "string"},
-              "type": {"type": "string"}
+              "type": {"type": "string", "example": "CALS-Internal, local-accession"}
             }
           }
         }
@@ -97,22 +132,26 @@
     },
 
     "title": {
+      "_datacite": "Property 3 (M)",
+      "_dc": "dc:title",
+      "obligation": "M",
       "type": "object",
       "description": "데이터셋 제목",
-      "_source": "DataCite Property 3 / DC title / Harvard Dataverse title",
       "required": ["main"],
       "properties": {
         "main": {"type": "string", "description": "주 제목 (한국어 권장)"},
         "main_en": {"type": "string", "description": "영문 제목"},
         "subtitle": {"type": "string"},
-        "alternative": {"type": "string", "description": "대체 제목 또는 약칭"}
+        "alternative": {"type": "string", "description": "약칭 또는 대체 제목"}
       }
     },
 
     "creator": {
+      "_datacite": "Property 2 (M)",
+      "_dc": "dc:creator",
+      "obligation": "M",
       "type": "array",
       "description": "데이터셋 생성에 주된 책임이 있는 인물 또는 기관 (순서 의미 있음)",
-      "_source": "DataCite Property 2 / Harvard Dataverse author / AGRIS dc:creator",
       "minItems": 1,
       "items": {
         "type": "object",
@@ -120,28 +159,20 @@
         "properties": {
           "name": {"type": "string", "description": "성명 (한국어: 홍길동, 영어: Last, First)"},
           "name_en": {"type": "string"},
-          "name_type": {
-            "type": "string",
-            "enum": ["Personal", "Organizational"],
-            "default": "Personal"
-          },
+          "name_type": {"type": "string", "enum": ["Personal", "Organizational"], "default": "Personal"},
           "affiliation": {
             "type": "object",
             "properties": {
-              "name": {"type": "string", "description": "소속 기관명"},
+              "name": {"type": "string"},
               "name_en": {"type": "string"},
-              "ror_id": {"type": "string", "description": "ROR 식별자", "pattern": "^https://ror.org/"}
+              "ror_id": {"type": "string", "description": "ROR 식별자", "example": "https://ror.org/04h9pn542"}
             }
           },
           "identifier": {
             "type": "object",
             "properties": {
-              "value": {"type": "string"},
-              "scheme": {
-                "type": "string",
-                "enum": ["ORCID", "ISNI", "SCOPUS", "ResearcherID", "GND"],
-                "default": "ORCID"
-              }
+              "value": {"type": "string", "example": "https://orcid.org/0000-0000-0000-0001"},
+              "scheme": {"type": "string", "enum": ["ORCID", "ISNI", "SCOPUS", "ResearcherID", "GND"], "default": "ORCID"}
             }
           },
           "email": {"type": "string", "format": "email"}
@@ -150,9 +181,10 @@
     },
 
     "contributor": {
+      "_datacite": "Property 7 (R)",
+      "obligation": "R",
       "type": "array",
-      "description": "기여자 (연구비책임자, 데이터 관리자, 연구원 등)",
-      "_source": "DataCite Property 7 / Wageningen Contributor",
+      "description": "기여자 (데이터 수집자, 관리자, 연구비책임자 등)",
       "items": {
         "type": "object",
         "required": ["name", "contributor_type"],
@@ -160,70 +192,80 @@
           "name": {"type": "string"},
           "contributor_type": {
             "type": "string",
-            "enum": ["ContactPerson", "DataCollector", "DataCurator", "DataManager",
-                     "ProjectLeader", "ProjectMember", "Researcher", "Supervisor",
-                     "FieldTechnician", "LabTechnician", "Other"]
+            "enum": [
+              "ContactPerson", "DataCollector", "DataCurator", "DataManager",
+              "ProjectLeader", "ProjectMember", "Researcher", "Supervisor",
+              "FieldTechnician", "LabTechnician", "Sponsor", "HostingInstitution", "Other"
+            ]
           },
           "affiliation": {"type": "string"},
-          "identifier": {"type": "string", "description": "ORCID 등"}
+          "identifier": {"type": "string"}
         }
       }
     },
 
     "publisher": {
+      "_datacite": "Property 4 (M)",
+      "_dc": "dc:publisher",
+      "obligation": "M",
       "type": "object",
-      "description": "데이터셋 배포·관리 기관",
-      "_source": "DataCite Property 4 / DC publisher",
       "required": ["name"],
       "properties": {
         "name": {
           "type": "string",
-          "default": "서울대학교 농업생명과학대학 연구데이터관리시스템",
-          "description": "배포 기관명"
+          "default": "서울대학교 농업생명과학대학 연구데이터관리시스템"
         },
         "name_en": {
           "type": "string",
-          "default": "Seoul National University, College of Agriculture and Life Sciences Research Data Repository"
+          "default": "Seoul National University CALS Research Data Repository"
         },
-        "ror_id": {"type": "string", "description": "ROR 식별자"},
-        "url": {"type": "string", "format": "uri"}
+        "ror_id": {"type": "string"},
+        "url": {"type": "string", "format": "uri", "default": "https://cals.snu.ac.kr"}
       }
     },
 
     "publication_year": {
+      "_datacite": "Property 5 (M)",
+      "obligation": "M",
       "type": "integer",
       "description": "데이터셋 공개·배포 연도 (YYYY)",
-      "_source": "DataCite Property 5",
       "minimum": 1900,
       "maximum": 2100
     },
 
     "resource_type": {
+      "_datacite": "Property 10 (M)",
+      "_dc": "dc:type",
+      "obligation": "M",
       "type": "object",
-      "description": "리소스 유형",
-      "_source": "DataCite Property 10 / DC type",
       "required": ["general"],
       "properties": {
         "general": {
           "type": "string",
-          "enum": ["Dataset", "Collection", "DataPaper", "Software", "Image",
-                   "Audiovisual", "Text", "Other"],
+          "enum": [
+            "Dataset", "Collection", "DataPaper", "Software", "Image",
+            "Audiovisual", "Instrument", "Model", "Text", "Other"
+          ],
           "default": "Dataset"
         },
         "specific": {
           "type": "string",
           "description": "세부 유형 자유 기술",
-          "examples": ["Field Trial Data", "Sensor Time Series", "Genomics Data",
-                       "Remote Sensing Image", "Survey Data", "Model Output",
-                       "Laboratory Measurement", "AI Training Dataset"]
+          "examples": [
+            "Field Trial Data", "Sensor Time Series", "Genomics Data",
+            "Remote Sensing Point Cloud", "Survey Data", "Model Output",
+            "AI Training Dataset", "Eddy Covariance Flux", "Water Quality Monitoring"
+          ]
         }
       }
     },
 
     "description": {
+      "_datacite": "Property 17 (R)",
+      "_dc": "dc:description",
+      "obligation": "R",
       "type": "array",
-      "description": "데이터셋에 대한 설명",
-      "_source": "DataCite Property 17 / DC description / Wageningen Description",
+      "description": "데이터셋 설명. Abstract 유형 필수 권장.",
       "items": {
         "type": "object",
         "required": ["value", "type"],
@@ -240,42 +282,37 @@
     },
 
     "subject": {
+      "_datacite": "Property 6 (R)",
+      "_dc": "dc:subject",
+      "_agrovoc": "권장 통제어휘",
+      "obligation": "R",
       "type": "array",
-      "description": "주제어 및 분류 코드 (AGROVOC 통제어휘 강력 권장)",
-      "_source": "DataCite Property 6 / AGRIS dc:subject / Harvard Dataverse keyword",
+      "description": "주제어 및 분류 코드. AGROVOC URI 포함 강력 권장.",
       "items": {
         "type": "object",
         "required": ["value"],
         "properties": {
-          "value": {"type": "string", "description": "주제어 (한국어 또는 영어)"},
+          "value": {"type": "string"},
           "scheme": {
             "type": "string",
-            "enum": ["AGROVOC", "AGRIS Subject Category", "MeSH", "NAL Thesaurus",
-                     "Free Keyword", "WoS Category", "NARCIS"],
+            "enum": ["AGROVOC", "AGRIS Subject Category", "MeSH", "NAL Thesaurus", "Free Keyword", "WoS Category"],
             "default": "AGROVOC"
           },
-          "scheme_uri": {
-            "type": "string",
-            "format": "uri",
-            "description": "통제어휘 출처 URI"
-          },
-          "value_uri": {
-            "type": "string",
-            "format": "uri",
-            "description": "해당 주제어의 URI (예: AGROVOC 개념 URI)"
-          },
+          "scheme_uri": {"type": "string", "format": "uri"},
+          "value_uri": {"type": "string", "format": "uri", "description": "AGROVOC 개념 URI"},
           "language": {"type": "string", "default": "ko"}
         }
       }
     },
 
     "date": {
+      "_datacite": "Property 8 (R)",
+      "_dc": "dc:date",
+      "obligation": "R",
       "type": "object",
-      "description": "데이터셋 관련 날짜 정보",
-      "_source": "DataCite Property 8 / DC date",
       "properties": {
-        "created": {"type": "string", "format": "date", "description": "데이터셋 최초 생성일"},
-        "modified": {"type": "string", "format": "date", "description": "최종 수정일"},
+        "created": {"type": "string", "format": "date"},
+        "modified": {"type": "string", "format": "date"},
         "issued": {"type": "string", "format": "date", "description": "공식 배포일"},
         "collected": {
           "type": "object",
@@ -290,83 +327,72 @@
     },
 
     "language": {
+      "_datacite": "Property 9 (O)",
+      "_dc": "dc:language",
+      "obligation": "O",
       "type": "array",
-      "description": "데이터셋의 주 언어",
-      "_source": "DataCite Property 9 / DC language",
       "items": {"type": "string"},
-      "default": ["ko"],
-      "examples": [["ko"], ["ko", "en"], ["en"]]
+      "default": ["ko"]
     },
 
     "rights": {
+      "_datacite": "Property 16 (R)",
+      "_dc": "dc:rights",
+      "obligation": "R",
       "type": "object",
-      "description": "이용 조건 및 접근 권한",
-      "_source": "DataCite Property 16 / DC rights / Wageningen Rights",
       "properties": {
-        "license": {
-          "type": "string",
-          "description": "라이선스명",
-          "examples": ["CC BY 4.0", "CC BY-NC 4.0", "CC0 1.0", "공공저작물 자유이용허락"]
-        },
-        "license_uri": {
-          "type": "string",
-          "format": "uri",
-          "examples": ["https://creativecommons.org/licenses/by/4.0/"]
-        },
+        "license": {"type": "string", "examples": ["CC BY 4.0", "CC BY-NC 4.0", "CC0 1.0", "공공저작물 자유이용허락"]},
+        "license_uri": {"type": "string", "format": "uri"},
         "access_type": {
           "type": "string",
           "enum": ["open", "restricted", "embargoed", "closed"],
-          "description": "접근 유형"
+          "default": "restricted"
         },
-        "embargo_end_date": {
-          "type": "string",
-          "format": "date",
-          "description": "공개 유예 종료일 (embargoed인 경우)"
-        },
-        "access_conditions": {
-          "type": "string",
-          "description": "접근 조건 설명 (restricted인 경우)"
-        }
+        "embargo_end_date": {"type": "string", "format": "date"},
+        "access_conditions": {"type": "string", "description": "제한 접근 조건 설명"}
       }
     },
 
     "format": {
+      "_datacite": "Property 14 (O)",
+      "_dc": "dc:format",
+      "obligation": "O",
       "type": "array",
-      "description": "파일 형식 (MIME 유형 권장)",
-      "_source": "DataCite Property 14 / DC format",
       "items": {"type": "string"},
-      "examples": [["text/csv"], ["application/json", "text/csv"], ["image/tiff"]]
+      "examples": [["text/csv"], ["application/json", "text/csv"], ["image/tiff"], ["application/octet-stream"]]
     },
 
     "size": {
+      "_datacite": "Property 13 (O)",
+      "obligation": "O",
       "type": "array",
-      "description": "데이터셋 크기 및 파일 수",
-      "_source": "DataCite Property 13",
       "items": {"type": "string"},
-      "examples": [["15 MB", "3 files"]]
+      "examples": [["15 MB", "3 files"], ["12,450 images", "8.2 GB"]]
     },
 
     "version": {
+      "_datacite": "Property 15 (O)",
+      "obligation": "O",
       "type": "string",
-      "description": "데이터셋 버전",
-      "_source": "DataCite Property 15",
       "default": "1.0"
     },
 
     "geo_location": {
+      "_datacite": "Property 18 (R)",
+      "_dc": "dc:coverage",
+      "obligation": "R",
       "type": "array",
-      "description": "데이터 수집 위치 정보",
-      "_source": "DataCite Property 18 / Harvard Dataverse geospatial / Wageningen GeoLocation",
+      "description": "데이터 수집 위치. 포인트·바운딩박스·지명 중 하나 이상 입력.",
       "items": {
         "type": "object",
         "properties": {
-          "place": {"type": "string", "description": "지명 (예: 서울특별시 관악구, 전남 나주시 혁신도시)"},
-          "country": {"type": "string", "description": "국가 코드 (ISO 3166-1 alpha-2)", "default": "KR"},
+          "place": {"type": "string", "description": "지명 (예: 서울특별시 관악구, 전남 나주시)"},
+          "country": {"type": "string", "default": "KR", "description": "ISO 3166-1 alpha-2"},
           "province": {"type": "string", "description": "시도"},
           "city": {"type": "string", "description": "시군구"},
           "point": {
             "type": "object",
-            "description": "단일 지점 좌표 (WGS84)",
+            "description": "단일 지점 (WGS84)",
             "properties": {
               "latitude": {"type": "number", "minimum": -90, "maximum": 90},
               "longitude": {"type": "number", "minimum": -180, "maximum": 180}
@@ -374,22 +400,24 @@
           },
           "bounding_box": {
             "type": "object",
-            "description": "사각형 범위",
             "properties": {
               "west_longitude": {"type": "number"},
               "east_longitude": {"type": "number"},
               "south_latitude": {"type": "number"},
               "north_latitude": {"type": "number"}
             }
-          }
+          },
+          "crs_epsg": {"type": "integer", "default": 4326, "description": "좌표계 EPSG 코드"}
         }
       }
     },
 
     "related_identifier": {
+      "_datacite": "Property 12 (R)",
+      "_dc": "dc:relation",
+      "obligation": "R",
       "type": "array",
-      "description": "관련 자원 식별자 (논문 DOI, 선행 데이터셋, 코드 등)",
-      "_source": "DataCite Property 12",
+      "description": "관련 자원 (논문 DOI, 선행 데이터셋, 소프트웨어 등)",
       "items": {
         "type": "object",
         "required": ["value", "type", "relation_type"],
@@ -397,17 +425,18 @@
           "value": {"type": "string"},
           "type": {
             "type": "string",
-            "enum": ["DOI", "Handle", "URL", "ISSN", "ISBN", "arXiv", "PMID", "URN"]
+            "enum": ["DOI", "Handle", "URL", "ISSN", "ISBN", "arXiv", "PMID", "URN", "RRID"]
           },
           "relation_type": {
             "type": "string",
-            "enum": ["IsCitedBy", "Cites", "IsSupplementTo", "IsSupplementedBy",
-                     "IsPartOf", "HasPart", "IsVersionOf", "HasVersion",
-                     "IsNewVersionOf", "IsPreviousVersionOf",
-                     "IsDocumentedBy", "Documents",
-                     "IsDerivedFrom", "IsSourceOf",
-                     "IsCollectedBy", "Collects",
-                     "References", "IsReferencedBy", "Other"]
+            "enum": [
+              "IsCitedBy", "Cites", "IsSupplementTo", "IsSupplementedBy",
+              "IsPartOf", "HasPart", "IsVersionOf", "HasVersion",
+              "IsDocumentedBy", "Documents",
+              "IsDerivedFrom", "IsSourceOf",
+              "IsCollectedBy", "Collects",
+              "References", "IsReferencedBy", "Other"
+            ]
           },
           "description": {"type": "string"}
         }
@@ -415,23 +444,22 @@
     },
 
     "funding_reference": {
+      "_datacite": "Property 19 (R)",
+      "obligation": "R",
       "type": "array",
-      "description": "연구비 지원 정보 (과제번호 포함)",
-      "_source": "DataCite Property 19 / Wageningen DMP",
+      "description": "연구비 지원 정보 (과제번호 필수 권장)",
       "items": {
         "type": "object",
         "required": ["funder_name"],
         "properties": {
           "funder_name": {
             "type": "string",
-            "description": "지원 기관명",
-            "examples": ["한국연구재단 (NRF)", "농촌진흥청 (RDA)", "농림축산식품부 (MAFRA)",
-                         "과학기술정보통신부", "교육부"]
+            "examples": ["한국연구재단 (NRF)", "농촌진흥청 (RDA)", "농림축산식품부 (MAFRA)", "과학기술정보통신부"]
           },
           "funder_identifier": {"type": "string"},
           "funder_identifier_type": {
             "type": "string",
-            "enum": ["Crossref Funder ID", "ISNI", "GRID", "ROR", "Other"]
+            "enum": ["Crossref Funder ID", "ISNI", "ROR", "Other"]
           },
           "award_number": {"type": "string", "description": "과제번호"},
           "award_title": {"type": "string", "description": "과제명"},
@@ -440,160 +468,604 @@
       }
     },
 
-    "cals_research": {
+    "provenance": {
+      "_dc": "dcterms:provenance",
+      "obligation": "O",
       "type": "object",
-      "description": "서울대학교 농업생명과학대학 연구 특화 메타데이터 블록",
+      "description": "데이터 출처 및 처리 이력",
+      "properties": {
+        "derived_from": {"type": "array", "items": {"type": "string"}},
+        "processing_history": {"type": "string"},
+        "quality_statement": {"type": "string"},
+        "collection_method": {"type": "string"}
+      }
+    },
+
+    "cals_research": {
+      "obligation": "M",
+      "type": "object",
+      "description": "SNU CALS 연구 특화 메타데이터 블록 (v2.0 전면 재설계)",
       "required": ["department", "research_domain"],
 
       "properties": {
 
         "department": {
+          "obligation": "M",
           "type": "string",
-          "description": "소속 학과/기관",
+          "description": "소속 학부/학과",
           "enum": [
-            "식물생산과학부 (Department of Plant Science)",
-            "산림과학부 (Department of Forest Sciences)",
-            "식품·동물생명공학부 (Department of Food and Animal Biotechnology)",
-            "조경·지역시스템공학부 (Department of Landscape Architecture and Rural Systems Engineering)",
-            "바이오시스템·소재학부 (Department of Biosystems and Biomaterials Science and Engineering)",
-            "생태조경·지역시스템공학부",
+            "식물생산과학부 — 작물생명과학전공",
+            "식물생산과학부 — 원예과학전공",
+            "산림과학부 — 산림환경학전공",
+            "산림과학부 — 환경재료과학전공",
+            "응용생물화학부 — 응용생명화학전공",
+            "응용생물화학부 — 식물미생물학전공",
+            "응용생물화학부 — 곤충학전공",
+            "식품·동물생명공학부 — 식품생명공학전공",
+            "식품·동물생명공학부 — 동물생명공학전공",
+            "조경·지역시스템공학부 — 조경학전공",
+            "조경·지역시스템공학부 — 지역시스템공학전공",
+            "바이오시스템·소재학부 — 바이오시스템공학전공",
+            "바이오시스템·소재학부 — 바이오소재공학전공",
+            "농경제사회학부 — 농업·자원경제학전공",
+            "농경제사회학부 — 농산업교육전공",
             "기타"
           ]
         },
 
-        "lab_group": {
+        "lab_id": {
+          "obligation": "R",
           "type": "string",
-          "description": "연구실/과제 그룹명"
+          "description": "snu_cals_labs.json에 정의된 연구실 식별자",
+          "examples": [
+            "snu_bse_laba", "snu_bse_bicpal", "snu_plant_crop_science",
+            "snu_plant_horticulture", "snu_forest_lidar_carbon",
+            "snu_abc_plant_micro", "snu_food_microbiology_safety",
+            "snu_rse_rural_water_ict", "snu_are_agricultural_economics",
+            "snu_food_animal_biotech"
+          ]
+        },
+
+        "lab_group": {
+          "obligation": "O",
+          "type": "string",
+          "description": "연구실명 또는 과제 그룹명"
         },
 
         "research_domain": {
+          "obligation": "M",
           "type": "array",
           "description": "연구 분야 분류 (복수 선택 가능)",
           "minItems": 1,
           "items": {
             "type": "string",
             "enum": [
-              "식물과학 (Plant Science)",
-              "작물학 (Agronomy)",
-              "원예학 (Horticulture)",
-              "산림과학 (Forest Science)",
-              "동물생명공학 (Animal Biotechnology)",
-              "식품공학 (Food Engineering)",
-              "식품영양학 (Food and Nutrition)",
-              "바이오시스템공학 (Biosystems Engineering)",
+              "작물학·식물유전체 (Crop Science & Plant Genomics)",
+              "원예학·시설원예 (Horticulture & CEA)",
+              "산림과학·탄소순환 (Forest Science & Carbon Cycle)",
+              "임산공학 (Wood & Biomaterials Engineering)",
+              "응용생명화학·농약학 (Applied Life Chemistry & Pesticide Science)",
+              "식물병리·생물방제 (Plant Pathology & Biocontrol)",
+              "곤충학 (Entomology)",
+              "식품생명공학·미생물안전 (Food Biotechnology & Microbial Safety)",
+              "동물생명공학·유전체 (Animal Biotechnology & Genomics)",
+              "바이오시스템공학·정밀농업 (Biosystems Engineering & Precision Agriculture)",
+              "농업 AI·컴퓨터비전 (Agricultural AI & Computer Vision)",
+              "스마트팜 (Smart Farm & CEA)",
+              "농업수자원·수문학 (Agricultural Water Resources & Hydrology)",
               "조경학 (Landscape Architecture)",
-              "농촌시스템공학 (Rural Systems Engineering)",
-              "환경생태학 (Environmental Ecology)",
-              "농업경제학 (Agricultural Economics)",
-              "스마트팜 (Smart Farm)",
-              "농업빅데이터·AI (Agricultural Big Data & AI)",
-              "정밀농업 (Precision Agriculture)",
+              "농업경제학·정책 (Agricultural Economics & Policy)",
               "기타"
             ]
           }
         },
 
-        "agriculture_extension": {
+        "experiment_context": {
+          "obligation": "R",
           "type": "object",
-          "description": "농업생명과학 특화 확장 메타데이터",
-          "_source": "AGRIS AP + AgMES + 스마트팜 데이터마켓 + Harvard Dataverse Life Sciences",
-
+          "description": "실험 설계 공통 정보 — 모든 연구실 공통 사용",
           "properties": {
-
-            "crop": {
+            "experiment_type": {
+              "obligation": "M",
               "type": "array",
-              "description": "연구 대상 작물 (AGROVOC 통제어휘 권장)",
+              "description": "실험 유형 (중복 선택 가능)",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "포장시험 (Field Trial)",
+                  "온실실험 (Greenhouse Experiment)",
+                  "실험실실험 (Laboratory Experiment)",
+                  "성장챔버실험 (Growth Chamber Experiment)",
+                  "식물공장실험 (Plant Factory / PFAL)",
+                  "스마트팜 파일럿 (Smart Farm Pilot)",
+                  "원격탐사 (Remote Sensing)",
+                  "유전체·오믹스 (Genomics / Omics)",
+                  "AI 학습 데이터 구축 (AI Training Dataset)",
+                  "자율주행·로봇시험 (Autonomous Vehicle / Robot Field Trial)",
+                  "수문관측 (Hydrological Monitoring)",
+                  "에디공분산 (Eddy Covariance)",
+                  "LiDAR 측량 (LiDAR Survey)",
+                  "설문·면접조사 (Survey / Interview)",
+                  "행정데이터분석 (Administrative Data Analysis)",
+                  "모델링·시뮬레이션 (Modeling / Simulation)",
+                  "기타"
+                ]
+              }
+            },
+            "experimental_design": {
+              "obligation": "R",
+              "type": "string",
+              "description": "실험 설계 유형",
+              "enum": [
+                "CRD (완전임의배치)", "RCBD (완전블럭설계)", "Split-plot",
+                "Alpha-lattice", "Augmented design", "Factorial",
+                "Dose-response", "Repeated measures", "Longitudinal",
+                "Observational", "Case-control", "Cohort", "기타"
+              ]
+            },
+            "treatment": {
+              "obligation": "R",
+              "type": "array",
+              "description": "처리구 정보",
               "items": {
                 "type": "object",
                 "properties": {
-                  "common_name_ko": {"type": "string", "description": "한국어 작물명"},
-                  "common_name_en": {"type": "string"},
-                  "scientific_name": {
+                  "factor": {"type": "string", "description": "처리 인자명", "example": "질소 시비량, 광질, 살균제 농도"},
+                  "levels": {"type": "array", "items": {"type": "string"}, "description": "처리 수준 목록"},
+                  "unit": {"type": "string", "example": "kg/ha, μmol m⁻² s⁻¹, mg/L"}
+                }
+              }
+            },
+            "replication": {
+              "obligation": "R",
+              "type": "object",
+              "properties": {
+                "n_replicates": {"type": "integer", "description": "처리구당 반복 수"},
+                "n_blocks": {"type": "integer", "description": "블럭 수 (RCBD의 경우)"},
+                "n_plants_per_plot": {"type": "integer"},
+                "n_runs": {"type": "integer", "description": "시험 반복 횟수 (로봇·기계 시험의 경우)"}
+              }
+            },
+            "observation_period": {
+              "obligation": "O",
+              "type": "object",
+              "properties": {
+                "start": {"type": "string", "format": "date"},
+                "end": {"type": "string", "format": "date"},
+                "duration_days": {"type": "integer"},
+                "temporal_resolution": {"type": "string", "example": "10분, 1일, 주간, 월간"}
+              }
+            }
+          }
+        },
+
+        "biological_subject": {
+          "obligation": "C",
+          "condition": "생물체가 연구 대상인 경우 (식물·동물·미생물 관련 연구 전반)",
+          "type": "object",
+          "description": "연구 대상 생물 정보",
+          "properties": {
+            "crops": {
+              "type": "array",
+              "description": "연구 대상 작물",
+              "_source": "AgMES ags:cropType + AGROVOC",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "common_name_ko": {"type": "string", "example": "벼"},
+                  "common_name_en": {"type": "string", "example": "rice"},
+                  "scientific_name": {"type": "string", "example": "Oryza sativa L."},
+                  "agrovoc_uri": {"type": "string", "format": "uri", "example": "http://aims.fao.org/aos/agrovoc/c_6599"},
+                  "ncbi_taxid": {"type": "integer", "example": 4530},
+                  "cultivar_or_line": {"type": "string", "example": "삼광, Nipponbare"},
+                  "growth_stage": {"type": "string", "example": "출수기, 개화기, 수확기"}
+                }
+              }
+            },
+            "livestock": {
+              "type": "array",
+              "description": "연구 대상 가축·실험동물",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "species_common_ko": {"type": "string", "example": "육계"},
+                  "species_scientific": {"type": "string", "example": "Gallus gallus domesticus"},
+                  "breed": {"type": "string", "example": "Ross 308, Berkshire"},
+                  "sex": {"type": "string", "enum": ["male", "female", "mixed"]},
+                  "age_or_stage": {"type": "string", "example": "28일령, 도체중 2.5kg"},
+                  "n_animals": {"type": "integer"},
+                  "ncbi_taxid": {"type": "integer"}
+                }
+              }
+            },
+            "microorganisms": {
+              "type": "array",
+              "description": "연구 대상 미생물 (병원균, 발효균, 생물방제균 등)",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "species": {"type": "string", "example": "Salmonella enterica, Bacillus subtilis SB01"},
+                  "strain_id": {"type": "string"},
+                  "category": {
                     "type": "string",
-                    "description": "학명 (Genus species 형식)",
-                    "_source": "AgMES ags:scientificName"
+                    "enum": ["pathogen", "probiotic", "biocontrol_agent", "spoilage_organism", "starter_culture", "other"]
                   },
-                  "agrovoc_uri": {
-                    "type": "string",
-                    "format": "uri",
-                    "description": "AGROVOC 개념 URI",
-                    "example": "http://aims.fao.org/aos/agrovoc/c_7796"
-                  },
-                  "ncbi_taxid": {
-                    "type": "integer",
-                    "description": "NCBI Taxonomy ID"
-                  },
-                  "variety_cultivar": {
-                    "type": "string",
-                    "description": "품종명"
+                  "ncbi_taxid": {"type": "integer"}
+                }
+              }
+            },
+            "trees_or_forest": {
+              "type": "object",
+              "description": "산림 연구 대상 수목 정보",
+              "properties": {
+                "dominant_species": {"type": "string", "example": "Pinus koraiensis"},
+                "stand_age_years": {"type": "integer"},
+                "stand_area_ha": {"type": "number"},
+                "ncbi_taxid": {"type": "integer"}
+              }
+            }
+          }
+        },
+
+        "domain_extension": {
+          "obligation": "R",
+          "type": "object",
+          "description": "연구 도메인별 특화 확장 블록. 해당하는 키만 입력.",
+
+          "properties": {
+
+            "imaging_ai": {
+              "obligation": "C",
+              "condition": "experiment_type에 'AI 학습 데이터 구축' 포함 또는 이미지·영상 데이터셋인 경우",
+              "_source_lab": "snu_bse_laba (LABA, 김태형)",
+              "type": "object",
+              "description": "이미지·영상 기반 AI 학습 데이터 특화 필드",
+              "properties": {
+                "camera_model": {"type": "string", "example": "FLIR Blackfly S, Sony α7R IV"},
+                "sensor_type": {
+                  "type": "string",
+                  "enum": ["RGB", "multispectral", "hyperspectral", "thermal_IR", "depth_RGBD", "LiDAR"]
+                },
+                "image_resolution": {"type": "string", "example": "3840x2160"},
+                "frame_rate_fps": {"type": "number"},
+                "mounting_type": {
+                  "type": "string",
+                  "enum": ["overhead_fixed", "UAV", "handheld", "ground_robot", "conveyor_belt"]
+                },
+                "acquisition_height_m": {"type": "number"},
+                "n_images_or_frames": {"type": "integer"},
+                "annotation_type": {
+                  "type": "string",
+                  "enum": ["bounding_box", "polygon_mask", "keypoint", "classification", "semantic_segmentation", "instance_segmentation", "none"]
+                },
+                "annotation_format": {
+                  "type": "string",
+                  "enum": ["COCO", "Pascal_VOC", "YOLO", "JSON", "CSV", "Other"]
+                },
+                "annotation_tool": {"type": "string", "example": "CVAT, LabelImg, Roboflow"},
+                "n_annotators": {"type": "integer"},
+                "inter_annotator_agreement": {"type": "number", "description": "Cohen's kappa 또는 평균 IoU"},
+                "label_accuracy_pct": {"type": "number", "minimum": 0, "maximum": 100},
+                "dataset_split": {
+                  "type": "object",
+                  "properties": {
+                    "train_ratio": {"type": "number"},
+                    "validation_ratio": {"type": "number"},
+                    "test_ratio": {"type": "number"},
+                    "split_method": {"type": "string", "enum": ["random", "stratified", "temporal", "spatial", "k_fold"]}
+                  }
+                },
+                "model_reference": {
+                  "type": "object",
+                  "description": "데이터셋으로 학습된 모델 정보 (선택)",
+                  "properties": {
+                    "architecture": {"type": "string", "example": "YOLOv8, Mask R-CNN, SAM"},
+                    "pretrained_backbone": {"type": "string"},
+                    "primary_metric": {"type": "string", "example": "mAP@0.5"},
+                    "metric_value": {"type": "number"},
+                    "model_url": {"type": "string", "format": "uri"}
                   }
                 }
               }
             },
 
-            "organism": {
-              "type": "array",
-              "description": "연구 대상 생물 (작물 외: 가축, 미생물, 곤충 등)",
-              "_source": "Harvard Dataverse Life Sciences studyAssayOrganism",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "name_ko": {"type": "string"},
-                  "name_en": {"type": "string"},
-                  "scientific_name": {"type": "string"},
-                  "organism_type": {
-                    "type": "string",
-                    "enum": ["작물", "수목", "가축", "미생물", "곤충", "어류", "기타"]
-                  },
-                  "ncbi_taxid": {"type": "integer"},
-                  "agrovoc_uri": {"type": "string", "format": "uri"}
-                }
-              }
-            },
-
-            "experiment_type": {
-              "type": "array",
-              "description": "실험 유형",
-              "_source": "Harvard Dataverse Life Sciences studyDesignType",
-              "items": {
-                "type": "string",
-                "enum": [
-                  "Field Trial (포장시험)",
-                  "Greenhouse Experiment (온실실험)",
-                  "Laboratory Experiment (실험실실험)",
-                  "Smart Farm Pilot (스마트팜 파일럿)",
-                  "Survey / Questionnaire (설문조사)",
-                  "Remote Sensing (원격탐사)",
-                  "Genomics / Omics (유전체·오믹스)",
-                  "Modeling / Simulation (모델링·시뮬레이션)",
-                  "Meta-analysis (메타분석)",
-                  "Other"
-                ]
-              }
-            },
-
-            "treatment": {
-              "type": "array",
-              "description": "처리(treatment) 정보",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "factor": {"type": "string", "description": "처리 인자 (예: 질소 시비량, 온도)"},
-                  "levels": {
-                    "type": "array",
-                    "items": {"type": "string"},
-                    "description": "처리 수준"
-                  },
-                  "unit": {"type": "string"}
-                }
-              }
-            },
-
-            "smart_farm": {
+            "precision_agriculture": {
+              "obligation": "C",
+              "condition": "experiment_type에 '자율주행·로봇시험' 포함 또는 GPS/GIS 기반 포장 데이터인 경우",
+              "_source_lab": "snu_bse_bicpal (BICPAL, 김학진)",
               "type": "object",
-              "description": "스마트팜 데이터 특화 메타데이터",
-              "_source": "농림축산식품부 스마트팜 데이터마켓 / 스마트팜코리아",
+              "description": "정밀농업·농업로봇 특화 필드",
+              "properties": {
+                "platform_type": {
+                  "type": "string",
+                  "enum": ["tractor", "UAV_fixed_wing", "UAV_multirotor", "ground_robot", "cultivator"]
+                },
+                "platform_model": {"type": "string", "example": "LS Mtron MT7101, DJI Matrice 300 RTK"},
+                "gnss_receiver": {"type": "string", "example": "Trimble R10, NovAtel SMART7"},
+                "gnss_mode": {
+                  "type": "string",
+                  "enum": ["RTK", "PPK", "SBAS", "standard_GPS"]
+                },
+                "position_accuracy_cm": {"type": "number"},
+                "imu_model": {"type": "string"},
+                "lidar_model": {"type": "string", "description": "장착된 경우"},
+                "path_type": {
+                  "type": "string",
+                  "enum": ["A-B_straight", "headland_turn", "contour_follow", "grid_survey", "random_exploration"]
+                },
+                "operation_speed_kmh": {"type": "number"},
+                "cross_track_error_cm_mean": {"type": "number"},
+                "data_format": {"type": "string", "enum": ["NMEA", "ROS_bag", "CSV", "GeoJSON", "KML"]}
+              }
+            },
 
+            "genomics_omics": {
+              "obligation": "C",
+              "condition": "experiment_type에 '유전체·오믹스' 포함인 경우",
+              "_source_lab": "snu_plant_crop_science (이석하), snu_food_animal_biotech (이창규)",
+              "type": "object",
+              "description": "유전체·오믹스 특화 필드",
+              "properties": {
+                "omics_type": {
+                  "type": "string",
+                  "enum": ["GWAS", "QTL_mapping", "WGS", "RNA_seq", "16S_rRNA_amplicon", "ITS_amplicon", "shotgun_metagenomics", "metabolomics_LC_MS", "metabolomics_GC_MS", "proteomics", "other"]
+                },
+                "reference_genome": {"type": "string", "example": "IRGSP-1.0, Sscrofa11.1, GalGal6a"},
+                "sequencing_platform": {"type": "string", "example": "Illumina NovaSeq 6000, PacBio Revio"},
+                "read_length_bp": {"type": "integer"},
+                "mean_coverage_x": {"type": "number"},
+                "n_samples": {"type": "integer"},
+                "n_markers_or_snps": {"type": "integer"},
+                "genotyping_platform": {"type": "string", "example": "Illumina PorcineSNP60K, Affymetrix Axiom 580K"},
+                "bioinformatics_pipeline": {"type": "string", "example": "GATK4, GAPIT3, DADA2, QIIME2"},
+                "significance_threshold": {"type": "string", "example": "Bonferroni p < 0.05/n_markers"},
+                "data_repository": {"type": "string", "format": "uri", "description": "NCBI SRA, DDBJ 등 등록 URL"},
+                "accession_number": {"type": "string"}
+              }
+            },
+
+            "controlled_environment": {
+              "obligation": "C",
+              "condition": "experiment_type에 '식물공장실험' 또는 '온실실험' 포함인 경우",
+              "_source_lab": "snu_plant_horticulture (전창후)",
+              "type": "object",
+              "description": "시설원예·식물공장·성장챔버 특화 필드",
+              "properties": {
+                "facility": {
+                  "type": "string",
+                  "enum": ["plant_factory_PFAL", "growth_chamber", "glass_greenhouse", "plastic_greenhouse", "shade_house"]
+                },
+                "ppfd_umol_m2_s": {"type": "number", "description": "광합성광양자속밀도 (μmol m⁻² s⁻¹)"},
+                "light_spectrum_peak_nm": {"type": "array", "items": {"type": "number"}},
+                "photoperiod_h": {"type": "number"},
+                "temperature_day_C": {"type": "number"},
+                "temperature_night_C": {"type": "number"},
+                "rh_pct": {"type": "number"},
+                "co2_ppm": {"type": "number"},
+                "nutrient_solution_EC_dS_m": {"type": "number"},
+                "cultivation_method": {
+                  "type": "string",
+                  "enum": ["수경재배", "토경재배", "양액재배", "NFT", "DWC", "기타"]
+                },
+                "growth_traits_measured": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "trait": {"type": "string", "example": "fresh_weight"},
+                      "unit": {"type": "string", "example": "g/plant"},
+                      "measurement_interval_days": {"type": "integer"}
+                    }
+                  }
+                },
+                "postharvest": {
+                  "type": "object",
+                  "properties": {
+                    "storage_temperature_C": {"type": "number"},
+                    "storage_duration_days": {"type": "integer"},
+                    "firmness_N": {"type": "number"},
+                    "soluble_solids_brix": {"type": "number"}
+                  }
+                }
+              }
+            },
+
+            "forest_remote_sensing": {
+              "obligation": "C",
+              "condition": "experiment_type에 'LiDAR 측량', '에디공분산', '원격탐사' 포함인 경우",
+              "_source_lab": "snu_forest_lidar_carbon (산림과학부)",
+              "type": "object",
+              "description": "산림원격탐사·탄소순환 특화 필드",
+              "properties": {
+                "forest_type": {
+                  "type": "string",
+                  "enum": ["Korean_pine_plantation", "deciduous_broadleaf", "mixed_conifer_broadleaf", "bamboo", "riparian", "other"]
+                },
+                "stand_age_years": {"type": "integer"},
+                "slope_deg": {"type": "number"},
+                "aspect": {"type": "string", "example": "NE, SW"},
+                "lidar_scanner_model": {"type": "string", "example": "Riegl VUX-1UAV, Hesai Pandar40"},
+                "lidar_platform": {
+                  "type": "string",
+                  "enum": ["backpack_TLS", "UAV_ULS", "tripod_TLS", "vehicle_MLS"]
+                },
+                "lidar_point_density_pts_m2": {"type": "number"},
+                "lidar_data_format": {"type": "string", "enum": ["LAS_1.4", "LAZ", "PLY", "PCD"]},
+                "eddy_covariance": {
+                  "type": "object",
+                  "properties": {
+                    "tower_height_m": {"type": "number"},
+                    "sonic_anemometer": {"type": "string", "example": "CSAT3, Gill Windmaster Pro"},
+                    "gas_analyzer": {"type": "string", "example": "LI-7500A, EC155"},
+                    "sampling_freq_hz": {"type": "integer", "default": 10},
+                    "averaging_period_min": {"type": "integer", "default": 30},
+                    "qc_software": {"type": "string", "example": "EddyPro 7"},
+                    "flux_variables": {"type": "array", "items": {"type": "string"}, "example": ["NEE_CO2", "LE", "H", "Rn"]}
+                  }
+                },
+                "dendrochronology": {
+                  "type": "object",
+                  "properties": {
+                    "n_trees_sampled": {"type": "integer"},
+                    "cores_per_tree": {"type": "integer"},
+                    "measurement_device": {"type": "string", "example": "LINTAB6, WinDENDRO"},
+                    "chronology_length_years": {"type": "integer"}
+                  }
+                },
+                "biomass_agb_Mg_ha": {"type": "number"},
+                "carbon_fraction": {"type": "number", "default": 0.5}
+              }
+            },
+
+            "plant_microbiology": {
+              "obligation": "C",
+              "condition": "연구 대상이 식물 병원균·해충·생물방제제인 경우",
+              "_source_lab": "snu_abc_plant_micro (응용생물화학부)",
+              "type": "object",
+              "description": "식물미생물·생물방제·농약 특화 필드",
+              "properties": {
+                "target_pathogen_or_pest": {"type": "string", "example": "Fusarium oxysporum, Plutella xylostella"},
+                "organism_type": {
+                  "type": "string",
+                  "enum": ["fungus", "bacterium", "nematode", "insect_pest", "virus", "weed"]
+                },
+                "host_plant": {"type": "string"},
+                "biocontrol_agent": {"type": "string", "example": "Bacillus subtilis SB01"},
+                "biocontrol_agent_type": {
+                  "type": "string",
+                  "enum": ["bacterium", "fungus", "baculovirus", "nematode", "predatory_insect", "SynCom"]
+                },
+                "agent_concentration": {"type": "string", "example": "10⁸ CFU/mL"},
+                "disease_index_scale": {"type": "string", "example": "0-9 (IRRI), 0-5 Horsfall-Barratt"},
+                "assessment_timing_DAI": {"type": "array", "items": {"type": "integer"}},
+                "efficacy_pct": {"type": "number"},
+                "analytical_instrument": {"type": "string", "example": "Agilent 6470 LC-MS/MS, Illumina MiSeq"},
+                "analytical_method": {
+                  "type": "string",
+                  "enum": ["LC-MS/MS_targeted", "GC-MS_targeted", "16S_amplicon", "ITS_amplicon", "shotgun_metagenomics", "visual_rating", "bioassay"]
+                },
+                "detection_limit_ppb": {"type": "number"}
+              }
+            },
+
+            "food_safety_microbiology": {
+              "obligation": "C",
+              "condition": "연구가 식품 안전성·미생물·발효 분야인 경우",
+              "_source_lab": "snu_food_microbiology_safety (강동현)",
+              "type": "object",
+              "description": "식품미생물·안전성 특화 필드",
+              "properties": {
+                "food_matrix": {"type": "string", "example": "poultry meat, kimchi, dairy"},
+                "processing_stage": {
+                  "type": "string",
+                  "enum": ["raw", "fermented", "pasteurized", "processed", "ready_to_eat"]
+                },
+                "water_activity_aw": {"type": "number"},
+                "target_pathogen": {"type": "string", "example": "Salmonella enterica, Listeria monocytogenes"},
+                "pathogen_category": {
+                  "type": "string",
+                  "enum": ["pathogen", "probiotic", "spoilage_organism", "starter_culture"]
+                },
+                "initial_inoculum_CFU_g": {"type": "number"},
+                "antimicrobial_agent": {"type": "string", "example": "quercetin + blue light (405 nm), phage cocktail"},
+                "inactivation_method": {
+                  "type": "string",
+                  "enum": ["ohmic_heating", "UV_irradiation", "photodynamic_treatment", "bacteriophage", "chemical_sanitizer", "combined"]
+                },
+                "primary_endpoint": {
+                  "type": "string",
+                  "enum": ["log_reduction_CFU_g", "MIC_ug_mL", "D_value", "growth_curve_OD600", "diversity_index_Shannon"]
+                },
+                "analytical_method": {"type": "string", "example": "pour plate, qPCR, flow cytometry, Illumina MiSeq 16S"},
+                "sequencing_platform": {"type": "string"},
+                "variable_region_16S": {"type": "string", "example": "V3-V4"},
+                "bioinformatics_pipeline": {"type": "string", "example": "QIIME2, DADA2"}
+              }
+            },
+
+            "hydrology_gis": {
+              "obligation": "C",
+              "condition": "experiment_type에 '수문관측' 포함 또는 GIS·유역 분석 데이터인 경우",
+              "_source_lab": "snu_rse_rural_water_ict (최진용)",
+              "type": "object",
+              "description": "농업수자원·수문·GIS 특화 필드",
+              "properties": {
+                "watershed_name": {"type": "string", "example": "안성천, 영산강"},
+                "watershed_area_km2": {"type": "number"},
+                "dominant_land_use": {
+                  "type": "string",
+                  "enum": ["paddy_dominated", "upland_crop", "mixed_agricultural", "forest_dominated", "urban_peri_urban"]
+                },
+                "hydrological_model": {"type": "string", "example": "SWAT, SWAT-MODFLOW-PADDY, HEC-HMS"},
+                "dem_resolution_m": {"type": "number"},
+                "dem_source": {"type": "string", "example": "NGII 수치표고모델 5m"},
+                "soil_map_source": {"type": "string", "example": "NAAS 정밀토양도"},
+                "crs_epsg": {"type": "integer", "default": 5186},
+                "observation_variables": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "variable": {"type": "string", "example": "streamflow"},
+                      "unit": {"type": "string", "example": "m³/s"},
+                      "sensor_model": {"type": "string"},
+                      "temporal_resolution": {"type": "string", "example": "10 min"}
+                    }
+                  }
+                },
+                "water_quality_parameters": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "parameter": {"type": "string", "example": "TN, TP, BOD5, SS"},
+                      "unit": {"type": "string"},
+                      "method_standard": {"type": "string", "example": "ES 04363.1"}
+                    }
+                  }
+                },
+                "data_source": {
+                  "type": "string",
+                  "enum": ["field_logger", "KMA_ASOS", "KMA_AWS", "WAMIS", "MODIS", "Landsat", "Sentinel", "other"]
+                }
+              }
+            },
+
+            "agri_economics": {
+              "obligation": "C",
+              "condition": "experiment_type에 '설문·면접조사' 또는 '행정데이터분석' 포함인 경우",
+              "_source_lab": "snu_are_agricultural_economics (농경제사회학부)",
+              "type": "object",
+              "description": "농업경제학·정책·사회학 특화 필드",
+              "properties": {
+                "study_type": {
+                  "type": "string",
+                  "enum": ["household_survey", "farm_panel_survey", "market_price_analysis", "CGE_model", "econometric_regression", "GIS_spatial_analysis", "policy_impact_evaluation"]
+                },
+                "target_population": {"type": "string", "example": "Korean farm households, 경기도 농촌 주민"},
+                "sampling_method": {
+                  "type": "string",
+                  "enum": ["stratified_random", "cluster", "purposive", "snowball", "census"]
+                },
+                "n_respondents": {"type": "integer"},
+                "survey_mode": {
+                  "type": "string",
+                  "enum": ["face_to_face", "telephone_CATI", "web_CAWI", "mail", "mixed_mode"]
+                },
+                "administrative_data_source": {"type": "string", "example": "KOSIS 농업총조사, MAFRA 농업관측, FAO FAOSTAT"},
+                "spatial_resolution": {"type": "string", "example": "시군구(SGG), 읍면동"},
+                "econometric_model": {"type": "string", "example": "DiD, IV regression, panel fixed effects, PSM"},
+                "analysis_software": {"type": "string", "example": "Stata 18, R, GAMS"},
+                "unit_of_analysis": {"type": "string", "example": "household, farm, county, country"}
+              }
+            },
+
+            "smart_farm_iot": {
+              "obligation": "C",
+              "condition": "experiment_type에 '스마트팜 파일럿' 포함 또는 IoT 센서 시계열 데이터인 경우",
+              "_source": "standards/smartfarm_kr.json (농림축산식품부 스마트팜 데이터마켓)",
+              "type": "object",
+              "description": "스마트팜·IoT 센서 특화 필드",
               "properties": {
                 "facility_type": {
                   "type": "string",
@@ -605,168 +1077,102 @@
                 },
                 "sensor_types": {
                   "type": "array",
-                  "description": "사용된 센서 유형 목록",
                   "items": {
                     "type": "string",
-                    "enum": ["온도", "습도", "CO2", "조도", "일사량", "토양수분", "토양EC",
-                             "토양pH", "양액EC", "양액pH", "풍속", "풍향", "강우량",
-                             "이미지(RGB)", "이미지(NIR)", "이미지(멀티스펙트럼)",
-                             "체온(가축)", "활동량(가축)", "기타"]
+                    "enum": [
+                      "온도", "습도", "CO2", "조도", "일사량",
+                      "토양수분", "토양EC", "토양pH",
+                      "양액EC", "양액pH",
+                      "풍속", "풍향", "강우량",
+                      "이미지(RGB)", "이미지(NIR)", "이미지(멀티스펙트럼)", "이미지(열화상)",
+                      "체온(가축)", "활동량(가축)", "기타"
+                    ]
                   }
                 },
-                "sampling_interval": {
-                  "type": "string",
-                  "description": "데이터 수집 주기",
-                  "examples": ["1분", "10분", "1시간", "일별", "수동측정"]
-                },
-                "control_system": {
-                  "type": "string",
-                  "description": "환경 제어 시스템명"
-                },
-                "iot_protocol": {
-                  "type": "array",
-                  "items": {"type": "string"},
-                  "description": "IoT 통신 프로토콜",
-                  "examples": [["MQTT"], ["HTTP/REST", "MQTT"]]
-                }
-              }
-            },
-
-            "field_location": {
-              "type": "object",
-              "description": "실험지/농장 위치 상세정보",
-              "properties": {
-                "name": {"type": "string", "description": "실험지명 (예: SNU 남부학술림, 농생대 부속농장)"},
-                "type": {
-                  "type": "string",
-                  "enum": ["대학 부속농장", "대학 실험포장", "협력 농가", "국공립연구소", "상업 농장", "기타"]
-                },
-                "altitude_m": {"type": "number", "description": "해발고도 (m)"},
-                "soil_type": {"type": "string", "description": "토양 유형"}
-              }
-            },
-
-            "measurement_metadata": {
-              "type": "object",
-              "description": "측정·분석 방법 메타데이터",
-              "_source": "Harvard Dataverse Life Sciences + Wageningen",
-              "properties": {
-                "measurement_type": {
-                  "type": "array",
-                  "items": {"type": "string"},
-                  "description": "측정 항목 유형"
-                },
-                "technology_type": {
-                  "type": "string",
-                  "description": "사용 기술 유형",
-                  "examples": ["DNA Sequencing", "Mass Spectrometry", "Remote Sensing",
-                               "IoT Sensor", "Chemical Analysis", "Image Analysis"]
-                },
-                "instrument": {
-                  "type": "string",
-                  "description": "주요 측정 장비명"
-                },
-                "protocol_reference": {
-                  "type": "string",
-                  "description": "분석 프로토콜 참고문헌 또는 URL"
-                }
+                "sampling_interval": {"type": "string", "examples": ["1분", "10분", "1시간", "일별"]},
+                "control_system": {"type": "string"},
+                "iot_protocol": {"type": "array", "items": {"type": "string"}, "examples": [["MQTT"], ["HTTP/REST", "MQTT"]]}
               }
             }
           }
         },
 
         "ai_training_metadata": {
+          "obligation": "C",
+          "condition": "domain_extension.imaging_ai가 사용되거나 is_ai_training_data = true인 경우",
+          "_source": "standards/aihub_kr.json (한국 AI Hub 가이드라인 v3.1)",
           "type": "object",
-          "description": "AI 학습용 데이터셋 특화 메타데이터",
-          "_source": "한국 AI Hub 품질관리 가이드라인 v3.1",
           "properties": {
             "is_ai_training_data": {"type": "boolean", "default": false},
             "task_type": {
               "type": "array",
-              "description": "AI 학습 목적",
               "items": {
                 "type": "string",
-                "enum": ["객체인식", "이미지분류", "세그멘테이션", "시계열예측",
-                         "자연어처리", "생성AI", "병해충탐지", "수확량예측", "기타"]
+                "enum": ["객체인식", "이미지분류", "세그멘테이션", "시계열예측", "자연어처리", "병해충탐지", "수확량예측", "생성AI", "기타"]
               }
             },
-            "annotation_type": {
-              "type": "string",
-              "enum": ["Bounding Box", "Segmentation", "Classification Label",
-                       "Keypoint", "Caption", "None", "Other"]
-            },
-            "annotation_format": {
-              "type": "string",
-              "enum": ["COCO", "Pascal VOC", "YOLO", "JSON", "CSV", "Other"]
-            },
-            "label_accuracy": {
-              "type": "number",
-              "description": "라벨링 정확도 (%)",
-              "minimum": 0,
-              "maximum": 100
-            },
-            "train_val_test_split": {
+            "total_instances": {"type": "integer", "description": "전체 레이블 인스턴스 수"},
+            "n_categories": {"type": "integer", "description": "분류 카테고리 수"},
+            "class_distribution": {
               "type": "object",
-              "description": "학습/검증/테스트 분할 비율",
-              "properties": {
-                "train": {"type": "number"},
-                "validation": {"type": "number"},
-                "test": {"type": "number"}
-              }
-            }
+              "description": "카테고리별 샘플 수 {카테고리명: 샘플수}",
+              "additionalProperties": {"type": "integer"}
+            },
+            "data_imbalance_handling": {"type": "string", "example": "oversampling, SMOTE, class weighting"}
+          }
+        },
+
+        "measurement_instrument": {
+          "obligation": "O",
+          "_source": "Harvard Dataverse Life Sciences + Wageningen",
+          "type": "object",
+          "description": "주요 측정·분석 장비 정보",
+          "properties": {
+            "primary_instrument": {"type": "string", "description": "주 장비명 및 모델"},
+            "instrument_type": {
+              "type": "string",
+              "enum": [
+                "sequencer", "mass_spectrometer", "spectrophotometer", "GNSS_receiver",
+                "LiDAR_scanner", "eddy_covariance_system", "gas_analyzer",
+                "IoT_sensor_logger", "camera_imaging", "flow_meter", "other"
+              ]
+            },
+            "manufacturer": {"type": "string"},
+            "calibration_date": {"type": "string", "format": "date"},
+            "protocol_reference": {"type": "string", "description": "분석 프로토콜 DOI 또는 URL"}
+          }
+        },
+
+        "field_location": {
+          "obligation": "O",
+          "type": "object",
+          "description": "실험지·농장 위치 상세 정보 (geo_location의 보완 정보)",
+          "properties": {
+            "name": {"type": "string", "example": "SNU 남부학술림, 농생대 부속농장, 경기도 화성시 협력 농가"},
+            "type": {
+              "type": "string",
+              "enum": ["대학 부속농장", "대학 실험포장", "협력 농가", "국공립연구소", "상업 농장", "산림", "기타"]
+            },
+            "altitude_m": {"type": "number"},
+            "soil_type": {"type": "string", "description": "FAO 토양 분류 또는 NAAS 토양도 기준"}
           }
         },
 
         "retention_policy": {
+          "obligation": "O",
+          "_source": "standards/wageningen_wur.json (WUR 보존 기간 권고)",
           "type": "object",
-          "description": "데이터 보존 정책",
-          "_source": "Wageningen WUR 보존 기간 권고",
           "properties": {
-            "retention_period": {
-              "type": "string",
-              "description": "보존 기간",
-              "examples": ["5년", "10년", "영구보존"],
-              "default": "10년"
-            },
-            "expected_deletion_date": {
-              "type": "string",
-              "format": "date"
-            },
-            "archival_institution": {
-              "type": "string",
-              "description": "장기보존 기탁 기관"
-            }
+            "retention_period": {"type": "string", "default": "10년", "examples": ["5년", "10년", "영구보존"]},
+            "expected_deletion_date": {"type": "string", "format": "date"},
+            "archival_institution": {"type": "string", "description": "장기보존 기탁 기관"}
           }
-        }
-      }
-    },
-
-    "provenance": {
-      "type": "object",
-      "description": "데이터 출처 및 이력 (DCMI Terms provenance)",
-      "_source": "Dublin Core dcterms:provenance",
-      "properties": {
-        "derived_from": {
-          "type": "array",
-          "description": "원본 데이터 또는 파생 출처",
-          "items": {"type": "string"}
-        },
-        "processing_history": {
-          "type": "string",
-          "description": "데이터 처리·정제 이력"
-        },
-        "quality_statement": {
-          "type": "string",
-          "description": "데이터 품질 설명"
-        },
-        "collection_method": {
-          "type": "string",
-          "description": "수집 방법 서술"
         }
       }
     },
 
     "administrative": {
+      "obligation": "O",
       "type": "object",
       "description": "데이터셋 관리 정보 (시스템 내부용)",
       "properties": {
@@ -790,48 +1196,125 @@
 
   "examples": [
     {
-      "_comment": "스마트팜 토마토 생육·환경 데이터셋 예시",
-      "identifier": {"value": "10.xxxx/cals.2026.001", "type": "DOI"},
+      "_comment": "예시 1 — LABA 육계 밀도 추정 AI 학습 이미지 데이터셋 (김태형 교수)",
+      "identifier": {"value": "CALS-2026-LABA-001", "type": "CALS-Internal"},
       "title": {
-        "main": "스마트팜 토마토 온실 환경 및 생육 시계열 데이터 (2025년)",
-        "main_en": "Smart Farm Tomato Greenhouse Environment and Growth Time-series Dataset (2025)"
+        "main": "상업용 육계 사육 밀도 추정을 위한 딥러닝 학습 이미지 데이터셋",
+        "main_en": "Deep Learning Training Image Dataset for Broiler Density Estimation in Commercial Poultry Houses"
       },
       "creator": [
         {
-          "name": "홍길동",
-          "name_en": "Hong, Gildong",
-          "name_type": "Personal",
-          "affiliation": {"name": "서울대학교 농업생명과학대학 식물생산과학부"},
-          "identifier": {"value": "https://orcid.org/0000-0000-0000-0001", "scheme": "ORCID"}
+          "name": "김태형",
+          "name_en": "Kim, Taehyung",
+          "affiliation": {"name": "서울대학교 농업생명과학대학 바이오시스템공학전공 LABA"},
+          "identifier": {"value": "https://orcid.org/0000-0000-0000-XXXX", "scheme": "ORCID"}
         }
       ],
       "publisher": {"name": "서울대학교 농업생명과학대학 연구데이터관리시스템"},
       "publication_year": 2026,
-      "resource_type": {"general": "Dataset", "specific": "Sensor Time Series"},
-      "description": [{"value": "경기도 화성시 스마트팜 유리온실에서 2025년 1월~12월 수집된 토마토 환경(온도·습도·CO2·조도) 및 생육(초장·엽수·수확량) 시계열 데이터.", "type": "Abstract"}],
-      "subject": [
-        {"value": "tomato", "scheme": "AGROVOC", "value_uri": "http://aims.fao.org/aos/agrovoc/c_7796"},
-        {"value": "smart farming", "scheme": "AGROVOC"},
-        {"value": "greenhouse horticulture", "scheme": "AGROVOC"}
+      "resource_type": {"general": "Dataset", "specific": "AI Training Dataset"},
+      "description": [
+        {
+          "value": "상업용 육계 사육 시설 내 천장 카메라로 촬영한 오버헤드 이미지 12,450장. 밀도 수준 3단계(저·중·고)에 따라 Bounding Box 및 Instance Segmentation 라벨링 완료. YOLOv8 학습에 최적화된 COCO 포맷 제공.",
+          "type": "Abstract", "language": "ko"
+        },
+        {
+          "value": "Images captured by overhead RGB cameras (FLIR Blackfly S, 3840×2160) at 2.8 m height. Annotated by 3 trained annotators (mean IoU 0.89). Train:Val:Test = 70:15:15.",
+          "type": "Methods", "language": "en"
+        }
       ],
-      "date": {"created": "2026-01-10", "collected": {"start": "2025-01-01", "end": "2025-12-31"}},
+      "subject": [
+        {"value": "broiler", "scheme": "AGROVOC", "value_uri": "http://aims.fao.org/aos/agrovoc/c_1369"},
+        {"value": "computer vision", "scheme": "Free Keyword"},
+        {"value": "precision livestock farming", "scheme": "AGROVOC"}
+      ],
+      "date": {"created": "2026-02-01", "collected": {"start": "2025-06-01", "end": "2025-11-30"}},
       "rights": {"license": "CC BY 4.0", "license_uri": "https://creativecommons.org/licenses/by/4.0/", "access_type": "open"},
-      "format": ["text/csv", "application/json"],
+      "format": ["image/jpeg", "application/json"],
+      "size": ["12,450 images", "18.3 GB"],
+      "geo_location": [{"place": "경기도 안성시 협력 육계 농가", "country": "KR"}],
+      "funding_reference": [{"funder_name": "농촌진흥청 (RDA)", "award_number": "PJ0XXXXXX", "award_title": "농업 AI 기반 스마트 축산 기술 개발"}],
       "cals_research": {
-        "department": "식물생산과학부 (Department of Plant Science)",
-        "research_domain": ["원예학 (Horticulture)", "스마트팜 (Smart Farm)"],
-        "agriculture_extension": {
-          "crop": [{"common_name_ko": "토마토", "common_name_en": "tomato", "scientific_name": "Solanum lycopersicum", "agrovoc_uri": "http://aims.fao.org/aos/agrovoc/c_7796", "ncbi_taxid": 4081}],
-          "experiment_type": ["Smart Farm Pilot (스마트팜 파일럿)"],
-          "smart_farm": {
-            "facility_type": "유리온실",
-            "cultivation_method": "수경재배",
-            "sensor_types": ["온도", "습도", "CO2", "조도", "양액EC", "양액pH"],
-            "sampling_interval": "10분"
-          },
-          "field_location": {"name": "경기도 화성시 협력 농가", "type": "협력 농가"}
+        "department": "바이오시스템·소재학부 — 바이오시스템공학전공",
+        "lab_id": "snu_bse_laba",
+        "lab_group": "LABA (Laboratory for Agricultural Bioinformatics and Automation)",
+        "research_domain": ["농업 AI·컴퓨터비전 (Agricultural AI & Computer Vision)", "스마트팜 (Smart Farm & CEA)"],
+        "experiment_context": {
+          "experiment_type": ["AI 학습 데이터 구축"],
+          "observation_period": {"start": "2025-06-01", "end": "2025-11-30"}
+        },
+        "biological_subject": {
+          "livestock": [
+            {"species_common_ko": "육계", "species_scientific": "Gallus gallus domesticus", "breed": "Ross 308", "age_or_stage": "28-35일령"}
+          ]
+        },
+        "domain_extension": {
+          "imaging_ai": {
+            "camera_model": "FLIR Blackfly S BFS-U3-200S6C",
+            "sensor_type": "RGB",
+            "image_resolution": "3840x2160",
+            "mounting_type": "overhead_fixed",
+            "acquisition_height_m": 2.8,
+            "n_images_or_frames": 12450,
+            "annotation_type": "instance_segmentation",
+            "annotation_format": "COCO",
+            "annotation_tool": "CVAT",
+            "n_annotators": 3,
+            "inter_annotator_agreement": 0.89,
+            "label_accuracy_pct": 95.2,
+            "dataset_split": {"train_ratio": 0.7, "validation_ratio": 0.15, "test_ratio": 0.15, "split_method": "stratified"}
+          }
+        },
+        "ai_training_metadata": {
+          "is_ai_training_data": true,
+          "task_type": ["객체인식", "세그멘테이션"],
+          "n_categories": 3,
+          "class_distribution": {"low_density": 4150, "medium_density": 4200, "high_density": 4100}
         },
         "retention_policy": {"retention_period": "10년"}
+      }
+    },
+    {
+      "_comment": "예시 2 — 작물생명과학 콩 GWAS 데이터셋 (이석하 교수)",
+      "identifier": {"value": "CALS-2024-CropSci-042", "type": "CALS-Internal"},
+      "title": {"main": "한국 재래 콩 유전자원 농업 형질 게놈연관분석(GWAS) 데이터셋", "main_en": "GWAS Dataset for Agronomic Traits in Korean Landrace Soybean Accessions"},
+      "creator": [{"name": "이석하", "name_en": "Lee, Suk-Ha", "affiliation": {"name": "서울대학교 농업생명과학대학 작물생명과학전공", "ror_id": "https://ror.org/04h9pn542"}}],
+      "publisher": {"name": "서울대학교 농업생명과학대학 연구데이터관리시스템"},
+      "publication_year": 2024,
+      "resource_type": {"general": "Dataset", "specific": "Genomics Data"},
+      "description": [{"value": "307개 한국 재래 콩 유전자원의 580K SNP 칩 기반 유전형 데이터 및 포장 표현형 데이터(수량, 단백질 함량, 개화일수 등 12개 형질). GWAS 수행 결과 QTL 위치 포함.", "type": "Abstract", "language": "ko"}],
+      "subject": [
+        {"value": "soybean", "scheme": "AGROVOC", "value_uri": "http://aims.fao.org/aos/agrovoc/c_7009"},
+        {"value": "genome-wide association study", "scheme": "Free Keyword"},
+        {"value": "plant breeding", "scheme": "AGROVOC"}
+      ],
+      "date": {"collected": {"start": "2021-05-01", "end": "2023-09-30"}},
+      "rights": {"license": "CC BY-NC 4.0", "access_type": "restricted"},
+      "related_identifier": [{"value": "10.3389/fpls.2024.1375646", "type": "DOI", "relation_type": "IsCitedBy"}],
+      "geo_location": [{"place": "서울대학교 농생대 부속농장, 수원 국립식량과학원", "country": "KR"}],
+      "cals_research": {
+        "department": "식물생산과학부 — 작물생명과학전공",
+        "lab_id": "snu_plant_crop_science",
+        "research_domain": ["작물학·식물유전체 (Crop Science & Plant Genomics)"],
+        "experiment_context": {
+          "experiment_type": ["포장시험 (Field Trial)", "유전체·오믹스 (Genomics / Omics)"],
+          "experimental_design": "Alpha-lattice",
+          "replication": {"n_replicates": 3}
+        },
+        "biological_subject": {
+          "crops": [{"common_name_ko": "콩", "common_name_en": "soybean", "scientific_name": "Glycine max (L.) Merr.", "agrovoc_uri": "http://aims.fao.org/aos/agrovoc/c_7009", "ncbi_taxid": 3847}]
+        },
+        "domain_extension": {
+          "genomics_omics": {
+            "omics_type": "GWAS",
+            "reference_genome": "Wm82.a4.v1",
+            "genotyping_platform": "Affymetrix Axiom Soybean 580K",
+            "n_samples": 307,
+            "n_markers_or_snps": 512340,
+            "bioinformatics_pipeline": "GAPIT3, PLINK2",
+            "significance_threshold": "Bonferroni p < 0.05/n_markers"
+          }
+        }
       }
     }
   ]
