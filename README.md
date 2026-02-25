@@ -1,4 +1,4 @@
-# CALS Dataverse — Metadata Standards
+# CALS 데이터버스 — 메타데이터 표준
 
 서울대학교 농업생명과학대학(CALS) 연구 데이터 통합관리 플랫폼 구축을 위한 메타데이터 표준 정의 저장소입니다.
 
@@ -43,7 +43,7 @@
 
 ## SNU CALS 연구실 커스텀 스키마 (`snu_cals_labs.json`)
 
-각 연구실의 논문 Materials & Methods 섹션을 역설계하여 정의한 연구실별 메타데이터 필드셋입니다.
+각 연구실의 논문 재료 및 방법(Materials & Methods) 섹션을 역설계하여 정의한 연구실별 메타데이터 필드셋입니다.
 
 | lab_id | 연구실 | 교수 | 데이터 유형 |
 |--------|--------|------|------------|
@@ -58,11 +58,11 @@
 | `snu_are_agricultural_economics` | 농업·자원경제학 | 농경제사회학부 다수 | 설문·패널·시계열 |
 | `snu_food_animal_biotech` | 동물생명공학·유전체 | 이창규 외 | SNP칩·RNA-seq |
 
-모든 스키마는 **DataCite 4.5 / Dublin Core / AgMES / AGROVOC** Crosswalk를 포함합니다.
+모든 스키마는 **DataCite 4.5 / Dublin Core / AgMES / AGROVOC** 크로스워크(Crosswalk)를 포함합니다.
 
 ## 데이터베이스
 
-- **Engine**: PostgreSQL (latest stable)
+- **엔진**: PostgreSQL (최신 안정 버전)
 - **핵심 패턴**: `metadata JSONB` 컬럼으로 계층형 메타데이터 저장
 - **마이그레이션**: `db/migrations/` 내 번호 순서 SQL 파일
 
