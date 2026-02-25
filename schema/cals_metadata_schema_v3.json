@@ -1,0 +1,638 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cals.snu.ac.kr/metadata/schema/v3.0",
+
+  "_meta": {
+    "schema_name": "서울대학교 농업생명과학대학 (CALS) 연구 데이터 통합 메타데이터 스키마",
+    "version": "3.0.0",
+    "created_at": "2026-02-25",
+    "status": "draft",
+    "changelog": "v3.0 — 과잉 설계 제거. MRO 체계 재정비. domain_extension 10개 강제 블록 → domain_metadata 자유형으로 전환. 333개 필드 → 45개로 압축.",
+    "design_principles": [
+      "DataCite 4.5 필수 필드 80% 이상 준수",
+      "CALS 전용 필드는 '바꾸지 않으면 안 되는 핵심'만 유지",
+      "도메인 확장은 core 스키마에 내장하지 않고 snu_cals_labs.json 참조로 분리",
+      "MRO(Mandatory/Recommended/Optional) 체계 전면 적용"
+    ],
+    "obligation_legend": {
+      "M": "Mandatory — 없으면 등록 불가. DataCite 필수 필드 + CALS 최소 식별 정보.",
+      "R": "Recommended — 검색 품질·인용 신뢰도에 직결. 입력 강력 권장.",
+      "O": "Optional — 연구실별 상세 정보. UI에서 기본 숨김, 전문 연구자용."
+    },
+    "field_count": {
+      "mandatory": 7,
+      "recommended": 7,
+      "optional": 3,
+      "cals_research_sub": 6,
+      "total_explicit": 23,
+      "note": "v2.0 333개 대비 93% 감소"
+    },
+    "references": {
+      "datacite_4_5": "standards/datacite_4_5.json",
+      "dublin_core": "standards/dublin_core.json",
+      "lab_schemas": "standards/snu_cals_labs.json",
+      "domain_field_spec": "standards/snu_cals_labs.json → labs[].data_schema.domain_specific_fields"
+    }
+  },
+
+  "title": "CALS 연구 데이터 메타데이터 스키마 v3.0",
+  "type": "object",
+  "required": ["identifier", "title", "creator", "publisher", "publication_year", "resource_type", "cals_research"],
+
+  "properties": {
+
+    "identifier": {
+      "_obligation": "M",
+      "_datacite": "Property 1",
+      "_dc": "dc:identifier",
+      "description": "데이터셋 고유 식별자. DOI 발급 전에는 CALS 내부 ID 사용.",
+      "type": "object",
+      "required": ["value", "type"],
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "식별자 값",
+          "examples": ["10.xxxx/cals.2026.laba.001", "CALS-2026-LABA-001"]
+        },
+        "type": {
+          "type": "string",
+          "enum": ["DOI", "Handle", "URL", "CALS-Internal"],
+          "default": "CALS-Internal",
+          "description": "DOI 발급 전 단계에서는 CALS-Internal 사용. DataCite 등록 시 DOI로 업그레이드."
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "title": {
+      "_obligation": "M",
+      "_datacite": "Property 3",
+      "_dc": "dc:title",
+      "description": "데이터셋 주 제목. 한국어 또는 영어. 내용·재료·방법이 드러나도록 구체적으로 작성.",
+      "type": "string",
+      "minLength": 5,
+      "examples": [
+        "CALS 브로일러 밀도 추정 AI 이미지 데이터셋 (2026)",
+        "Broiler Density Estimation AI Image Dataset — SNU CALS LABA (2026)"
+      ]
+    },
+
+    "creator": {
+      "_obligation": "M",
+      "_datacite": "Property 2",
+      "_dc": "dc:creator",
+      "description": "데이터 생성 주 책임자. 논문 교신저자 또는 연구책임자를 첫 번째 항목으로.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "성명 (한국어 또는 영문 Last, First 형식)",
+            "examples": ["김태형", "Kim, Taehyung"]
+          },
+          "orcid": {
+            "type": "string",
+            "pattern": "^https://orcid\\.org/\\d{4}-\\d{4}-\\d{4}-\\d{3}[\\dX]$",
+            "description": "ORCID URI. 동명이인 구분 및 국제 식별자로 강력 권장."
+          },
+          "affiliation": {
+            "type": "string",
+            "description": "소속 기관명",
+            "default": "서울대학교 농업생명과학대학"
+          },
+          "ror": {
+            "type": "string",
+            "description": "기관 ROR ID",
+            "examples": ["https://ror.org/04h9pn542"]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+
+    "publisher": {
+      "_obligation": "M",
+      "_datacite": "Property 4",
+      "description": "데이터셋 발행 기관. CALS Dataverse의 경우 고정값.",
+      "type": "string",
+      "default": "서울대학교 농업생명과학대학 CALS Dataverse",
+      "examples": ["서울대학교 농업생명과학대학 CALS Dataverse"]
+    },
+
+    "publication_year": {
+      "_obligation": "M",
+      "_datacite": "Property 5",
+      "description": "데이터셋 공개 연도 (YYYY). 미공개 시 데이터 수집 완료 연도.",
+      "type": "integer",
+      "minimum": 2000,
+      "maximum": 2099,
+      "examples": [2026]
+    },
+
+    "resource_type": {
+      "_obligation": "M",
+      "_datacite": "Property 10",
+      "description": "리소스 유형.",
+      "type": "string",
+      "enum": ["Dataset", "Software", "Image", "Model", "Collection", "Other"],
+      "default": "Dataset"
+    },
+
+    "cals_research": {
+      "_obligation": "M",
+      "description": "CALS 연구 특화 블록. 국제 표준이 담지 못하는 '어떻게 만들어졌는가' 정보. department와 research_domain만 필수.",
+      "type": "object",
+      "required": ["department", "research_domain"],
+      "properties": {
+
+        "department": {
+          "_obligation": "M (within cals_research)",
+          "description": "소속 학부·전공. Harvard Dataverse의 Collection 계층 1단계.",
+          "type": "string",
+          "enum": [
+            "바이오시스템·소재학부 — 바이오시스템공학전공",
+            "바이오시스템·소재학부 — 바이오소재공학전공",
+            "식물생산과학부 — 작물생명과학전공",
+            "식물생산과학부 — 원예생명공학전공",
+            "식물생산과학부 — 산업인력개발학전공",
+            "산림과학부 — 산림환경학전공",
+            "산림과학부 — 환경재료과학전공",
+            "응용생물화학부 — 식물미생물학전공",
+            "응용생물화학부 — 농생명공학전공",
+            "응용생물화학부 — 조경학전공",
+            "식품·동물생명공학부 — 식품생명공학전공",
+            "식품·동물생명공학부 — 동물생명공학전공",
+            "조경·지역시스템공학부 — 조경학전공",
+            "조경·지역시스템공학부 — 지역시스템공학전공",
+            "농업·자원경제학부"
+          ]
+        },
+
+        "research_domain": {
+          "_obligation": "M (within cals_research)",
+          "description": "연구 도메인 분류. domain_metadata.extension_type 선택의 기준.",
+          "type": "string",
+          "enum": [
+            "agricultural_ai_cv",
+            "precision_agriculture_robotics",
+            "genomics_omics",
+            "controlled_environment_agriculture",
+            "forest_remote_sensing_carbon",
+            "plant_microbiology_biocontrol",
+            "food_safety_microbiology",
+            "hydrology_water_resources",
+            "agricultural_economics_policy",
+            "animal_biotechnology",
+            "smart_farm_iot",
+            "other"
+          ]
+        },
+
+        "lab_id": {
+          "_obligation": "R (within cals_research)",
+          "description": "연구실 고유 ID. snu_cals_labs.json의 lab_id와 연결. Harvard Collection 2단계.",
+          "type": "string",
+          "examples": [
+            "snu_bse_laba",
+            "snu_bse_bicpal",
+            "snu_plant_crop_science",
+            "snu_plant_horticulture",
+            "snu_forest_lidar_carbon",
+            "snu_abc_plant_micro",
+            "snu_food_microbiology_safety",
+            "snu_rse_rural_water_ict",
+            "snu_are_agricultural_economics",
+            "snu_food_animal_biotech"
+          ]
+        },
+
+        "biological_subject": {
+          "_obligation": "R (within cals_research)",
+          "_note": "v2.0에서 crops/livestock/microorganisms/trees 4개 배열 → 1개 통합 배열로 단순화",
+          "description": "연구 대상 생물체 목록. AGROVOC URI로 다국어 정규화 권장.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name"],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "생물체 일반명 (한국어 또는 영어)",
+                "examples": ["딸기", "대두", "육계", "Listeria monocytogenes"]
+              },
+              "subject_type": {
+                "type": "string",
+                "enum": ["crop", "livestock", "microorganism", "tree", "fish", "insect", "other"],
+                "description": "생물체 분류"
+              },
+              "agrovoc_uri": {
+                "type": "string",
+                "format": "uri",
+                "description": "AGROVOC 통제어휘 URI. 한/영 동시 검색의 핵심.",
+                "examples": [
+                  "http://aims.fao.org/aos/agrovoc/c_7394",
+                  "http://aims.fao.org/aos/agrovoc/c_7627"
+                ]
+              },
+              "ncbi_taxon_id": {
+                "type": "integer",
+                "description": "NCBI Taxonomy ID. 미생물·동물 데이터에서 사용.",
+                "examples": [9031, 1313]
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+
+        "experiment_design": {
+          "_obligation": "O (within cals_research)",
+          "description": "실험 설계 핵심 정보. 재현성 확보를 위한 최소 기술.",
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "실험 유형 (자유 기술 또는 controlled vocabulary)",
+              "examples": [
+                "field_experiment",
+                "controlled_environment_experiment",
+                "observational_study",
+                "retrospective_analysis",
+                "simulation_modeling"
+              ]
+            },
+            "design": {
+              "type": "string",
+              "description": "실험 설계법",
+              "examples": ["RCBD", "CRD", "Split-plot", "Factorial", "Survey"]
+            },
+            "replication": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "반복 수 (통계적 신뢰도 판단 기준)"
+            },
+            "duration": {
+              "type": "object",
+              "description": "데이터 수집 기간",
+              "properties": {
+                "start": {"type": "string", "format": "date"},
+                "end": {"type": "string", "format": "date"}
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+
+        "domain_metadata": {
+          "_obligation": "O (within cals_research)",
+          "_note": "v2.0의 10개 강제 블록(114개 필드)을 대체. 구조는 standards/snu_cals_labs.json 참조.",
+          "description": "연구 도메인별 자유 확장 필드. extension_type으로 도메인을 식별하고, fields에 연구실별 커스텀 정보를 자유 형식으로 기록한다. 필드 명세는 standards/snu_cals_labs.json의 해당 lab_id를 참조.",
+          "type": "object",
+          "required": ["extension_type"],
+          "properties": {
+            "extension_type": {
+              "type": "string",
+              "enum": [
+                "imaging_ai",
+                "precision_agriculture",
+                "genomics_omics",
+                "controlled_environment",
+                "forest_remote_sensing",
+                "plant_microbiology",
+                "food_safety_microbiology",
+                "hydrology_gis",
+                "agri_economics",
+                "smart_farm_iot",
+                "other"
+              ],
+              "description": "도메인 유형 식별자. DB 인덱스 생성 대상. UI 동적 폼 렌더링 기준."
+            },
+            "fields": {
+              "type": "object",
+              "additionalProperties": true,
+              "description": "연구실별 자유 형식 필드. 형식 제약 없음. 상세 명세: standards/snu_cals_labs.json"
+            }
+          },
+          "additionalProperties": false
+        }
+
+      },
+      "additionalProperties": false
+    },
+
+    "description": {
+      "_obligation": "R",
+      "_datacite": "Property 17",
+      "_dc": "dc:description",
+      "description": "데이터셋 설명 (초록). 수집 배경, 방법, 활용 가능성을 포함. 최소 100자 권장.",
+      "type": "string",
+      "minLength": 50
+    },
+
+    "subject": {
+      "_obligation": "R",
+      "_datacite": "Property 6",
+      "_dc": "dc:subject",
+      "description": "주제어 목록. AGROVOC URI 포함 시 국제 검색 엔진(BASE, OpenAIRE) 자동 인덱싱.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["term"],
+        "properties": {
+          "term": {
+            "type": "string",
+            "description": "주제어 (한국어 또는 영어)"
+          },
+          "agrovoc_uri": {
+            "type": "string",
+            "format": "uri",
+            "description": "AGROVOC URI. 미입력 시 한/영 통합 검색 불가.",
+            "examples": ["http://aims.fao.org/aos/agrovoc/c_7394"]
+          },
+          "vocabulary": {
+            "type": "string",
+            "description": "통제어휘 출처",
+            "default": "AGROVOC",
+            "examples": ["AGROVOC", "MeSH", "NAL Thesaurus"]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+
+    "rights": {
+      "_obligation": "R",
+      "_datacite": "Property 16",
+      "_dc": "dc:rights",
+      "description": "라이선스 및 접근 조건.",
+      "type": "object",
+      "required": ["access_type"],
+      "properties": {
+        "license": {
+          "type": "string",
+          "enum": ["CC BY 4.0", "CC BY-NC 4.0", "CC BY-SA 4.0", "CC0 1.0", "All Rights Reserved", "Other"],
+          "default": "CC BY 4.0"
+        },
+        "license_uri": {
+          "type": "string",
+          "format": "uri",
+          "examples": ["https://creativecommons.org/licenses/by/4.0/"]
+        },
+        "access_type": {
+          "type": "string",
+          "enum": ["open", "restricted", "embargo"],
+          "description": "open: 즉시 다운로드 / restricted: 신청 필요 / embargo: 기간 유보"
+        },
+        "embargo_end_date": {
+          "type": "string",
+          "format": "date",
+          "description": "access_type이 embargo일 때 필수. 이 날짜 이후 자동 open."
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "date_collected": {
+      "_obligation": "R",
+      "_datacite": "Property 8 (dateType: Collected)",
+      "description": "데이터 수집 기간. 재현성 및 시계열 검색의 핵심.",
+      "type": "object",
+      "required": ["start"],
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date",
+          "description": "수집 시작일 (ISO 8601: YYYY-MM-DD)"
+        },
+        "end": {
+          "type": "string",
+          "format": "date",
+          "description": "수집 종료일. 단일 시점 수집 시 start와 동일."
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "geo_location": {
+      "_obligation": "R",
+      "_datacite": "Property 18",
+      "description": "연구 수행 위치. 포장 실험, 유역, 산림 데이터에서 필수적.",
+      "type": "object",
+      "properties": {
+        "site_name": {
+          "type": "string",
+          "description": "장소 명칭",
+          "examples": ["서울대학교 농업생명과학대학 실험 포장", "영산강 유역", "광릉 국립수목원"]
+        },
+        "admin_region": {
+          "type": "string",
+          "description": "행정구역 (시/도 — 시/군/구)",
+          "examples": ["경기도 — 수원시", "전라남도 — 나주시"]
+        },
+        "latitude": {"type": "number", "minimum": 33.0, "maximum": 39.0},
+        "longitude": {"type": "number", "minimum": 124.0, "maximum": 132.0},
+        "country": {"type": "string", "default": "KR", "description": "ISO 3166-1 alpha-2"}
+      },
+      "additionalProperties": false
+    },
+
+    "funding_reference": {
+      "_obligation": "R",
+      "_datacite": "Property 19",
+      "description": "연구 과제 정보. 연구비 추적 및 기관 보고 의무.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["funder_name"],
+        "properties": {
+          "funder_name": {
+            "type": "string",
+            "examples": ["농림축산식품부", "한국연구재단 (NRF)", "농촌진흥청 (RDA)", "정보통신기획평가원 (IITP)"]
+          },
+          "award_number": {
+            "type": "string",
+            "description": "과제 번호",
+            "examples": ["RS-2024-00123456"]
+          },
+          "award_title": {
+            "type": "string",
+            "description": "과제명 (선택)"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+
+    "related_identifier": {
+      "_obligation": "R",
+      "_datacite": "Property 12",
+      "description": "연관 자원 식별자. 특히 이 데이터를 기반으로 출판된 논문 DOI를 반드시 연결.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["value", "relation_type"],
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "DOI 또는 URL",
+            "examples": ["10.1016/j.compag.2024.004368"]
+          },
+          "identifier_type": {
+            "type": "string",
+            "enum": ["DOI", "URL", "arXiv", "PMID"],
+            "default": "DOI"
+          },
+          "relation_type": {
+            "type": "string",
+            "enum": [
+              "IsSupplementTo",
+              "IsSupplementedBy",
+              "IsDerivedFrom",
+              "IsSourceOf",
+              "IsPartOf",
+              "HasPart",
+              "References",
+              "IsReferencedBy"
+            ],
+            "description": "논문에 데이터를 첨부하는 경우: IsSupplementTo"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+
+    "contributor": {
+      "_obligation": "O",
+      "_datacite": "Property 7",
+      "description": "데이터 수집·처리에 기여한 연구원 (creator 외).",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": {"type": "string"},
+          "role": {
+            "type": "string",
+            "enum": [
+              "DataCollector", "DataCurator", "DataManager",
+              "Researcher", "Supervisor", "Other"
+            ]
+          },
+          "orcid": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+
+    "language": {
+      "_obligation": "O",
+      "_datacite": "Property 9",
+      "description": "데이터셋 주 언어 (IETF BCP 47).",
+      "type": "string",
+      "enum": ["ko", "en", "ko, en"],
+      "default": "ko"
+    },
+
+    "version": {
+      "_obligation": "O",
+      "_datacite": "Property 15",
+      "description": "데이터셋 버전. 갱신·수정 시 증가.",
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+(\\.\\d+)?$",
+      "examples": ["1.0", "1.1", "2.0"]
+    }
+
+  },
+
+  "additionalProperties": false,
+
+  "examples": [
+    {
+      "_comment": "예시 1: LABA 김태형 교수 — AI 학습 데이터셋 (domain_metadata.fields 자유형 활용)",
+      "identifier": {"value": "CALS-2026-LABA-001", "type": "CALS-Internal"},
+      "title": "CALS 브로일러 밀도 추정 Vision AI 이미지 데이터셋 (2026)",
+      "creator": [{"name": "김태형", "affiliation": "서울대학교 농업생명과학대학", "orcid": "https://orcid.org/0000-0000-0000-0001"}],
+      "publisher": "서울대학교 농업생명과학대학 CALS Dataverse",
+      "publication_year": 2026,
+      "resource_type": "Dataset",
+      "cals_research": {
+        "department": "바이오시스템·소재학부 — 바이오시스템공학전공",
+        "research_domain": "agricultural_ai_cv",
+        "lab_id": "snu_bse_laba",
+        "biological_subject": [
+          {"name": "육계", "subject_type": "livestock", "agrovoc_uri": "http://aims.fao.org/aos/agrovoc/c_9069", "ncbi_taxon_id": 9031}
+        ],
+        "experiment_design": {
+          "type": "observational_study",
+          "replication": 1,
+          "duration": {"start": "2025-03-01", "end": "2025-12-31"}
+        },
+        "domain_metadata": {
+          "extension_type": "imaging_ai",
+          "fields": {
+            "camera_model": "Basler acA2040-25gc",
+            "sensor_type": "RGB",
+            "resolution": "2048x2048",
+            "annotation_type": "bounding_box",
+            "annotation_format": "COCO JSON",
+            "n_annotators": 3,
+            "inter_annotator_agreement": {"metric": "Cohen's Kappa", "value": 0.89},
+            "total_images": 5420,
+            "total_instances": 47832,
+            "n_categories": 3,
+            "class_distribution": {"standing": 18240, "lying": 22415, "crowded": 7177},
+            "dataset_split": {"train": 0.70, "val": 0.15, "test": 0.15},
+            "data_imbalance_handling": "weighted random sampling"
+          }
+        }
+      },
+      "description": "서울대학교 LABA 연구실에서 구축한 브로일러(육계) 밀도 추정 AI 학습용 이미지 데이터셋. 축사 CCTV 영상 기반 5,420장 이미지, 47,832개 바운딩박스 어노테이션. YOLOv8 기반 밀도 추정 모델 학습에 사용.",
+      "subject": [
+        {"term": "브로일러", "agrovoc_uri": "http://aims.fao.org/aos/agrovoc/c_9069", "vocabulary": "AGROVOC"},
+        {"term": "컴퓨터비전", "vocabulary": "NAL Thesaurus"},
+        {"term": "정밀축산"}
+      ],
+      "rights": {"license": "CC BY 4.0", "access_type": "restricted"},
+      "date_collected": {"start": "2025-03-01", "end": "2025-12-31"},
+      "related_identifier": [{"value": "10.1016/j.compag.2024.004368", "identifier_type": "DOI", "relation_type": "IsSupplementTo"}],
+      "funding_reference": [{"funder_name": "농림축산식품부", "award_number": "RS-2025-AG00001"}]
+    },
+    {
+      "_comment": "예시 2: 전창후 교수 — 시설원예 생육 데이터 (minimal M+R 입력 예시)",
+      "identifier": {"value": "CALS-2026-HORT-012", "type": "CALS-Internal"},
+      "title": "딸기 묘 생산 청색광 보광 처리별 생육 및 수확 후 품질 데이터셋",
+      "creator": [{"name": "전창후", "affiliation": "서울대학교 농업생명과학대학"}],
+      "publisher": "서울대학교 농업생명과학대학 CALS Dataverse",
+      "publication_year": 2026,
+      "resource_type": "Dataset",
+      "cals_research": {
+        "department": "식물생산과학부 — 원예생명공학전공",
+        "research_domain": "controlled_environment_agriculture",
+        "lab_id": "snu_plant_horticulture",
+        "biological_subject": [
+          {"name": "딸기", "subject_type": "crop", "agrovoc_uri": "http://aims.fao.org/aos/agrovoc/c_7394"}
+        ],
+        "experiment_design": {"type": "controlled_environment_experiment", "design": "RCBD", "replication": 3},
+        "domain_metadata": {
+          "extension_type": "controlled_environment",
+          "fields": {
+            "facility": "식물공장",
+            "ppfd_umol_m2_s": 200,
+            "light_spectrum_peak_nm": 450,
+            "photoperiod_h": 16,
+            "temperature_day_C": 22,
+            "nutrient_solution_EC": 1.2
+          }
+        }
+      },
+      "description": "청색 LED 보광 처리가 딸기 묘 생산 효율 및 수확 후 품질에 미치는 영향 실험 데이터.",
+      "subject": [{"term": "딸기", "agrovoc_uri": "http://aims.fao.org/aos/agrovoc/c_7394"}, {"term": "LED 광질"}],
+      "rights": {"license": "CC BY 4.0", "access_type": "open"},
+      "date_collected": {"start": "2025-09-01", "end": "2026-01-31"},
+      "related_identifier": [{"value": "10.1007/s13580-022-00493-9", "identifier_type": "DOI", "relation_type": "IsSupplementTo"}]
+    }
+  ]
+}
