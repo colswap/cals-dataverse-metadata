@@ -1,0 +1,269 @@
+{
+  "_meta": {
+    "standard_name": "Harvard Dataverse Metadata Blocks",
+    "version": "Dataverse 6.x",
+    "source": {
+      "institution": "Harvard University IQSS (Institute for Quantitative Social Science)",
+      "url": "https://guides.dataverse.org/en/latest/user/appendix.html",
+      "tsv_source": "https://github.com/IQSS/dataverse/blob/master/scripts/api/data/metadatablocks/citation.tsv",
+      "retrieved_at": "2026-02-24",
+      "note": "TSV 직접 파싱 보류(pending_fao.md 참조). 가이드 문서 스니펫 기반으로 작성."
+    },
+    "standards_compliance": ["DDI Lite", "DDI 2.5 Codebook", "DataCite 4.5", "Dublin Core DCMI Terms"]
+  },
+
+  "blocks": {
+    "citation": {
+      "label": "Citation Metadata",
+      "standards": ["DDI Lite", "DDI 2.5 Codebook", "DataCite 4.5", "Dublin Core DCMI Terms"],
+      "fields": {
+        "title": {
+          "obligation": "mandatory",
+          "type": "text",
+          "description": "데이터셋의 주 제목",
+          "maps_to": {"ddi": "titl", "datacite": "Title", "dc": "title"}
+        },
+        "subtitle": {
+          "obligation": "optional",
+          "type": "text",
+          "description": "주 제목을 보완하거나 제한을 명시하는 부제"
+        },
+        "alternativeTitle": {
+          "obligation": "optional",
+          "type": "text",
+          "description": "일반적으로 사용되는 약칭 또는 대체 제목"
+        },
+        "alternativeURL": {
+          "obligation": "optional",
+          "type": "url",
+          "description": "데이터셋에 접근할 수 있는 다른 URL"
+        },
+        "author": {
+          "obligation": "mandatory",
+          "type": "compound",
+          "description": "데이터셋 생성에 책임이 있는 인물 또는 기관",
+          "subfields": {
+            "authorName": {"type": "text", "description": "성명 (Last, First 형식 권장)"},
+            "authorAffiliation": {"type": "text", "description": "소속 기관명"},
+            "authorIdentifierScheme": {
+              "type": "controlledVocabulary",
+              "allowedValues": ["ORCID", "ISNI", "LCNA", "VIAF", "GND", "DAI", "ResearcherID", "ScopusID"],
+              "description": "식별자 체계"
+            },
+            "authorIdentifier": {"type": "text", "description": "저자 식별자 값"}
+          }
+        },
+        "datasetContact": {
+          "obligation": "mandatory",
+          "type": "compound",
+          "description": "데이터셋 관련 문의 담당자",
+          "subfields": {
+            "datasetContactName": {"type": "text"},
+            "datasetContactAffiliation": {"type": "text"},
+            "datasetContactEmail": {"type": "text"}
+          }
+        },
+        "dsDescription": {
+          "obligation": "mandatory",
+          "type": "compound",
+          "description": "데이터셋 설명",
+          "subfields": {
+            "dsDescriptionValue": {"type": "textbox", "description": "설명 본문"},
+            "dsDescriptionDate": {"type": "date", "description": "설명 작성일 (YYYY-MM-DD)"}
+          }
+        },
+        "subject": {
+          "obligation": "mandatory",
+          "type": "controlledVocabulary",
+          "description": "데이터셋과 관련된 학문 분야",
+          "allowedValues": [
+            "Agricultural Sciences", "Arts and Humanities", "Astronomy and Astrophysics",
+            "Business and Management", "Chemistry", "Computer and Information Science",
+            "Earth and Environmental Sciences", "Engineering", "Law",
+            "Mathematical Sciences", "Medicine, Health and Life Sciences",
+            "Physics", "Social Sciences", "Other"
+          ]
+        },
+        "keyword": {
+          "obligation": "optional",
+          "type": "compound",
+          "description": "주요 측면을 기술하는 키워드",
+          "subfields": {
+            "keywordValue": {"type": "text"},
+            "keywordVocabulary": {"type": "text", "description": "통제어휘 출처명 (예: AGROVOC)"},
+            "keywordVocabularyURI": {"type": "url"}
+          }
+        },
+        "topicClassification": {
+          "obligation": "optional",
+          "type": "compound",
+          "subfields": {
+            "topicClassValue": {"type": "text"},
+            "topicClassVocab": {"type": "text"},
+            "topicClassVocabURI": {"type": "url"}
+          }
+        },
+        "relatedPublication": {
+          "obligation": "optional",
+          "type": "compound",
+          "description": "데이터를 사용한 논문 또는 보고서",
+          "subfields": {
+            "publicationCitation": {"type": "text"},
+            "publicationIDType": {
+              "type": "controlledVocabulary",
+              "allowedValues": ["ark", "arXiv", "bibcode", "doi", "ean13", "eissn", "handle",
+                                "isbn", "issn", "istc", "lissn", "lsid", "pmid", "purl",
+                                "upc", "url", "urn"]
+            },
+            "publicationIDNumber": {"type": "text"},
+            "publicationURL": {"type": "url"}
+          }
+        },
+        "language": {
+          "obligation": "optional",
+          "type": "controlledVocabulary",
+          "description": "데이터셋 파일이 작성된 언어",
+          "vocabulary_standard": "ISO 639-1",
+          "example_values": ["Korean", "English", "Chinese", "Japanese"]
+        },
+        "producer": {
+          "obligation": "optional",
+          "type": "compound",
+          "description": "데이터셋 제작의 재정·행정 관리 주체",
+          "subfields": {
+            "producerName": {"type": "text"},
+            "producerAffiliation": {"type": "text"},
+            "producerAbbreviation": {"type": "text"},
+            "producerURL": {"type": "url"},
+            "producerLogoURL": {"type": "url"}
+          }
+        },
+        "distributionDate": {
+          "obligation": "optional",
+          "type": "date",
+          "description": "배포 날짜 (YYYY-MM-DD)"
+        },
+        "depositor": {
+          "obligation": "optional",
+          "type": "text",
+          "description": "데이터셋을 기탁한 사람"
+        },
+        "dateOfDeposit": {
+          "obligation": "optional",
+          "type": "date",
+          "description": "기탁일 (YYYY-MM-DD)"
+        },
+        "timePeriodCovered": {
+          "obligation": "optional",
+          "type": "compound",
+          "description": "데이터가 커버하는 시간 범위",
+          "subfields": {
+            "timePeriodCoveredStart": {"type": "date"},
+            "timePeriodCoveredEnd": {"type": "date"}
+          }
+        },
+        "dateOfCollection": {
+          "obligation": "optional",
+          "type": "compound",
+          "subfields": {
+            "dateOfCollectionStart": {"type": "date"},
+            "dateOfCollectionEnd": {"type": "date"}
+          }
+        },
+        "kindOfData": {
+          "obligation": "optional",
+          "type": "text",
+          "description": "데이터 유형 (예: survey data, time series, sensor data)"
+        },
+        "dataSources": {
+          "obligation": "optional",
+          "type": "textbox",
+          "description": "데이터 출처"
+        },
+        "originOfSources": {
+          "obligation": "optional",
+          "type": "textbox"
+        },
+        "characteristicOfSources": {
+          "obligation": "optional",
+          "type": "textbox"
+        },
+        "accessToSources": {
+          "obligation": "optional",
+          "type": "textbox"
+        }
+      }
+    },
+
+    "geospatial": {
+      "label": "Geospatial Metadata",
+      "standards": ["DDI Lite", "DDI 2.5 Codebook", "DataCite 4.5", "Dublin Core"],
+      "fields": {
+        "geographicCoverage": {
+          "obligation": "optional",
+          "type": "compound",
+          "subfields": {
+            "country": {
+              "type": "controlledVocabulary",
+              "vocabulary_standard": "ISO 3166-1",
+              "description": "국가명"
+            },
+            "state": {"type": "text", "description": "시도"},
+            "city": {"type": "text", "description": "시군구"},
+            "otherGeographicCoverage": {"type": "text"}
+          }
+        },
+        "geographicBoundingBox": {
+          "obligation": "optional",
+          "type": "compound",
+          "subfields": {
+            "westLongitude": {"type": "number"},
+            "eastLongitude": {"type": "number"},
+            "northLatitude": {"type": "number"},
+            "southLatitude": {"type": "number"}
+          }
+        }
+      }
+    },
+
+    "lifesciences": {
+      "label": "Life Sciences Metadata",
+      "standards": ["ISA-Tab Specification"],
+      "note": "농업생명과학 데이터에 직접 적용 가능한 블록",
+      "controlled_vocabularies": ["OBI Ontology", "NCBI Taxonomy"],
+      "fields": {
+        "studyDesignType": {
+          "obligation": "optional",
+          "type": "controlledVocabulary",
+          "description": "연구 설계 유형",
+          "vocabulary": "OBI"
+        },
+        "studyFactorType": {
+          "obligation": "optional",
+          "type": "text",
+          "description": "연구 인자 유형"
+        },
+        "studyAssayOrganism": {
+          "obligation": "optional",
+          "type": "controlledVocabulary",
+          "description": "생물종 (NCBI Taxonomy)",
+          "vocabulary": "NCBI Taxonomy"
+        },
+        "studyAssayMeasurementType": {
+          "obligation": "optional",
+          "type": "controlledVocabulary",
+          "vocabulary": "OBI"
+        },
+        "studyAssayTechnologyType": {
+          "obligation": "optional",
+          "type": "controlledVocabulary",
+          "vocabulary": "OBI"
+        },
+        "studyAssayTechnologyPlatform": {
+          "obligation": "optional",
+          "type": "text"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,148 @@
+{
+  "_meta": {
+    "standard_name": "Dublin Core Metadata Initiative Terms (DCMI Terms)",
+    "version": "DCMI Recommendation 2020-01-20",
+    "source": {
+      "institution": "Dublin Core Metadata Initiative (DCMI)",
+      "url": "https://www.dublincore.org/specifications/dublin-core/dcmi-terms/",
+      "namespace_uri": "http://purl.org/dc/terms/",
+      "legacy_namespace": "http://purl.org/dc/elements/1.1/",
+      "retrieved_at": "2026-02-24"
+    },
+    "note": "농업생명과학 메타데이터 표준(AGRIS AP, AgMES)의 기반 표준. 15개 핵심 요소 + DCMI Terms 확장."
+  },
+
+  "core_elements": {
+    "dc:title": {
+      "uri": "http://purl.org/dc/elements/1.1/title",
+      "label": "Title",
+      "definition": "자원에 부여된 이름",
+      "obligation_in_agris": "mandatory",
+      "obligation_in_datacite": "mandatory"
+    },
+    "dc:creator": {
+      "uri": "http://purl.org/dc/elements/1.1/creator",
+      "label": "Creator",
+      "definition": "자원 내용의 생성에 주된 책임이 있는 주체",
+      "obligation_in_agris": "mandatory"
+    },
+    "dc:subject": {
+      "uri": "http://purl.org/dc/elements/1.1/subject",
+      "label": "Subject",
+      "definition": "자원 내용의 주제. AGROVOC 등 통제어휘 사용 권장.",
+      "controlled_vocabulary_recommended": "AGROVOC (https://agrovoc.fao.org/)"
+    },
+    "dc:description": {
+      "uri": "http://purl.org/dc/elements/1.1/description",
+      "label": "Description",
+      "definition": "자원 내용에 대한 설명 (초록, 목차, 그래픽 표현 포함)",
+      "refinements": ["abstract", "tableOfContents"]
+    },
+    "dc:publisher": {
+      "uri": "http://purl.org/dc/elements/1.1/publisher",
+      "label": "Publisher",
+      "definition": "자원을 이용 가능하게 만드는 역할을 한 주체",
+      "obligation_in_agris": "mandatory"
+    },
+    "dc:contributor": {
+      "uri": "http://purl.org/dc/elements/1.1/contributor",
+      "label": "Contributor",
+      "definition": "자원 내용에 기여한 주체 (creator 외)"
+    },
+    "dc:date": {
+      "uri": "http://purl.org/dc/elements/1.1/date",
+      "label": "Date",
+      "definition": "자원의 생명주기에서 사건과 연관된 날짜",
+      "format": "ISO 8601 (YYYY-MM-DD)",
+      "refinements": ["created", "modified", "issued", "available", "valid", "dateCopyrighted", "dateAccepted", "dateSubmitted"]
+    },
+    "dc:type": {
+      "uri": "http://purl.org/dc/elements/1.1/type",
+      "label": "Type",
+      "definition": "자원 내용의 성격 또는 장르",
+      "controlled_vocabulary": "DCMI Type Vocabulary",
+      "allowedValues": ["Collection", "Dataset", "Event", "Image", "InteractiveResource",
+                        "MovingImage", "PhysicalObject", "Service", "Software",
+                        "Sound", "StillImage", "Text"]
+    },
+    "dc:format": {
+      "uri": "http://purl.org/dc/elements/1.1/format",
+      "label": "Format",
+      "definition": "자원의 파일 형식, 물리적 매체 또는 크기",
+      "controlled_vocabulary": "IANA MIME Types",
+      "refinements": ["medium", "extent"]
+    },
+    "dc:identifier": {
+      "uri": "http://purl.org/dc/elements/1.1/identifier",
+      "label": "Identifier",
+      "definition": "주어진 컨텍스트에서 자원을 유일하게 식별하는 참조",
+      "encoding_schemes": ["URI", "DOI", "ISBN", "ISSN", "Handle"]
+    },
+    "dc:source": {
+      "uri": "http://purl.org/dc/elements/1.1/source",
+      "label": "Source",
+      "definition": "현재 자원이 파생된 관련 자원에 대한 참조"
+    },
+    "dc:language": {
+      "uri": "http://purl.org/dc/elements/1.1/language",
+      "label": "Language",
+      "definition": "자원의 지적 내용 언어",
+      "encoding_scheme": "RFC 4646 / ISO 639-1"
+    },
+    "dc:relation": {
+      "uri": "http://purl.org/dc/elements/1.1/relation",
+      "label": "Relation",
+      "definition": "관련 자원에 대한 참조",
+      "refinements": ["isVersionOf", "hasVersion", "isReplacedBy", "replaces",
+                      "isRequiredBy", "requires", "isPartOf", "hasPart",
+                      "isReferencedBy", "references", "isFormatOf", "hasFormat",
+                      "conformsTo"]
+    },
+    "dc:coverage": {
+      "uri": "http://purl.org/dc/elements/1.1/coverage",
+      "label": "Coverage",
+      "definition": "자원 내용의 범위 (공간적 위치, 시간적 기간, 관할권 포함)",
+      "refinements": ["spatial", "temporal"]
+    },
+    "dc:rights": {
+      "uri": "http://purl.org/dc/elements/1.1/rights",
+      "label": "Rights",
+      "definition": "자원에 대한 권리 관련 정보",
+      "refinements": ["license", "accessRights"]
+    }
+  },
+
+  "dcterms_extensions": {
+    "dcterms:abstract": {
+      "uri": "http://purl.org/dc/terms/abstract",
+      "label": "Abstract",
+      "definition": "자원에 대한 요약"
+    },
+    "dcterms:spatial": {
+      "uri": "http://purl.org/dc/terms/spatial",
+      "label": "Spatial Coverage",
+      "definition": "자원 내용의 공간적 특성"
+    },
+    "dcterms:temporal": {
+      "uri": "http://purl.org/dc/terms/temporal",
+      "label": "Temporal Coverage",
+      "definition": "자원 내용의 시간적 특성"
+    },
+    "dcterms:license": {
+      "uri": "http://purl.org/dc/terms/license",
+      "label": "License",
+      "definition": "자원 이용에 관한 법적 문서",
+      "example": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    "dcterms:accrualMethod": {
+      "uri": "http://purl.org/dc/terms/accrualMethod",
+      "label": "Accrual Method",
+      "definition": "컬렉션에 항목이 추가되는 방법"
+    },
+    "dcterms:provenance": {
+      "uri": "http://purl.org/dc/terms/provenance",
+      "label": "Provenance",
+      "definition": "자원의 소유권 및 보관 이력"
+    }
+  }
+}

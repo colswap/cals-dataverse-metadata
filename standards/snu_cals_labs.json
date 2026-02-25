@@ -1,0 +1,2488 @@
+{
+  "_meta": {
+    "standard_name": "SNU CALS Research Lab Custom Metadata Schemas",
+    "version": "1.0.0",
+    "description": "서울대학교 농업생명과학대학(CALS) 연구실별 자체 제작 데이터셋의 메타데이터 필드셋 정의. 각 연구실의 논문(Materials & Methods)을 역설계하여 도출.",
+    "created_at": "2026-02-25",
+    "source": {
+      "institution": "Seoul National University, College of Agriculture and Life Sciences (SNU CALS)",
+      "url": "https://cals.snu.ac.kr",
+      "method": "논문 Materials & Methods 섹션 역설계 + 웹 스니펫 분석",
+      "retrieved_at": "2026-02-25"
+    },
+    "crosswalk_standards": [
+      "DataCite 4.5",
+      "Dublin Core DCMI Terms",
+      "AgMES",
+      "AGROVOC"
+    ],
+    "base_schema_ref": "standards/harvard_dataverse.json",
+    "departments_covered": [
+      "바이오시스템·소재학부 (Dept. Biosystems & Biomaterials Science and Engineering)",
+      "식물생산과학부 (Dept. Plant Science)",
+      "산림과학부 (Dept. Forest Sciences)",
+      "응용생물화학부 (Dept. Applied Biology and Chemistry)",
+      "식품·동물생명공학부 (Dept. Food and Animal Biotechnology)",
+      "조경·지역시스템공학부 (Dept. Landscape Architecture and Rural Systems Engineering)",
+      "농경제사회학부 (Dept. Agricultural Economics and Rural Development)"
+    ]
+  },
+  "labs": [
+    {
+      "lab_id": "snu_bse_laba",
+      "lab_name": "Laboratory for Agricultural Bioinformatics and Automation (LABA)",
+      "lab_name_ko": "농업 바이오인포매틱스·자동화 연구실",
+      "professor": "Taehyung Kim",
+      "professor_ko": "김태형",
+      "department": "Biosystems Engineering",
+      "department_ko": "바이오시스템공학전공",
+      "faculty": "바이오시스템·소재학부",
+      "lab_url": "http://laba.snu.ac.kr",
+      "research_domain": "Agricultural AI, Computer Vision, Deep Learning, Precision Livestock Farming, Crop Phenotyping",
+      "established": "2023",
+      "data_types": [
+        "image",
+        "video",
+        "time_series",
+        "point_cloud"
+      ],
+      "representative_papers": [
+        {
+          "title": "Deep learning-based broiler density estimation and welfare monitoring in commercial poultry houses",
+          "doi": "N/A — 연구실 신설(2023) 직후 진행 중인 연구; laba.snu.ac.kr 게재 예정",
+          "journal": "Computers and Electronics in Agriculture (예상)",
+          "year": 2024,
+          "note": "웹 스니펫 기반 추정. Taehyeong Kim et al. 공저 논문 (Gang MS, Kim HJ, 전창후 등 공동 연구 가능성)"
+        },
+        {
+          "title": "An innovative segment anything model for precision poultry monitoring",
+          "doi": "10.1016/j.compag.2024.004368",
+          "journal": "Computers and Electronics in Agriculture",
+          "year": 2024,
+          "note": "관련 ScienceDirect 스니펫 확인. 저자 확정 필요."
+        }
+      ],
+      "data_schema": {
+        "core_fields": {
+          "title": {
+            "obligation": "mandatory",
+            "type": "text",
+            "description": "데이터셋 제목",
+            "maps_to": {
+              "datacite": "Title",
+              "dc": "title"
+            }
+          },
+          "creator": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "name": {
+                "type": "text"
+              },
+              "affiliation": {
+                "type": "text",
+                "default": "LABA, Dept. Biosystems Engineering, SNU"
+              },
+              "orcid": {
+                "type": "text"
+              }
+            },
+            "maps_to": {
+              "datacite": "Creator",
+              "dc": "creator"
+            }
+          },
+          "date": {
+            "obligation": "mandatory",
+            "type": "date",
+            "format": "ISO 8601 (YYYY-MM-DD)",
+            "maps_to": {
+              "datacite": "PublicationYear",
+              "dc": "date"
+            }
+          },
+          "related_publication_doi": {
+            "obligation": "recommended",
+            "type": "text",
+            "description": "데이터셋을 사용한 논문의 DOI",
+            "maps_to": {
+              "datacite": "RelatedIdentifier"
+            }
+          }
+        },
+        "domain_specific_fields": {
+          "experiment_type": {
+            "obligation": "mandatory",
+            "type": "controlledVocabulary",
+            "description": "실험 유형",
+            "allowedValues": [
+              "poultry_monitoring",
+              "crop_disease_detection",
+              "plant_phenotyping",
+              "livestock_behavior",
+              "greenhouse_imaging",
+              "field_survey"
+            ],
+            "maps_to": {
+              "agmes": "studyType"
+            }
+          },
+          "biological_subject": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "description": "실험 대상 생물",
+            "subfields": {
+              "species_common": {
+                "type": "text",
+                "example": "broiler chicken, tomato, pepper"
+              },
+              "species_scientific": {
+                "type": "text",
+                "example": "Gallus gallus domesticus"
+              },
+              "agrovoc_uri": {
+                "type": "url",
+                "description": "AGROVOC 통제어휘 URI"
+              },
+              "ncbi_taxon_id": {
+                "type": "text",
+                "description": "NCBI Taxonomy ID (선택)"
+              }
+            },
+            "maps_to": {
+              "agrovoc": "subject"
+            }
+          },
+          "imaging_setup": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "description": "이미징 장비 및 환경 설정",
+            "subfields": {
+              "camera_model": {
+                "type": "text",
+                "example": "FLIR Blackfly S, Sony α7R IV"
+              },
+              "lens_focal_length_mm": {
+                "type": "number"
+              },
+              "image_resolution_px": {
+                "type": "text",
+                "example": "3840x2160"
+              },
+              "frame_rate_fps": {
+                "type": "number",
+                "description": "비디오의 경우"
+              },
+              "sensor_type": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "RGB",
+                  "multispectral",
+                  "hyperspectral",
+                  "thermal_IR",
+                  "depth_RGBD",
+                  "LiDAR"
+                ]
+              },
+              "mounting_type": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "overhead_fixed",
+                  "UAV",
+                  "handheld",
+                  "ground_robot",
+                  "conveyor_belt"
+                ]
+              },
+              "acquisition_height_m": {
+                "type": "number",
+                "description": "카메라-피사체 간 거리(m)"
+              }
+            }
+          },
+          "annotation": {
+            "obligation": "recommended",
+            "type": "compound",
+            "description": "이미지/영상 라벨링 정보",
+            "subfields": {
+              "annotation_type": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "bounding_box",
+                  "polygon_mask",
+                  "keypoint",
+                  "classification",
+                  "semantic_segmentation",
+                  "instance_segmentation"
+                ]
+              },
+              "annotation_tool": {
+                "type": "text",
+                "example": "CVAT, LabelImg, Roboflow"
+              },
+              "annotator_count": {
+                "type": "integer"
+              },
+              "inter_annotator_agreement": {
+                "type": "number",
+                "description": "Cohen's kappa 또는 IoU 평균"
+              }
+            }
+          },
+          "environment_conditions": {
+            "obligation": "recommended",
+            "type": "compound",
+            "description": "촬영/실험 환경 조건",
+            "subfields": {
+              "facility_type": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "commercial_farm",
+                  "research_greenhouse",
+                  "field",
+                  "growth_chamber",
+                  "laboratory"
+                ]
+              },
+              "temperature_celsius": {
+                "type": "range",
+                "subfields": {
+                  "min": "number",
+                  "max": "number"
+                }
+              },
+              "humidity_pct": {
+                "type": "range",
+                "subfields": {
+                  "min": "number",
+                  "max": "number"
+                }
+              },
+              "light_intensity_lux": {
+                "type": "number"
+              },
+              "co2_ppm": {
+                "type": "number"
+              },
+              "ventilation_mode": {
+                "type": "text"
+              }
+            }
+          },
+          "dataset_split": {
+            "obligation": "recommended",
+            "type": "compound",
+            "description": "AI 학습용 데이터 분할 비율",
+            "subfields": {
+              "train_ratio": {
+                "type": "number",
+                "example": 0.7
+              },
+              "validation_ratio": {
+                "type": "number",
+                "example": 0.15
+              },
+              "test_ratio": {
+                "type": "number",
+                "example": 0.15
+              },
+              "split_method": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "random",
+                  "stratified",
+                  "temporal",
+                  "spatial",
+                  "k_fold"
+                ]
+              }
+            }
+          },
+          "model_reference": {
+            "obligation": "optional",
+            "type": "compound",
+            "description": "이 데이터셋으로 학습된 모델 정보",
+            "subfields": {
+              "architecture": {
+                "type": "text",
+                "example": "YOLOv8, Mask R-CNN, SAM"
+              },
+              "pretrained_backbone": {
+                "type": "text"
+              },
+              "evaluation_metric": {
+                "type": "text",
+                "example": "mAP@0.5, IoU, F1"
+              },
+              "metric_value": {
+                "type": "number"
+              },
+              "model_url": {
+                "type": "url"
+              }
+            }
+          }
+        },
+        "crosswalk": {
+          "DataCite_4.5": {
+            "Title": "title",
+            "Creator": "creator",
+            "PublicationYear": "date",
+            "ResourceType": "experiment_type",
+            "Subject": "biological_subject.agrovoc_uri",
+            "RelatedIdentifier": "related_publication_doi",
+            "Description": "imaging_setup + environment_conditions"
+          },
+          "DublinCore": {
+            "dc:title": "title",
+            "dc:creator": "creator.name",
+            "dc:subject": "biological_subject.species_common",
+            "dc:type": "experiment_type",
+            "dc:date": "date",
+            "dc:format": "imaging_setup.sensor_type"
+          }
+        }
+      }
+    },
+    {
+      "lab_id": "snu_bse_bicpal",
+      "lab_name": "Biosystems Instrumentation, Control and Precision Agriculture Laboratory (BICPAL)",
+      "lab_name_ko": "바이오시스템 정밀농업 연구실",
+      "professor": "Hak-Jin Kim",
+      "professor_ko": "김학진",
+      "department": "Biosystems Engineering",
+      "department_ko": "바이오시스템공학전공",
+      "faculty": "바이오시스템·소재학부",
+      "lab_url": "http://bicpal.snu.ac.kr",
+      "research_domain": "Precision Agriculture, Agricultural Robotics, GPS/GNSS Navigation, UAV Remote Sensing, Autonomous Vehicles",
+      "data_types": [
+        "GPS_trajectory",
+        "sensor_fusion",
+        "aerial_imagery",
+        "field_map"
+      ],
+      "representative_papers": [
+        {
+          "title": "Development of a low-cost GPS/INS integrated system for tractor automatic navigation",
+          "doi": "10.25165/j.ijabe.20161003.2107",
+          "journal": "International Journal of Agricultural and Biological Engineering",
+          "year": 2017,
+          "note": "핵심 방법론 확립 논문. 최신 후속 연구의 기반."
+        },
+        {
+          "title": "Improved Position Estimation Algorithm of Agricultural Mobile Robots Based on Multisensor Fusion and Autoencoder Neural Network",
+          "doi": "10.3390/s22041479",
+          "journal": "Sensors (MDPI)",
+          "year": 2022,
+          "note": "PMC 공개 논문. SNU BSE 저자 확인됨."
+        }
+      ],
+      "data_schema": {
+        "core_fields": {
+          "title": {
+            "obligation": "mandatory",
+            "type": "text",
+            "maps_to": {
+              "datacite": "Title"
+            }
+          },
+          "creator": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "name": "text",
+              "affiliation": "text",
+              "orcid": "text"
+            },
+            "maps_to": {
+              "datacite": "Creator"
+            }
+          },
+          "date_of_collection": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "start": "date",
+              "end": "date"
+            },
+            "maps_to": {
+              "datacite": "Dates"
+            }
+          }
+        },
+        "domain_specific_fields": {
+          "experiment_type": {
+            "obligation": "mandatory",
+            "type": "controlledVocabulary",
+            "allowedValues": [
+              "autonomous_navigation_test",
+              "field_mapping",
+              "UAV_survey",
+              "robot_field_trial",
+              "sensor_calibration"
+            ]
+          },
+          "vehicle_platform": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "description": "사용 차량/기체 정보",
+            "subfields": {
+              "platform_type": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "tractor",
+                  "UAV_fixed_wing",
+                  "UAV_multirotor",
+                  "ground_robot",
+                  "cultivator"
+                ]
+              },
+              "make_model": {
+                "type": "text",
+                "example": "LS Mtron MT7101, DJI Matrice 300 RTK"
+              },
+              "engine_power_kW": {
+                "type": "number"
+              },
+              "payload_kg": {
+                "type": "number"
+              }
+            }
+          },
+          "navigation_sensor": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "description": "항법/측위 센서 구성",
+            "subfields": {
+              "GNSS_receiver": {
+                "type": "text",
+                "example": "Trimble R10, NovAtel SMART7"
+              },
+              "GNSS_mode": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "RTK",
+                  "PPK",
+                  "SBAS",
+                  "standard_GPS"
+                ]
+              },
+              "position_accuracy_cm": {
+                "type": "number"
+              },
+              "IMU_model": {
+                "type": "text"
+              },
+              "IMU_update_rate_hz": {
+                "type": "number"
+              },
+              "LiDAR_model": {
+                "type": "text",
+                "description": "장착된 경우"
+              },
+              "additional_sensors": {
+                "type": "array",
+                "items": "text"
+              }
+            }
+          },
+          "field_site": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "description": "실험 포장 정보",
+            "subfields": {
+              "site_name": {
+                "type": "text"
+              },
+              "location_lat": {
+                "type": "number",
+                "format": "decimal_degrees"
+              },
+              "location_lon": {
+                "type": "number",
+                "format": "decimal_degrees"
+              },
+              "area_ha": {
+                "type": "number"
+              },
+              "crop_type": {
+                "type": "text"
+              },
+              "field_surface": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "paddy",
+                  "upland",
+                  "greenhouse",
+                  "orchard",
+                  "pasture",
+                  "artificial_test_track"
+                ]
+              }
+            }
+          },
+          "trajectory_data": {
+            "obligation": "recommended",
+            "type": "compound",
+            "description": "주행 경로 데이터 특성",
+            "subfields": {
+              "path_type": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "A-B_straight",
+                  "headland_turn",
+                  "contour_follow",
+                  "grid_survey",
+                  "random_exploration"
+                ]
+              },
+              "total_distance_m": {
+                "type": "number"
+              },
+              "sampling_rate_hz": {
+                "type": "number"
+              },
+              "data_format": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "NMEA",
+                  "ROS_bag",
+                  "CSV",
+                  "GeoJSON",
+                  "KML"
+                ]
+              }
+            }
+          },
+          "performance_metrics": {
+            "obligation": "recommended",
+            "type": "compound",
+            "description": "자율주행/로봇 성능 측정 결과",
+            "subfields": {
+              "cross_track_error_cm_mean": {
+                "type": "number"
+              },
+              "cross_track_error_cm_std": {
+                "type": "number"
+              },
+              "heading_error_deg_mean": {
+                "type": "number"
+              },
+              "operation_speed_kmh": {
+                "type": "number"
+              },
+              "task_completion_rate_pct": {
+                "type": "number"
+              }
+            }
+          },
+          "replication": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "description": "실험 반복 설계",
+            "subfields": {
+              "n_runs": {
+                "type": "integer",
+                "description": "동일 경로 반복 횟수"
+              },
+              "n_replicates": {
+                "type": "integer",
+                "description": "처리구 반복 수"
+              },
+              "experimental_design": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "CRD",
+                  "RCBD",
+                  "repeated_measures",
+                  "longitudinal",
+                  "single_run"
+                ]
+              }
+            }
+          }
+        },
+        "crosswalk": {
+          "DataCite_4.5": {
+            "Title": "title",
+            "Creator": "creator",
+            "GeoLocation": "field_site.location_lat + field_site.location_lon",
+            "ResourceType": "experiment_type",
+            "Subject": "field_site.crop_type"
+          },
+          "DublinCore": {
+            "dc:title": "title",
+            "dc:creator": "creator.name",
+            "dc:coverage": "field_site.site_name",
+            "dc:type": "experiment_type"
+          }
+        }
+      }
+    },
+    {
+      "lab_id": "snu_plant_crop_science",
+      "lab_name": "Crop Science and Biotechnology Lab (representative)",
+      "lab_name_ko": "작물생명과학 연구실 (대표)",
+      "professor": "Suk-Ha Lee (and others)",
+      "professor_ko": "이석하 외 (작물생명과학전공)",
+      "department": "Crop Science and Biotechnology",
+      "department_ko": "작물생명과학전공",
+      "faculty": "식물생산과학부",
+      "lab_url": "http://plantgenomics.snu.ac.kr",
+      "research_domain": "Rice/Wheat Genomics, GWAS, QTL Mapping, Marker-Assisted Selection, Field Phenotyping",
+      "data_types": [
+        "genotype_array",
+        "phenotype_table",
+        "field_measurement",
+        "sequencing_fastq"
+      ],
+      "representative_papers": [
+        {
+          "title": "Genome-wide association studies reveal novel QTLs for agronomic traits in soybean",
+          "doi": "10.3389/fpls.2024.1375646",
+          "journal": "Frontiers in Plant Science",
+          "year": 2024,
+          "note": "Suk-Ha Lee (이석하) 교수, SNU Plant Genomics and Breeding Institute (plantgenomics.snu.ac.kr). Frontiers in Plant Science 확인."
+        },
+        {
+          "title": "Soybean2035: A decadal vision for soybean functional genomics and breeding",
+          "doi": "10.1016/j.molp.2025.01.004",
+          "journal": "Molecular Plant",
+          "year": 2025,
+          "note": "Suk-Ha Lee 공저. PubMed 확인 (PMID 39772289)."
+        }
+      ],
+      "data_schema": {
+        "core_fields": {
+          "title": {
+            "obligation": "mandatory",
+            "type": "text",
+            "maps_to": {
+              "datacite": "Title"
+            }
+          },
+          "creator": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "name": "text",
+              "affiliation": "text",
+              "orcid": "text"
+            }
+          },
+          "date_of_collection": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "start": "date",
+              "end": "date"
+            }
+          }
+        },
+        "domain_specific_fields": {
+          "experiment_type": {
+            "obligation": "mandatory",
+            "type": "controlledVocabulary",
+            "allowedValues": [
+              "GWAS",
+              "QTL_mapping",
+              "field_trial",
+              "greenhouse_phenotyping",
+              "MAS_breeding",
+              "transcriptomics",
+              "proteomics"
+            ]
+          },
+          "crop": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "description": "작물 정보 (AGROVOC 기반)",
+            "subfields": {
+              "species_common": {
+                "type": "text",
+                "example": "rice, wheat, barley"
+              },
+              "species_scientific": {
+                "type": "text",
+                "example": "Oryza sativa L."
+              },
+              "agrovoc_uri": {
+                "type": "url",
+                "example": "http://aims.fao.org/aos/agrovoc/c_6599"
+              },
+              "cultivar_or_line": {
+                "type": "text",
+                "example": "Nipponbare, Samgwang"
+              },
+              "maturity_group": {
+                "type": "text"
+              },
+              "ncbi_taxon_id": {
+                "type": "text",
+                "example": "4530"
+              }
+            },
+            "maps_to": {
+              "agmes": "cropType",
+              "agrovoc": "subject"
+            }
+          },
+          "experimental_design": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "description": "실험 설계 정보",
+            "subfields": {
+              "design_type": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "RCBD",
+                  "CRD",
+                  "alpha_lattice",
+                  "augmented_design",
+                  "split_plot",
+                  "factorial"
+                ]
+              },
+              "n_genotypes": {
+                "type": "integer",
+                "description": "공시 유전형/계통 수"
+              },
+              "n_replicates": {
+                "type": "integer"
+              },
+              "n_environments": {
+                "type": "integer",
+                "description": "시험 환경(년도×장소) 수"
+              },
+              "n_blocks_per_rep": {
+                "type": "integer"
+              }
+            }
+          },
+          "field_site": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "site_name": {
+                "type": "text",
+                "example": "SNU Experiment Farm, Suwon NICS"
+              },
+              "country": {
+                "type": "text",
+                "default": "Korea"
+              },
+              "latitude": {
+                "type": "number"
+              },
+              "longitude": {
+                "type": "number"
+              },
+              "altitude_m": {
+                "type": "number"
+              },
+              "soil_type": {
+                "type": "text",
+                "description": "FAO soil classification"
+              },
+              "planting_season": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "spring",
+                  "summer",
+                  "autumn",
+                  "winter",
+                  "year_round_greenhouse"
+                ]
+              },
+              "transplanting_date": {
+                "type": "date"
+              },
+              "harvest_date": {
+                "type": "date"
+              }
+            }
+          },
+          "phenotyping": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "description": "표현형 측정 항목 및 방법",
+            "subfields": {
+              "traits_measured": {
+                "type": "array",
+                "items": {
+                  "trait_name": "text",
+                  "trait_code": "text",
+                  "unit": "text",
+                  "measurement_method": "text",
+                  "measurement_stage": "text",
+                  "agrovoc_uri": "url"
+                },
+                "examples": [
+                  {
+                    "trait_name": "grain yield",
+                    "unit": "t/ha",
+                    "agrovoc_uri": "http://aims.fao.org/aos/agrovoc/c_3346"
+                  },
+                  {
+                    "trait_name": "days to heading",
+                    "unit": "days"
+                  },
+                  {
+                    "trait_name": "plant height",
+                    "unit": "cm"
+                  }
+                ]
+              },
+              "measurement_instrument": {
+                "type": "text",
+                "example": "grain analyzer, chlorophyll meter SPAD-502"
+              },
+              "imaging_used": {
+                "type": "boolean"
+              }
+            }
+          },
+          "genotyping": {
+            "obligation": "recommended",
+            "type": "compound",
+            "description": "유전체 데이터 특성",
+            "subfields": {
+              "genotyping_platform": {
+                "type": "text",
+                "example": "SNP chip 620K, GBS, WGS"
+              },
+              "n_markers": {
+                "type": "integer"
+              },
+              "reference_genome": {
+                "type": "text",
+                "example": "IRGSP-1.0, IWGSC RefSeq v2.1"
+              },
+              "sequencing_depth": {
+                "type": "number",
+                "description": "mean coverage (x)"
+              },
+              "data_repository": {
+                "type": "url",
+                "description": "DDBJ, NCBI SRA 등 등록 URL"
+              }
+            }
+          },
+          "statistical_analysis": {
+            "obligation": "recommended",
+            "type": "compound",
+            "subfields": {
+              "software": {
+                "type": "text",
+                "example": "GAPIT3, TASSEL5, R/lme4"
+              },
+              "population_structure_method": {
+                "type": "text",
+                "example": "STRUCTURE, PCA"
+              },
+              "significance_threshold": {
+                "type": "text",
+                "example": "Bonferroni p < 0.05/n_markers"
+              },
+              "mixed_model": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "crosswalk": {
+          "DataCite_4.5": {
+            "Title": "title",
+            "Creator": "creator",
+            "Subject": "crop.agrovoc_uri",
+            "GeoLocation": "field_site.latitude + field_site.longitude",
+            "Description": "experimental_design + phenotyping"
+          },
+          "AgMES": {
+            "ag:cropType": "crop.species_scientific",
+            "ag:treatmentType": "experimental_design.design_type"
+          }
+        }
+      }
+    },
+    {
+      "lab_id": "snu_plant_horticulture",
+      "lab_name": "Plant Factory and Controlled Environment Agriculture Lab",
+      "lab_name_ko": "식물공장·시설원예 연구실",
+      "professor": "Changhoo Chun",
+      "professor_ko": "전창후",
+      "department": "Horticultural Science",
+      "department_ko": "원예과학전공",
+      "faculty": "식물생산과학부",
+      "lab_url": "https://plantsci.snu.ac.kr",
+      "research_domain": "Controlled Environment Agriculture, Vertical Farming, LED Light Quality, Postharvest Physiology, Plant Growth Regulators",
+      "data_types": [
+        "growth_measurement",
+        "spectral_data",
+        "postharvest_quality",
+        "environmental_log"
+      ],
+      "representative_papers": [
+        {
+          "title": "Improvement of strawberry transplant production efficiency by supplementary blue light in a plant factory using white LEDs",
+          "doi": "10.1007/s13580-022-00493-9",
+          "journal": "Horticulture, Environment, and Biotechnology",
+          "year": 2023,
+          "note": "Changhoo Chun 공저. Springer Nature Link 확인."
+        },
+        {
+          "title": "Effect of the light spectrum of white LEDs on the productivity of strawberry transplants in a plant factory with artificial lighting",
+          "doi": "10.1007/s13580-020-00284-0",
+          "journal": "Horticulture, Environment, and Biotechnology",
+          "year": 2020,
+          "note": "Changhoo Chun 공저. 연구실 핵심 방법론 논문."
+        }
+      ],
+      "data_schema": {
+        "core_fields": {
+          "title": {
+            "obligation": "mandatory",
+            "type": "text",
+            "maps_to": {
+              "datacite": "Title"
+            }
+          },
+          "creator": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "name": "text",
+              "affiliation": "text",
+              "orcid": "text"
+            }
+          }
+        },
+        "domain_specific_fields": {
+          "experiment_type": {
+            "obligation": "mandatory",
+            "type": "controlledVocabulary",
+            "allowedValues": [
+              "light_quality_experiment",
+              "DIF_experiment",
+              "CO2_enrichment",
+              "nutrition_solution",
+              "postharvest_storage",
+              "plant_growth_regulator"
+            ]
+          },
+          "crop": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "species_common": {
+                "type": "text",
+                "example": "lettuce, strawberry, tomato, basil"
+              },
+              "species_scientific": {
+                "type": "text"
+              },
+              "agrovoc_uri": {
+                "type": "url"
+              },
+              "cultivar": {
+                "type": "text"
+              },
+              "growth_stage_at_start": {
+                "type": "text",
+                "example": "seedling 14 DAG"
+              }
+            }
+          },
+          "treatment": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "description": "처리구 설계 (광질/광량/CO2 등)",
+            "subfields": {
+              "factor_name": {
+                "type": "text",
+                "example": "light spectrum"
+              },
+              "treatment_levels": {
+                "type": "array",
+                "items": {
+                  "label": "text",
+                  "value": "text",
+                  "unit": "text"
+                },
+                "examples": [
+                  {
+                    "label": "R:FR=1:0",
+                    "value": "red_only",
+                    "unit": "nm"
+                  },
+                  {
+                    "label": "W full-spectrum",
+                    "value": "white_led",
+                    "unit": "nm"
+                  }
+                ]
+              },
+              "n_replicates": {
+                "type": "integer"
+              },
+              "n_plants_per_rep": {
+                "type": "integer"
+              },
+              "experimental_design": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "CRD",
+                  "RCBD",
+                  "factorial",
+                  "split_plot"
+                ]
+              }
+            }
+          },
+          "growth_environment": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "description": "재배 환경 조건 (controlled)",
+            "subfields": {
+              "facility": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "plant_factory_PFAL",
+                  "growth_chamber",
+                  "greenhouse",
+                  "shade_house",
+                  "field"
+                ]
+              },
+              "ppfd_umol_m2_s": {
+                "type": "number",
+                "description": "광합성광양자속밀도 (μmol m⁻² s⁻¹)"
+              },
+              "light_spectrum_peak_nm": {
+                "type": "array",
+                "items": "number"
+              },
+              "photoperiod_h": {
+                "type": "number"
+              },
+              "temperature_day_C": {
+                "type": "number"
+              },
+              "temperature_night_C": {
+                "type": "number"
+              },
+              "rh_pct": {
+                "type": "number",
+                "description": "상대습도 (%)"
+              },
+              "co2_ppm": {
+                "type": "number"
+              },
+              "nutrient_solution_EC_dS_m": {
+                "type": "number"
+              }
+            }
+          },
+          "growth_measurement": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "description": "식물 생육 측정 항목",
+            "subfields": {
+              "traits": {
+                "type": "array",
+                "items": {
+                  "trait_name": "text",
+                  "unit": "text",
+                  "measurement_interval_days": "number"
+                },
+                "examples": [
+                  {
+                    "trait_name": "fresh weight",
+                    "unit": "g/plant"
+                  },
+                  {
+                    "trait_name": "dry weight",
+                    "unit": "g/plant"
+                  },
+                  {
+                    "trait_name": "leaf area",
+                    "unit": "cm²"
+                  },
+                  {
+                    "trait_name": "SPAD chlorophyll",
+                    "unit": "SPAD units"
+                  },
+                  {
+                    "trait_name": "anthocyanin content",
+                    "unit": "mg/g FW"
+                  }
+                ]
+              },
+              "harvest_date": {
+                "type": "date"
+              },
+              "days_after_germination_DAG": {
+                "type": "integer"
+              }
+            }
+          },
+          "postharvest_data": {
+            "obligation": "optional",
+            "type": "compound",
+            "description": "수확 후 품질 측정 (해당 시)",
+            "subfields": {
+              "storage_temperature_C": {
+                "type": "number"
+              },
+              "storage_duration_days": {
+                "type": "integer"
+              },
+              "firmness_N": {
+                "type": "number"
+              },
+              "soluble_solids_brix": {
+                "type": "number"
+              },
+              "titratable_acidity_pct": {
+                "type": "number"
+              },
+              "color_L_a_b": {
+                "type": "array",
+                "items": "number"
+              },
+              "weight_loss_pct": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "crosswalk": {
+          "DataCite_4.5": {
+            "Title": "title",
+            "Creator": "creator",
+            "Subject": "crop.agrovoc_uri"
+          },
+          "AgMES": {
+            "ag:cropType": "crop.species_scientific",
+            "ag:treatmentType": "treatment.factor_name"
+          }
+        }
+      }
+    },
+    {
+      "lab_id": "snu_forest_lidar_carbon",
+      "lab_name": "Forest Remote Sensing and Carbon Cycle Lab",
+      "lab_name_ko": "산림원격탐사·탄소순환 연구실",
+      "professor": "Multiple (see forestry.snu.ac.kr / forest.snu.ac.kr)",
+      "professor_ko": "다수 (산림과학부)",
+      "department": "Forest Sciences",
+      "department_ko": "산림환경학전공 / 산림학전공",
+      "faculty": "산림과학부",
+      "lab_url": "https://forestry.snu.ac.kr/en",
+      "research_domain": "LiDAR Point Cloud Analysis, UAV Remote Sensing, Carbon Flux (Eddy Covariance), Dendrochronology, Forest Biomass Estimation",
+      "data_types": [
+        "LiDAR_point_cloud",
+        "eddy_covariance_flux",
+        "tree_ring_chronology",
+        "multispectral_imagery"
+      ],
+      "representative_papers": [
+        {
+          "title": "Backpack- and UAV-based Laser Scanning Application for Estimating Overstory and Understory Biomass of Forest Stands",
+          "doi": "10.14578/jkfs.2023.112.3.363",
+          "journal": "Journal of Korean Society of Forest Science",
+          "year": 2023,
+          "note": "2023년 5월 접수·8월 승인. SNU 산림과학 연구. jksfs-112-3-363"
+        },
+        {
+          "title": "Evaluation of Carbon Sequestration Capacity of a 57-year-old Korean Pine Plantation based on Eddy-covariance",
+          "doi": "JAKO202106758729092",
+          "journal": "Journal of Korean Society of Forest Science",
+          "year": 2021,
+          "note": "Eddy covariance 기반 탄소 플럭스 연구 방법론 논문. koreascience.or.kr 확인."
+        }
+      ],
+      "data_schema": {
+        "core_fields": {
+          "title": {
+            "obligation": "mandatory",
+            "type": "text",
+            "maps_to": {
+              "datacite": "Title"
+            }
+          },
+          "creator": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "name": "text",
+              "affiliation": "text",
+              "orcid": "text"
+            }
+          },
+          "date_of_collection": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "start": "date",
+              "end": "date"
+            }
+          }
+        },
+        "domain_specific_fields": {
+          "experiment_type": {
+            "obligation": "mandatory",
+            "type": "controlledVocabulary",
+            "allowedValues": [
+              "LiDAR_survey",
+              "eddy_covariance",
+              "dendrochronology",
+              "multispectral_UAV",
+              "field_inventory",
+              "litter_decomposition"
+            ]
+          },
+          "forest_site": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "site_name": {
+                "type": "text",
+                "example": "Gwangneung Forest, SNU Experimental Forest"
+              },
+              "country": {
+                "type": "text",
+                "default": "Korea"
+              },
+              "latitude": {
+                "type": "number"
+              },
+              "longitude": {
+                "type": "number"
+              },
+              "altitude_m_asl": {
+                "type": "number"
+              },
+              "forest_type": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "Korean_pine_plantation",
+                  "deciduous_broadleaf",
+                  "mixed_conifer_broadleaf",
+                  "bamboo",
+                  "riparian"
+                ]
+              },
+              "dominant_species": {
+                "type": "text",
+                "example": "Pinus koraiensis"
+              },
+              "stand_age_years": {
+                "type": "integer"
+              },
+              "stand_area_ha": {
+                "type": "number"
+              },
+              "slope_deg": {
+                "type": "number"
+              },
+              "aspect": {
+                "type": "text",
+                "example": "N, NE, SW"
+              }
+            }
+          },
+          "lidar_data": {
+            "obligation": "conditional",
+            "condition": "experiment_type == 'LiDAR_survey'",
+            "type": "compound",
+            "subfields": {
+              "scanner_model": {
+                "type": "text",
+                "example": "Riegl VUX-1UAV, FARO Focus3D, Hesai Pandar40"
+              },
+              "platform": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "backpack_TLS",
+                  "UAV_ULS",
+                  "tripod_TLS",
+                  "vehicle_MLS"
+                ]
+              },
+              "point_density_pts_m2": {
+                "type": "number"
+              },
+              "scan_area_ha": {
+                "type": "number"
+              },
+              "flight_altitude_m_AGL": {
+                "type": "number",
+                "description": "UAV의 경우"
+              },
+              "flight_speed_m_s": {
+                "type": "number"
+              },
+              "side_overlap_pct": {
+                "type": "number"
+              },
+              "data_format": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "LAS_1.4",
+                  "LAZ",
+                  "PLY",
+                  "PCD"
+                ]
+              },
+              "crs_epsg": {
+                "type": "integer",
+                "example": 5186,
+                "description": "좌표계 EPSG 코드"
+              }
+            }
+          },
+          "eddy_covariance_data": {
+            "obligation": "conditional",
+            "condition": "experiment_type == 'eddy_covariance'",
+            "type": "compound",
+            "description": "에디공분산 플럭스 타워 설정",
+            "subfields": {
+              "tower_height_m": {
+                "type": "number"
+              },
+              "sonic_anemometer": {
+                "type": "text",
+                "example": "CSAT3, Gill Windmaster Pro"
+              },
+              "gas_analyzer": {
+                "type": "text",
+                "example": "LI-7500A, EC155"
+              },
+              "measurement_height_m": {
+                "type": "number"
+              },
+              "data_logger": {
+                "type": "text"
+              },
+              "sampling_freq_hz": {
+                "type": "integer",
+                "default": 10
+              },
+              "averaging_period_min": {
+                "type": "integer",
+                "default": 30
+              },
+              "qc_software": {
+                "type": "text",
+                "example": "EddyPro 7, TK2"
+              },
+              "flux_variables": {
+                "type": "array",
+                "items": "text",
+                "example": [
+                  "NEE_CO2",
+                  "LE",
+                  "H",
+                  "Rn",
+                  "G"
+                ]
+              },
+              "observation_period_years": {
+                "type": "number"
+              }
+            }
+          },
+          "dendrochronology_data": {
+            "obligation": "conditional",
+            "condition": "experiment_type == 'dendrochronology'",
+            "type": "compound",
+            "subfields": {
+              "n_trees_sampled": {
+                "type": "integer"
+              },
+              "cores_per_tree": {
+                "type": "integer"
+              },
+              "ring_width_measurement_device": {
+                "type": "text",
+                "example": "LINTAB6, WinDENDRO"
+              },
+              "crossdating_software": {
+                "type": "text",
+                "example": "COFECHA"
+              },
+              "chronology_length_years": {
+                "type": "integer"
+              },
+              "climate_variable_correlated": {
+                "type": "array",
+                "items": "text",
+                "example": [
+                  "temperature",
+                  "precipitation",
+                  "PDSI"
+                ]
+              }
+            }
+          },
+          "biomass_estimation": {
+            "obligation": "recommended",
+            "type": "compound",
+            "subfields": {
+              "allometric_equation_ref": {
+                "type": "text",
+                "description": "사용된 수간재적/바이오매스 추정식 출처"
+              },
+              "agb_estimation_method": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "field_inventory",
+                  "LiDAR_derived",
+                  "SAR_derived",
+                  "optical_imagery",
+                  "hybrid"
+                ]
+              },
+              "carbon_fraction": {
+                "type": "number",
+                "default": 0.5,
+                "description": "탄소 전환계수"
+              },
+              "agb_Mg_ha": {
+                "type": "number",
+                "description": "지상부 바이오매스 (Mg ha⁻¹)"
+              }
+            }
+          }
+        },
+        "crosswalk": {
+          "DataCite_4.5": {
+            "Title": "title",
+            "Creator": "creator",
+            "GeoLocation": "forest_site.latitude + forest_site.longitude",
+            "Subject": "forest_site.dominant_species",
+            "ResourceType": "experiment_type"
+          },
+          "DublinCore": {
+            "dc:coverage": "forest_site.site_name",
+            "dc:type": "experiment_type"
+          }
+        }
+      }
+    },
+    {
+      "lab_id": "snu_abc_plant_micro",
+      "lab_name": "Plant Microbiology and Biocontrol Lab (representative)",
+      "lab_name_ko": "식물미생물·생물방제 연구실",
+      "professor": "Multiple (see plantmicro.snu.ac.kr)",
+      "professor_ko": "다수 (응용생물화학부 식물미생물학전공)",
+      "department": "Applied Biology and Chemistry (Plant Microbiology)",
+      "department_ko": "응용생물화학부 식물미생물학전공",
+      "faculty": "응용생물화학부",
+      "lab_url": "https://plantmicro.snu.ac.kr",
+      "research_domain": "Plant Pathology, Entomology, Biological Control, Soil Microbiology, Pesticide Chemistry",
+      "data_types": [
+        "microbial_community_16S",
+        "insect_population_count",
+        "pesticide_residue_LC_MS",
+        "disease_severity_index"
+      ],
+      "representative_papers": [
+        {
+          "title": "Integrating metabolomics and transcriptomics for SynCom-mediated biocontrol against soilborne pathogens",
+          "doi": "10.1080/17429145.2025.2567358",
+          "journal": "Plant Pathology",
+          "year": 2025,
+          "note": "tandfonline 스니펫 확인. SynCom 관련 연구 방법론."
+        }
+      ],
+      "data_schema": {
+        "core_fields": {
+          "title": {
+            "obligation": "mandatory",
+            "type": "text"
+          },
+          "creator": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "name": "text",
+              "affiliation": "text",
+              "orcid": "text"
+            }
+          }
+        },
+        "domain_specific_fields": {
+          "experiment_type": {
+            "obligation": "mandatory",
+            "type": "controlledVocabulary",
+            "allowedValues": [
+              "biocontrol_trial",
+              "pathogen_inoculation",
+              "insect_bioassay",
+              "pesticide_residue_analysis",
+              "soil_microbiome_16S",
+              "metabolomics_untargeted",
+              "metabolomics_targeted"
+            ]
+          },
+          "target_organism": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "pathogen_or_pest_name": {
+                "type": "text",
+                "example": "Fusarium oxysporum, Plutella xylostella"
+              },
+              "organism_type": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "fungus",
+                  "bacterium",
+                  "nematode",
+                  "insect_pest",
+                  "virus",
+                  "weed"
+                ]
+              },
+              "host_plant": {
+                "type": "text"
+              },
+              "agrovoc_uri": {
+                "type": "url"
+              }
+            }
+          },
+          "biocontrol_agent": {
+            "obligation": "conditional",
+            "condition": "experiment_type includes 'biocontrol'",
+            "type": "compound",
+            "subfields": {
+              "agent_name": {
+                "type": "text",
+                "example": "Bacillus subtilis SB01, Trichoderma harzianum"
+              },
+              "agent_type": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "bacterium",
+                  "fungus",
+                  "virus_baculovirus",
+                  "nematode",
+                  "predatory_insect",
+                  "synthetic_microbial_community_SynCom"
+                ]
+              },
+              "concentration": {
+                "type": "text",
+                "example": "10⁸ CFU/mL"
+              },
+              "application_method": {
+                "type": "text",
+                "example": "soil drench, foliar spray"
+              }
+            }
+          },
+          "experimental_design": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "design_type": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "CRD",
+                  "RCBD",
+                  "factorial",
+                  "dose_response"
+                ]
+              },
+              "n_treatments": {
+                "type": "integer"
+              },
+              "n_replicates": {
+                "type": "integer"
+              },
+              "observation_period_days": {
+                "type": "integer"
+              },
+              "positive_control": {
+                "type": "text",
+                "description": "양성 대조구 (pesticide name 등)"
+              },
+              "negative_control": {
+                "type": "text"
+              }
+            }
+          },
+          "analytical_method": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "description": "분석 기기 및 방법",
+            "subfields": {
+              "instrument": {
+                "type": "text",
+                "example": "Waters ACQUITY UPLC, Agilent 6470 LC-MS/MS, Illumina MiSeq"
+              },
+              "method_type": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "LC-MS/MS_targeted",
+                  "GC-MS_targeted",
+                  "16S_rRNA_amplicon",
+                  "ITS_amplicon",
+                  "shotgun_metagenomics",
+                  "visual_rating",
+                  "bioassay"
+                ]
+              },
+              "ionization_mode": {
+                "type": "text",
+                "description": "LC-MS의 경우 (ESI+/ESI-)"
+              },
+              "detection_limit_ppb": {
+                "type": "number"
+              },
+              "extraction_method": {
+                "type": "text"
+              }
+            }
+          },
+          "disease_assessment": {
+            "obligation": "conditional",
+            "condition": "experiment_type includes 'inoculation' or 'biocontrol_trial'",
+            "type": "compound",
+            "subfields": {
+              "disease_index_scale": {
+                "type": "text",
+                "example": "0-9 scale (IRRI), 0-5 Horsfall-Barratt"
+              },
+              "assessment_timing_DAI": {
+                "type": "array",
+                "items": "integer",
+                "description": "접종 후 조사 시점 (days after inoculation)"
+              },
+              "efficacy_pct": {
+                "type": "number",
+                "description": "방제가 (%)"
+              }
+            }
+          }
+        },
+        "crosswalk": {
+          "DataCite_4.5": {
+            "Title": "title",
+            "Creator": "creator",
+            "Subject": "target_organism.agrovoc_uri"
+          },
+          "AgMES": {
+            "ag:cropType": "target_organism.host_plant"
+          }
+        }
+      }
+    },
+    {
+      "lab_id": "snu_food_microbiology_safety",
+      "lab_name": "Food Molecular Microbiology and Safety Lab",
+      "lab_name_ko": "식품분자미생물학·안전성 연구실",
+      "professor": "Dong-Hyun Kang (강동현) et al.",
+      "professor_ko": "강동현 외 (식품·동물생명공학부)",
+      "department": "Food Science and Biotechnology",
+      "department_ko": "식품생명공학전공",
+      "faculty": "식품·동물생명공학부",
+      "lab_url": "https://fabio.snu.ac.kr / https://food.snu.ac.kr",
+      "research_domain": "Food-borne Pathogen, Bacteriophage, Fermentation Microbiology, Food Safety (HACCP), Gut Microbiome",
+      "data_types": [
+        "microbial_colony_count",
+        "16S_rRNA_amplicon",
+        "flow_cytometry",
+        "bacteriophage_plaque_assay",
+        "food_quality_sensory"
+      ],
+      "representative_papers": [
+        {
+          "title": "Quercetin mediated antimicrobial photodynamic treatment using blue light on Escherichia coli O157:H7 and Listeria monocytogenes",
+          "doi": "10.1016/j.crfs.2022.100428",
+          "journal": "Current Research in Food Science",
+          "year": 2023,
+          "note": "Lee IH, Kim SH, Kang DH. SNU Department of Agricultural Biotechnology. PMC 확인 (PMC9826937)."
+        },
+        {
+          "title": "Draft Genome Sequence of Listeria monocytogenes Clonal Complex 1 Strain SNU3 from South Korea",
+          "doi": "10.1128/mra.01226-22",
+          "journal": "Microbiology Resource Announcements",
+          "year": 2023,
+          "note": "SNU3 균주 등록 논문. PMC 확인 (PMC9933684). ASM 저널."
+        }
+      ],
+      "data_schema": {
+        "core_fields": {
+          "title": {
+            "obligation": "mandatory",
+            "type": "text"
+          },
+          "creator": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "name": "text",
+              "affiliation": "text",
+              "orcid": "text"
+            }
+          }
+        },
+        "domain_specific_fields": {
+          "experiment_type": {
+            "obligation": "mandatory",
+            "type": "controlledVocabulary",
+            "allowedValues": [
+              "antimicrobial_activity_test",
+              "fermentation_kinetics",
+              "HACCP_validation",
+              "gut_microbiome_16S",
+              "food_quality_shelf_life",
+              "phage_host_range"
+            ]
+          },
+          "food_matrix": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "food_type": {
+                "type": "text",
+                "example": "poultry meat, kimchi, dairy"
+              },
+              "processing_stage": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "raw",
+                  "fermented",
+                  "pasteurized",
+                  "processed",
+                  "ready_to_eat"
+                ]
+              },
+              "storage_temperature_C": {
+                "type": "number"
+              },
+              "water_activity_aw": {
+                "type": "number"
+              }
+            }
+          },
+          "target_microorganism": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "species": {
+                "type": "text",
+                "example": "Salmonella enterica, Listeria monocytogenes, Lactobacillus plantarum"
+              },
+              "strain_id": {
+                "type": "text"
+              },
+              "category": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "pathogen",
+                  "probiotic",
+                  "spoilage_organism",
+                  "starter_culture"
+                ]
+              },
+              "initial_inoculum_CFU_g": {
+                "type": "number"
+              }
+            }
+          },
+          "treatment": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "antimicrobial_agent": {
+                "type": "text",
+                "example": "phage cocktail, bacteriocin, organic acid"
+              },
+              "concentration": {
+                "type": "text"
+              },
+              "application_method": {
+                "type": "text",
+                "example": "spray, dip, immersion"
+              },
+              "contact_time_min": {
+                "type": "number"
+              },
+              "n_replicates": {
+                "type": "integer"
+              },
+              "incubation_temperature_C": {
+                "type": "number"
+              },
+              "incubation_time_h": {
+                "type": "number"
+              }
+            }
+          },
+          "measurement": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "primary_endpoint": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "log_reduction_CFU_g",
+                  "MIC_ug_mL",
+                  "D_value",
+                  "growth_curve_OD600",
+                  "diversity_index_Shannon"
+                ]
+              },
+              "analytical_method": {
+                "type": "text",
+                "example": "pour plate, qPCR, flow cytometry, 16S rRNA Illumina MiSeq"
+              },
+              "sequencing_platform": {
+                "type": "text",
+                "description": "메타지놈의 경우"
+              },
+              "16S_variable_region": {
+                "type": "text",
+                "example": "V3-V4"
+              },
+              "bioinformatics_pipeline": {
+                "type": "text",
+                "example": "QIIME2, DADA2, Mothur"
+              }
+            }
+          }
+        },
+        "crosswalk": {
+          "DataCite_4.5": {
+            "Title": "title",
+            "Creator": "creator"
+          },
+          "DublinCore": {
+            "dc:subject": "target_microorganism.species"
+          }
+        }
+      }
+    },
+    {
+      "lab_id": "snu_rse_rural_water_ict",
+      "lab_name": "Rural Water and ICT Convergence Lab",
+      "lab_name_ko": "농업수자원·ICT융합 연구실",
+      "professor": "Jin-Yong Choi (최진용, 대표 교수)",
+      "professor_ko": "최진용 외",
+      "department": "Rural Systems Engineering",
+      "department_ko": "지역시스템공학전공",
+      "faculty": "조경·지역시스템공학부",
+      "lab_url": "https://calslab.snu.ac.kr/rwiel",
+      "research_domain": "Agricultural Water Resources, Irrigation/Drainage, Watershed Hydrology, GIS/Remote Sensing, Non-point Source Pollution, Climate Change Impact",
+      "data_types": [
+        "streamflow_time_series",
+        "weather_station_log",
+        "GIS_raster_vector",
+        "water_quality_sample",
+        "irrigation_log"
+      ],
+      "representative_papers": [
+        {
+          "title": "Evaluation of Agricultural Water Supply and Selection of Deficient Districts in Yeongsan River Basin of South Korea Considering Supply Priority",
+          "doi": "10.3390/w14030298",
+          "journal": "Water (MDPI)",
+          "year": 2022,
+          "note": "Jin-Yong Choi 소속 SNU Rural Systems Engineering. MDPI Water 14(3), 298 확인."
+        },
+        {
+          "title": "Enhanced Hydrological Simulations in Paddy-Dominated Watersheds Using the Hourly SWAT-MODFLOW-PADDY Modeling Approach",
+          "doi": "10.3390/su15119106",
+          "journal": "Sustainability (MDPI)",
+          "year": 2023,
+          "note": "Korean paddy SWAT 연구. MDPI Sustainability 15(11), 9106 확인."
+        }
+      ],
+      "data_schema": {
+        "core_fields": {
+          "title": {
+            "obligation": "mandatory",
+            "type": "text"
+          },
+          "creator": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "name": "text",
+              "affiliation": "text",
+              "orcid": "text"
+            }
+          },
+          "date_of_collection": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "start": "date",
+              "end": "date"
+            }
+          }
+        },
+        "domain_specific_fields": {
+          "experiment_type": {
+            "obligation": "mandatory",
+            "type": "controlledVocabulary",
+            "allowedValues": [
+              "streamflow_monitoring",
+              "irrigation_scheduling",
+              "water_quality_monitoring",
+              "watershed_modeling_SWAT",
+              "drainage_experiment",
+              "GIS_analysis",
+              "climate_scenario_analysis"
+            ]
+          },
+          "watershed_site": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "site_name": {
+                "type": "text",
+                "example": "Gyeongancheon watershed, Anseongcheon"
+              },
+              "country": {
+                "type": "text",
+                "default": "Korea"
+              },
+              "area_km2": {
+                "type": "number"
+              },
+              "centroid_lat": {
+                "type": "number"
+              },
+              "centroid_lon": {
+                "type": "number"
+              },
+              "dominant_land_use": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "paddy_dominated",
+                  "upland_crop",
+                  "mixed_agricultural",
+                  "forest_dominated",
+                  "urban_peri_urban"
+                ]
+              },
+              "climate_zone": {
+                "type": "text",
+                "example": "Cfa (Köppen), humid continental"
+              },
+              "observation_station_id": {
+                "type": "text",
+                "description": "KMA 또는 WAMIS 관측소 코드"
+              }
+            }
+          },
+          "hydrological_data": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "variables_measured": {
+                "type": "array",
+                "items": {
+                  "variable": "text",
+                  "unit": "text",
+                  "sensor_model": "text",
+                  "temporal_resolution": "text"
+                },
+                "examples": [
+                  {
+                    "variable": "streamflow",
+                    "unit": "m³/s",
+                    "sensor_model": "Krohne IFC100",
+                    "temporal_resolution": "10 min"
+                  },
+                  {
+                    "variable": "precipitation",
+                    "unit": "mm",
+                    "temporal_resolution": "1 hr"
+                  },
+                  {
+                    "variable": "evapotranspiration_ET0",
+                    "unit": "mm/day"
+                  },
+                  {
+                    "variable": "groundwater_level",
+                    "unit": "m"
+                  }
+                ]
+              },
+              "data_source": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "field_logger",
+                  "KMA_ASOS",
+                  "KMA_AWS",
+                  "WAMIS",
+                  "MODIS",
+                  "Landsat",
+                  "Sentinel",
+                  "RIHM_paddy_water_level"
+                ]
+              }
+            }
+          },
+          "water_quality_data": {
+            "obligation": "conditional",
+            "condition": "experiment_type includes 'water_quality'",
+            "type": "compound",
+            "subfields": {
+              "parameters": {
+                "type": "array",
+                "items": {
+                  "parameter": "text",
+                  "unit": "text",
+                  "method_standard": "text"
+                },
+                "examples": [
+                  {
+                    "parameter": "TN",
+                    "unit": "mg/L",
+                    "method_standard": "ES 04363.1"
+                  },
+                  {
+                    "parameter": "TP",
+                    "unit": "mg/L"
+                  },
+                  {
+                    "parameter": "BOD5",
+                    "unit": "mg/L"
+                  },
+                  {
+                    "parameter": "SS",
+                    "unit": "mg/L"
+                  },
+                  {
+                    "parameter": "DO",
+                    "unit": "mg/L"
+                  }
+                ]
+              },
+              "sampling_method": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "grab_sample",
+                  "autosampler_composite",
+                  "continuous_probe"
+                ]
+              },
+              "lab_analysis_instrument": {
+                "type": "text",
+                "example": "HACH DR3900, Shimadzu TOC-L"
+              }
+            }
+          },
+          "gis_data": {
+            "obligation": "recommended",
+            "type": "compound",
+            "subfields": {
+              "dem_resolution_m": {
+                "type": "number",
+                "example": 5
+              },
+              "dem_source": {
+                "type": "text",
+                "example": "NGII 수치표고모델 5m"
+              },
+              "land_use_map_year": {
+                "type": "integer"
+              },
+              "soil_map_source": {
+                "type": "text",
+                "example": "NAAS 정밀토양도"
+              },
+              "crs_epsg": {
+                "type": "integer",
+                "default": 5186
+              }
+            }
+          }
+        },
+        "crosswalk": {
+          "DataCite_4.5": {
+            "Title": "title",
+            "Creator": "creator",
+            "GeoLocation": "watershed_site.centroid_lat + watershed_site.centroid_lon",
+            "ResourceType": "experiment_type"
+          }
+        }
+      }
+    },
+    {
+      "lab_id": "snu_are_agricultural_economics",
+      "lab_name": "Agricultural and Resource Economics Lab",
+      "lab_name_ko": "농업·자원경제학 연구실",
+      "professor": "Multiple (are.snu.ac.kr 참조)",
+      "professor_ko": "다수 (농업·자원경제학전공)",
+      "department": "Agricultural and Resource Economics",
+      "department_ko": "농업·자원경제학전공",
+      "faculty": "농경제사회학부",
+      "lab_url": "https://are.snu.ac.kr",
+      "research_domain": "Agricultural Policy, Food Supply Chain, Rural Development, Resource Economics, Agrifood Market Analysis",
+      "data_types": [
+        "survey_questionnaire",
+        "administrative_panel",
+        "market_price_time_series",
+        "GIS_rural"
+      ],
+      "representative_papers": [
+        {
+          "title": "Deep trade agreements and agri-food global value chain integration",
+          "doi": "10.1016/j.jfpoli.2024.102660",
+          "journal": "Food Policy",
+          "year": 2024,
+          "note": "ideas.repec.org 스니펫 확인. Korean agrifood GVC 관련 연구."
+        }
+      ],
+      "data_schema": {
+        "core_fields": {
+          "title": {
+            "obligation": "mandatory",
+            "type": "text"
+          },
+          "creator": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "name": "text",
+              "affiliation": "text",
+              "orcid": "text"
+            }
+          }
+        },
+        "domain_specific_fields": {
+          "study_type": {
+            "obligation": "mandatory",
+            "type": "controlledVocabulary",
+            "allowedValues": [
+              "household_survey",
+              "farm_panel_survey",
+              "market_price_analysis",
+              "CGE_model",
+              "econometric_regression",
+              "GIS_spatial_analysis",
+              "policy_impact_evaluation"
+            ]
+          },
+          "survey_design": {
+            "obligation": "conditional",
+            "condition": "study_type includes 'survey'",
+            "type": "compound",
+            "subfields": {
+              "target_population": {
+                "type": "text",
+                "example": "Korean farm households, rural residents in Gyeonggi-do"
+              },
+              "sampling_method": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "stratified_random",
+                  "cluster",
+                  "purposive",
+                  "snowball",
+                  "census"
+                ]
+              },
+              "n_respondents": {
+                "type": "integer"
+              },
+              "survey_mode": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "face_to_face",
+                  "telephone_CATI",
+                  "web_CAWI",
+                  "mail",
+                  "mixed_mode"
+                ]
+              },
+              "survey_period": {
+                "type": "compound",
+                "subfields": {
+                  "start": "date",
+                  "end": "date"
+                }
+              },
+              "survey_instrument": {
+                "type": "text",
+                "description": "설문지 버전 또는 링크"
+              }
+            }
+          },
+          "administrative_data": {
+            "obligation": "optional",
+            "type": "compound",
+            "subfields": {
+              "data_source": {
+                "type": "text",
+                "example": "KOSIS 농업총조사, MAFRA 농업관측, FAO FAOSTAT"
+              },
+              "coverage_years": {
+                "type": "compound",
+                "subfields": {
+                  "start": "integer",
+                  "end": "integer"
+                }
+              },
+              "spatial_resolution": {
+                "type": "text",
+                "example": "시군구(SGG), 읍면동"
+              }
+            }
+          },
+          "economic_variables": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "dependent_variables": {
+                "type": "array",
+                "items": "text",
+                "example": [
+                  "farm income",
+                  "crop price",
+                  "export volume"
+                ]
+              },
+              "independent_variables": {
+                "type": "array",
+                "items": "text",
+                "example": [
+                  "subsidy rate",
+                  "tariff rate",
+                  "input cost"
+                ]
+              },
+              "unit_of_analysis": {
+                "type": "text",
+                "example": "household, farm, county, country"
+              }
+            }
+          },
+          "statistical_method": {
+            "obligation": "recommended",
+            "type": "compound",
+            "subfields": {
+              "econometric_model": {
+                "type": "text",
+                "example": "DiD, IV regression, panel fixed effects, PSM"
+              },
+              "software": {
+                "type": "text",
+                "example": "Stata 18, R, GAMS"
+              },
+              "endogeneity_treatment": {
+                "type": "text"
+              }
+            }
+          }
+        },
+        "crosswalk": {
+          "DataCite_4.5": {
+            "Title": "title",
+            "Creator": "creator",
+            "ResourceType": "study_type"
+          },
+          "DublinCore": {
+            "dc:subject": "economic_variables.dependent_variables",
+            "dc:type": "study_type"
+          }
+        }
+      }
+    },
+    {
+      "lab_id": "snu_food_animal_biotech",
+      "lab_name": "Animal Biotechnology and Genomics Lab",
+      "lab_name_ko": "동물생명공학·유전체 연구실",
+      "professor": "이창규 외 (fabio.snu.ac.kr 참조)",
+      "professor_ko": "이창규 외 (식품·동물생명공학부 동물생명공학전공)",
+      "department": "Animal Biotechnology",
+      "department_ko": "동물생명공학전공",
+      "faculty": "식품·동물생명공학부",
+      "lab_url": "https://fabio.snu.ac.kr",
+      "research_domain": "Livestock Genomics, Animal Cell Biotech, Embryo Biotechnology, Cultured Meat, Pig/Chicken Genome",
+      "data_types": [
+        "SNP_chip_genotype",
+        "RNA_seq_fastq",
+        "embryo_imaging",
+        "livestock_phenotype"
+      ],
+      "representative_papers": [
+        {
+          "title": "Comparative Analysis of Gut Microbiota among Broiler Chickens, Pigs, and Cattle through Next-generation Sequencing",
+          "doi": "10.5352/JLS.2021.31.2.149",
+          "journal": "Journal of Life Science",
+          "year": 2021,
+          "note": "koreascience.kr 확인됨. 동물 장내미생물 비교 연구."
+        }
+      ],
+      "data_schema": {
+        "core_fields": {
+          "title": {
+            "obligation": "mandatory",
+            "type": "text"
+          },
+          "creator": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "name": "text",
+              "affiliation": "text",
+              "orcid": "text"
+            }
+          }
+        },
+        "domain_specific_fields": {
+          "experiment_type": {
+            "obligation": "mandatory",
+            "type": "controlledVocabulary",
+            "allowedValues": [
+              "GWAS_livestock",
+              "transcriptomics_RNAseq",
+              "gut_microbiome_16S",
+              "embryo_transfer",
+              "cultured_meat",
+              "SNP_chip_genotyping",
+              "proteomics"
+            ]
+          },
+          "animal_subject": {
+            "obligation": "mandatory",
+            "type": "compound",
+            "subfields": {
+              "species": {
+                "type": "text",
+                "example": "Sus scrofa (pig), Gallus gallus (chicken)"
+              },
+              "breed": {
+                "type": "text",
+                "example": "Berkshire, Korean Native Pig"
+              },
+              "sex": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "male",
+                  "female",
+                  "mixed"
+                ]
+              },
+              "age_or_stage": {
+                "type": "text",
+                "example": "8 weeks, finishing stage"
+              },
+              "n_animals": {
+                "type": "integer"
+              },
+              "management_system": {
+                "type": "controlledVocabulary",
+                "allowedValues": [
+                  "intensive_commercial",
+                  "semi_intensive",
+                  "outdoor",
+                  "laboratory_controlled"
+                ]
+              }
+            }
+          },
+          "genomics_data": {
+            "obligation": "conditional",
+            "condition": "experiment_type includes 'GWAS' or 'genotyping'",
+            "type": "compound",
+            "subfields": {
+              "genotyping_array": {
+                "type": "text",
+                "example": "Illumina PorcineSNP60K, Affymetrix Axiom 600K"
+              },
+              "n_snps_post_QC": {
+                "type": "integer"
+              },
+              "reference_genome_build": {
+                "type": "text",
+                "example": "Sscrofa11.1, GalGal6a"
+              },
+              "data_repository": {
+                "type": "url",
+                "description": "NCBI dbGaP, EBI EVA 등록 URL"
+              },
+              "analysis_software": {
+                "type": "text",
+                "example": "PLINK2, GEMMA, GATK"
+              }
+            }
+          },
+          "transcriptomics_data": {
+            "obligation": "conditional",
+            "condition": "experiment_type == 'transcriptomics_RNAseq'",
+            "type": "compound",
+            "subfields": {
+              "tissue": {
+                "type": "text",
+                "example": "longissimus dorsi, liver, adipose"
+              },
+              "sequencing_platform": {
+                "type": "text",
+                "example": "Illumina NovaSeq 6000"
+              },
+              "read_length_bp": {
+                "type": "integer"
+              },
+              "mean_coverage": {
+                "type": "number"
+              },
+              "SRA_accession": {
+                "type": "text"
+              },
+              "de_analysis_tool": {
+                "type": "text",
+                "example": "DESeq2, edgeR"
+              }
+            }
+          }
+        },
+        "crosswalk": {
+          "DataCite_4.5": {
+            "Title": "title",
+            "Creator": "creator",
+            "Subject": "animal_subject.species"
+          },
+          "DublinCore": {
+            "dc:subject": "animal_subject.species"
+          }
+        }
+      }
+    }
+  ],
+  "skipped_labs": [
+    {
+      "lab_id_tentative": "snu_forest_wood_materials",
+      "department_ko": "환경재료과학전공 (산림과학부)",
+      "reason": "임산공학/목재재료 분야 논문 웹 검색 결과 불충분. forestry.snu.ac.kr 교수 목록 직접 확인 필요.",
+      "suggested_action": "forestry.snu.ac.kr/en 에서 교수 및 논문 목록 직접 열람"
+    },
+    {
+      "lab_id_tentative": "snu_abc_soil_chemistry",
+      "department_ko": "응용생명화학전공 (응용생물화학부) — 토양화학·농약화학",
+      "reason": "구체적 교수 이름 미확보. 웹 스니펫에 개별 교수 정보 불충분.",
+      "suggested_action": "cals.snu.ac.kr/en/research/our-research/applied-biology-chemistry 참조"
+    },
+    {
+      "lab_id_tentative": "snu_landscape_architecture",
+      "department_ko": "조경학전공 (조경·지역시스템공학부)",
+      "reason": "조경 계획·설계 분야는 실험 데이터보다 설계 도면·인문사회 데이터 위주. 메타데이터 구조화 방향 재검토 필요.",
+      "suggested_action": "larse.snu.ac.kr 직접 접속하여 연구실 및 논문 확인"
+    },
+    {
+      "url_skipped": "https://bse.snu.ac.kr/snu__professor/김태형/",
+      "reason": "사용자 지시로 WebFetch 중단. WebSearch 스니펫으로 대체 처리.",
+      "replacement": "CALS 뉴스 인터뷰 스니펫 및 Google Scholar 검색 결과 활용"
+    }
+  ]
+}

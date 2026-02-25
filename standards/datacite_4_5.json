@@ -1,0 +1,353 @@
+{
+  "_meta": {
+    "standard_name": "DataCite Metadata Schema",
+    "version": "4.5",
+    "source": {
+      "institution": "DataCite e.V.",
+      "url": "https://datacite-metadata-schema.readthedocs.io/en/4.5/",
+      "schema_url": "https://schema.datacite.org/meta/kernel-4.5/",
+      "retrieved_at": "2026-02-24"
+    },
+    "purpose": "연구 데이터 및 기타 연구 산출물의 인용 및 검색을 위한 핵심 메타데이터 속성",
+    "obligation_legend": {
+      "M": "Mandatory - 반드시 제공",
+      "R": "Recommended - 강력 권장 (상호운용성)",
+      "O": "Optional - 선택적 제공"
+    }
+  },
+
+  "properties": {
+    "1_identifier": {
+      "property_id": 1,
+      "name": "Identifier",
+      "obligation": "M",
+      "description": "리소스를 유일하게 식별하는 식별자. DOI 형식 권장.",
+      "subproperties": {
+        "identifierType": {
+          "obligation": "M",
+          "type": "controlledVocabulary",
+          "allowedValues": ["DOI"],
+          "description": "식별자 유형"
+        }
+      },
+      "example": "10.5061/dryad.8515"
+    },
+
+    "2_creator": {
+      "property_id": 2,
+      "name": "Creator",
+      "obligation": "M",
+      "description": "리소스 생성에 주된 책임이 있는 인물 또는 기관. 순서 중요.",
+      "subproperties": {
+        "creatorName": {
+          "obligation": "M",
+          "type": "text",
+          "nameType": {
+            "type": "controlledVocabulary",
+            "allowedValues": ["Organizational", "Personal"]
+          }
+        },
+        "givenName": {"obligation": "O", "type": "text"},
+        "familyName": {"obligation": "O", "type": "text"},
+        "nameIdentifier": {
+          "obligation": "O",
+          "type": "text",
+          "nameIdentifierScheme": {
+            "type": "controlledVocabulary",
+            "example_values": ["ORCID", "ISNI", "ROR"]
+          },
+          "schemeURI": {"type": "url"}
+        },
+        "affiliation": {
+          "obligation": "O",
+          "type": "text",
+          "affiliationIdentifier": {"type": "text"},
+          "affiliationIdentifierScheme": {"type": "text", "example": "ROR"},
+          "schemeURI": {"type": "url"}
+        }
+      }
+    },
+
+    "3_title": {
+      "property_id": 3,
+      "name": "Title",
+      "obligation": "M",
+      "description": "리소스에 부여된 이름",
+      "subproperties": {
+        "titleType": {
+          "obligation": "O",
+          "type": "controlledVocabulary",
+          "allowedValues": ["AlternativeTitle", "Subtitle", "TranslatedTitle", "Other"]
+        }
+      }
+    },
+
+    "4_publisher": {
+      "property_id": 4,
+      "name": "Publisher",
+      "obligation": "M",
+      "description": "리소스를 배포하는 기관 (v4.5에서 식별자 추가 지원)",
+      "subproperties": {
+        "publisherIdentifier": {"obligation": "O", "type": "text"},
+        "publisherIdentifierScheme": {"obligation": "O", "type": "text", "example": "ROR"},
+        "schemeURI": {"obligation": "O", "type": "url"}
+      }
+    },
+
+    "5_publicationYear": {
+      "property_id": 5,
+      "name": "PublicationYear",
+      "obligation": "M",
+      "description": "리소스가 배포된 연도 (YYYY)",
+      "format": "YYYY"
+    },
+
+    "6_subject": {
+      "property_id": 6,
+      "name": "Subject",
+      "obligation": "R",
+      "description": "리소스의 주제, 키워드, 분류코드 또는 핵심구",
+      "subproperties": {
+        "subjectScheme": {"obligation": "O", "type": "text", "example": "AGROVOC"},
+        "schemeURI": {"obligation": "O", "type": "url", "example": "https://agrovoc.fao.org/"},
+        "valueURI": {"obligation": "O", "type": "url"},
+        "classificationCode": {"obligation": "O", "type": "text"}
+      }
+    },
+
+    "7_contributor": {
+      "property_id": 7,
+      "name": "Contributor",
+      "obligation": "R",
+      "description": "리소스 개발에 책임이 있는 기여자",
+      "subproperties": {
+        "contributorType": {
+          "obligation": "M",
+          "type": "controlledVocabulary",
+          "allowedValues": [
+            "ContactPerson", "DataCollector", "DataCurator", "DataManager",
+            "Distributor", "Editor", "HostingInstitution", "Producer",
+            "ProjectLeader", "ProjectManager", "ProjectMember", "RegistrationAgency",
+            "RegistrationAuthority", "RelatedPerson", "Researcher",
+            "ResearchGroup", "RightsHolder", "Sponsor", "Supervisor",
+            "WorkPackageLeader", "Other"
+          ]
+        },
+        "contributorName": {"obligation": "M", "type": "text"},
+        "nameIdentifier": {"obligation": "O", "type": "text"},
+        "affiliation": {"obligation": "O", "type": "text"}
+      }
+    },
+
+    "8_date": {
+      "property_id": 8,
+      "name": "Date",
+      "obligation": "R",
+      "description": "리소스와 관련된 날짜",
+      "format": "ISO 8601 (YYYY, YYYY-MM, YYYY-MM-DD, YYYY-MM-DDThh:mm:ss)",
+      "subproperties": {
+        "dateType": {
+          "obligation": "M",
+          "type": "controlledVocabulary",
+          "allowedValues": [
+            "Accepted", "Available", "Copyrighted", "Collected",
+            "Created", "Issued", "Submitted", "Updated", "Valid",
+            "Withdrawn", "Other"
+          ]
+        },
+        "dateInformation": {"obligation": "O", "type": "text"}
+      }
+    },
+
+    "9_language": {
+      "property_id": 9,
+      "name": "Language",
+      "obligation": "O",
+      "description": "리소스의 주 언어",
+      "vocabulary_standard": "IETF BCP 47 / ISO 639-1",
+      "example": "ko, en, zh"
+    },
+
+    "10_resourceType": {
+      "property_id": 10,
+      "name": "ResourceType",
+      "obligation": "M",
+      "description": "리소스의 유형",
+      "subproperties": {
+        "resourceTypeGeneral": {
+          "obligation": "M",
+          "type": "controlledVocabulary",
+          "allowedValues": [
+            "Audiovisual", "Book", "BookChapter", "Collection", "ComputationalNotebook",
+            "ConferencePaper", "ConferenceProceeding", "DataPaper", "Dataset",
+            "Dissertation", "Event", "Image", "Instrument", "InteractiveResource",
+            "Journal", "JournalArticle", "Model", "OutputManagementPlan",
+            "PeerReview", "PhysicalObject", "Preprint", "Report", "Service",
+            "Software", "Sound", "Standard", "StudyRegistration", "Text", "Workflow", "Other"
+          ],
+          "note": "v4.5에서 Instrument, StudyRegistration 추가됨"
+        }
+      }
+    },
+
+    "11_alternateIdentifier": {
+      "property_id": 11,
+      "name": "AlternateIdentifier",
+      "obligation": "O",
+      "description": "동일 인스턴스에 대한 다른 식별자 (로컬 ID 등)",
+      "subproperties": {
+        "alternateIdentifierType": {"obligation": "M", "type": "text"}
+      }
+    },
+
+    "12_relatedIdentifier": {
+      "property_id": 12,
+      "name": "RelatedIdentifier",
+      "obligation": "R",
+      "description": "관련 리소스 식별자",
+      "subproperties": {
+        "relatedIdentifierType": {
+          "type": "controlledVocabulary",
+          "allowedValues": ["ARK", "arXiv", "bibcode", "CSTR", "DOI", "EAN13", "EISSN",
+                            "Handle", "IGSN", "ISBN", "ISSN", "ISTC", "LISSN", "LSID",
+                            "PMID", "PURL", "RRID", "UPC", "URL", "URN", "w3id"]
+        },
+        "relationType": {
+          "type": "controlledVocabulary",
+          "allowedValues": [
+            "IsCitedBy", "Cites", "IsCollectedBy", "Collects",
+            "IsSupplementTo", "IsSupplementedBy", "IsContinuedBy", "Continues",
+            "IsDescribedBy", "Describes", "HasMetadata", "IsMetadataFor",
+            "HasVersion", "IsVersionOf", "IsNewVersionOf", "IsPreviousVersionOf",
+            "IsPartOf", "HasPart", "IsPublishedIn", "IsReferencedBy", "References",
+            "IsDocumentedBy", "Documents", "IsCompiledBy", "Compiles",
+            "IsVariantFormOf", "IsOriginalFormOf", "IsIdenticalTo",
+            "IsReviewedBy", "Reviews", "IsDerivedFrom", "IsSourceOf",
+            "IsRequiredBy", "Requires", "Obsoletes", "IsObsoletedBy"
+          ],
+          "note": "v4.5에서 IsCollectedBy/Collects 추가됨"
+        }
+      }
+    },
+
+    "13_size": {
+      "property_id": 13,
+      "name": "Size",
+      "obligation": "O",
+      "description": "리소스의 크기 또는 용량",
+      "example": "15 MB, 3 files"
+    },
+
+    "14_format": {
+      "property_id": 14,
+      "name": "Format",
+      "obligation": "O",
+      "description": "파일 형식 (MIME 유형 권장)",
+      "example": "text/csv, application/json, image/tiff"
+    },
+
+    "15_version": {
+      "property_id": 15,
+      "name": "Version",
+      "obligation": "O",
+      "description": "리소스 버전"
+    },
+
+    "16_rights": {
+      "property_id": 16,
+      "name": "Rights",
+      "obligation": "O",
+      "description": "리소스에 적용되는 이용 조건",
+      "subproperties": {
+        "rightsURI": {"type": "url", "example": "https://creativecommons.org/licenses/by/4.0/"},
+        "rightsIdentifier": {"type": "text", "example": "CC-BY-4.0"},
+        "rightsIdentifierScheme": {"type": "text", "example": "SPDX"},
+        "schemeURI": {"type": "url"}
+      }
+    },
+
+    "17_description": {
+      "property_id": 17,
+      "name": "Description",
+      "obligation": "R",
+      "description": "리소스에 대한 추가 정보. Abstract 유형 강력 권장.",
+      "subproperties": {
+        "descriptionType": {
+          "obligation": "M",
+          "type": "controlledVocabulary",
+          "allowedValues": ["Abstract", "Methods", "SeriesInformation", "TableOfContents",
+                            "TechnicalInfo", "Other"]
+        }
+      }
+    },
+
+    "18_geoLocation": {
+      "property_id": 18,
+      "name": "GeoLocation",
+      "obligation": "R",
+      "description": "데이터가 수집된 공간 지역",
+      "subproperties": {
+        "geoLocationPlace": {"type": "text"},
+        "geoLocationPoint": {
+          "type": "compound",
+          "subfields": {
+            "pointLongitude": {"type": "number", "range": "-180 to 180"},
+            "pointLatitude": {"type": "number", "range": "-90 to 90"}
+          }
+        },
+        "geoLocationBox": {
+          "type": "compound",
+          "subfields": {
+            "westBoundLongitude": {"type": "number"},
+            "eastBoundLongitude": {"type": "number"},
+            "southBoundLatitude": {"type": "number"},
+            "northBoundLatitude": {"type": "number"}
+          }
+        },
+        "geoLocationPolygon": {"type": "array", "description": "다각형 좌표 목록"}
+      }
+    },
+
+    "19_fundingReference": {
+      "property_id": 19,
+      "name": "FundingReference",
+      "obligation": "O",
+      "description": "리소스를 지원한 연구비 정보",
+      "subproperties": {
+        "funderName": {"obligation": "M", "type": "text"},
+        "funderIdentifier": {"obligation": "O", "type": "text"},
+        "funderIdentifierType": {
+          "obligation": "O",
+          "type": "controlledVocabulary",
+          "allowedValues": ["ISNI", "GRID", "Crossref Funder ID", "ROR", "Other"]
+        },
+        "awardNumber": {"obligation": "O", "type": "text", "description": "과제번호"},
+        "awardURI": {"obligation": "O", "type": "url"},
+        "awardTitle": {"obligation": "O", "type": "text"}
+      }
+    },
+
+    "20_relatedItem": {
+      "property_id": 20,
+      "name": "RelatedItem",
+      "obligation": "O",
+      "description": "관련 리소스의 상세 메타데이터 (식별자 없는 경우)",
+      "subproperties": {
+        "relatedItemType": {"type": "controlledVocabulary", "note": "resourceTypeGeneral 값 사용"},
+        "relationType": {"type": "text", "note": "relatedIdentifier의 relationType 값 사용"},
+        "relatedItemIdentifier": {"type": "text"},
+        "titles": {"type": "array"},
+        "creators": {"type": "array"},
+        "publicationYear": {"type": "text"},
+        "volume": {"type": "text"},
+        "issue": {"type": "text"},
+        "number": {"type": "text"},
+        "firstPage": {"type": "text"},
+        "lastPage": {"type": "text"},
+        "publisher": {"type": "text"},
+        "edition": {"type": "text"},
+        "contributors": {"type": "array"}
+      }
+    }
+  }
+}

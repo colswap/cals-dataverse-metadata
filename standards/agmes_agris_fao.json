@@ -1,0 +1,178 @@
+{
+  "_meta": {
+    "standard_name": "AgMES (Agricultural Metadata Element Set) + AGRIS Application Profile",
+    "version": "AgMES 1.1 / AGRIS AP 2.0",
+    "source": [
+      {
+        "institution": "FAO - Food and Agriculture Organization of the United Nations",
+        "standard": "AgMES 1.1",
+        "url": "https://aims.fao.org/standards/agmes",
+        "namespace_spec_url": "https://aims.fao.org/standards/agmes/namespace-specification",
+        "retrieved_at": "2026-02-24",
+        "fetch_status": "PENDING - aims.fao.org 응답 지연. research/pending_fao.md 참조.",
+        "note": "DCC(dcc.ac.uk) 및 RDA Metadata Directory 스니펫 기반으로 작성"
+      },
+      {
+        "institution": "FAO - AGRIS International System",
+        "standard": "AGRIS Application Profile 2.0",
+        "url": "https://www.fao.org/agris/",
+        "full_spec_url": "https://www.fao.org/4/ae909e/ae909e02.htm",
+        "retrieved_at": "2026-02-24",
+        "fetch_status": "PARTIAL - 소개 섹션만 확인됨. 전체 요소 목록 보류.",
+        "secondary_source": "https://www.dcc.ac.uk/resources/metadata-standards/agmes-agricultural-metadata-element-set"
+      }
+    ],
+    "deprecation_notice": "AgMES는 공식적으로 Deprecated 상태임. 신규 시스템에서는 직접 사용 비권장. AGRIS AP 및 AGROVOC 참조 용도로 활용.",
+    "base_standards": ["Dublin Core (dc:)", "AGLS (agls:)", "AgMES (ags:)"]
+  },
+
+  "agmes_elements": {
+    "note": "AgMES는 Dublin Core를 확장하는 농업 특화 네임스페이스(ags:). 핵심 요소는 DC와 매핑됨.",
+    "namespace_prefix": "ags",
+    "namespace_uri": "http://purl.org/agmes/1.1/",
+
+    "ags:availability": {
+      "label": "Availability",
+      "definition": "자원에 접근하거나 획득하는 방법에 대한 정보",
+      "maps_to_dc": "dc:relation",
+      "subfields": {
+        "ags:availabilityLocation": {"definition": "소장 기관명"},
+        "ags:availabilityNumber": {"definition": "청구기호 또는 레코드 번호"}
+      }
+    },
+    "ags:coden": {
+      "label": "CODEN",
+      "definition": "저널 또는 시리얼 간행물의 CODEN 코드",
+      "maps_to_dc": "dc:identifier"
+    },
+    "ags:creatorCorporate": {
+      "label": "Creator Corporate",
+      "definition": "자원 생성에 책임이 있는 단체 (법인·기관)",
+      "maps_to_dc": "dc:creator"
+    },
+    "ags:creatorPersonal": {
+      "label": "Creator Personal",
+      "definition": "자원 생성에 책임이 있는 개인 저자",
+      "maps_to_dc": "dc:creator",
+      "subfields": {
+        "ags:creatorPersonalName": {"definition": "성명 (Surname, Given name 형식)"},
+        "ags:affiliation": {"definition": "소속 기관"}
+      }
+    },
+    "ags:publisherPlace": {
+      "label": "Publisher Place",
+      "definition": "출판지",
+      "maps_to_dc": "dc:publisher"
+    },
+    "ags:refereed": {
+      "label": "Refereed",
+      "definition": "동료심사(peer review) 여부",
+      "type": "boolean"
+    },
+    "ags:scientificName": {
+      "label": "Scientific Name",
+      "definition": "생물종의 학명",
+      "note": "농업생명과학 데이터에 핵심 필드",
+      "controlled_vocabulary": "NCBI Taxonomy, ITIS"
+    },
+    "ags:subjectClassification": {
+      "label": "Subject Classification",
+      "definition": "분류체계에 의한 주제 분류 코드",
+      "maps_to_dc": "dc:subject",
+      "controlled_vocabulary": "AGROVOC, ASC (AGRIS Subject Categories)"
+    },
+    "ags:subjectThesaurus": {
+      "label": "Subject Thesaurus",
+      "definition": "통제어휘(시소러스)에서 가져온 주제어",
+      "maps_to_dc": "dc:subject",
+      "controlled_vocabulary": "AGROVOC (https://agrovoc.fao.org/)"
+    }
+  },
+
+  "agris_ap_elements": {
+    "note": "AGRIS AP는 농업 문헌(Document-like Information Objects) 교환을 위한 응용 프로파일. DC + AGLS + AgMES 기반.",
+    "lode_bd_m2b_minimum": "LODE-BD Recommendations 3.0의 M2B(Meaningful Bibliographic Metadata) 준수 권장",
+
+    "mandatory_elements": {
+      "dc:title": {
+        "obligation": "mandatory",
+        "definition": "자원의 제목",
+        "refinements": ["dcterms:alternative"]
+      },
+      "dc:creator": {
+        "obligation": "mandatory",
+        "definition": "저자 (개인 또는 단체)",
+        "use_ags_subfields": true
+      },
+      "dc:publisher": {
+        "obligation": "mandatory",
+        "definition": "출판/배포 기관"
+      },
+      "dc:date": {
+        "obligation": "mandatory",
+        "definition": "출판 또는 생성 날짜",
+        "format": "ISO 8601"
+      },
+      "dc:type": {
+        "obligation": "mandatory",
+        "definition": "자원 유형 (AGRIS 내부 분류 사용)",
+        "agris_type_vocabulary": ["Journal Article", "Book", "Book Chapter", "Conference Paper",
+                                   "Report", "Thesis", "Patent", "Dataset", "Other"]
+      },
+      "dc:identifier": {
+        "obligation": "mandatory",
+        "definition": "자원 식별자 (DOI, Handle, URL 등)"
+      }
+    },
+
+    "recommended_elements": {
+      "dc:subject": {
+        "obligation": "recommended",
+        "definition": "주제어 및 분류코드",
+        "preferred_vocabulary": "AGROVOC"
+      },
+      "dc:description": {
+        "obligation": "recommended",
+        "definition": "초록 또는 요약 (dcterms:abstract 권장)"
+      },
+      "dc:contributor": {
+        "obligation": "recommended",
+        "definition": "기여자 (편집자, 데이터 관리자 등)"
+      },
+      "dc:language": {
+        "obligation": "recommended",
+        "encoding": "ISO 639-1"
+      },
+      "dc:format": {
+        "obligation": "recommended",
+        "definition": "자원의 파일 형식 또는 매체"
+      },
+      "dc:relation": {
+        "obligation": "recommended",
+        "definition": "관련 자원"
+      },
+      "dc:coverage": {
+        "obligation": "recommended",
+        "definition": "지리적·시간적 범위"
+      },
+      "dc:rights": {
+        "obligation": "recommended",
+        "definition": "이용 조건 및 라이선스"
+      },
+      "ags:availability": {
+        "obligation": "recommended",
+        "definition": "자원 소재 및 접근 방법"
+      }
+    }
+  },
+
+  "agrovoc_reference": {
+    "name": "AGROVOC Multilingual Thesaurus",
+    "institution": "FAO",
+    "url": "https://agrovoc.fao.org/",
+    "sparql_endpoint": "https://agrovoc.fao.org/sparql",
+    "languages": 40,
+    "note": "농업·식품·영양·수산·임업·환경 분야 통제어휘. SKOS RDF 형식 제공.",
+    "fetch_status": "PENDING - research/pending_fao.md 참조"
+  }
+}

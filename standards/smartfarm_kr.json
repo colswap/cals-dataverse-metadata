@@ -1,0 +1,288 @@
+{
+  "_meta": {
+    "standard_name": "스마트팜 데이터마켓 / 스마트팜코리아 데이터 메타데이터",
+    "version": "농림축산식품부 스마트팜 데이터 마트 API 기반",
+    "source": [
+      {
+        "institution": "농림축산식품부 / 스마트팜코리아",
+        "url": "https://www.smartfarmkorea.net/",
+        "openapi_items_url": "https://www.data.go.kr/data/15121325/openapi.do",
+        "openapi_season_url": "https://www.data.go.kr/data/15121324/openapi.do",
+        "openapi_bigdata_url": "https://www.data.go.kr/data/15121334/openapi.do",
+        "retrieved_at": "2026-02-24",
+        "note": "공공데이터포털 API 명세 스니펫 및 KISTI 표준 개발 보고서 기반 작성. data.go.kr Fetch 응답 지연으로 스니펫 활용."
+      },
+      {
+        "institution": "농촌진흥청 (RDA, Rural Development Administration)",
+        "url": "https://www.data.go.kr/data/15042594/openapi.do",
+        "description": "스마트팜 우수농가 공개 데이터"
+      },
+      {
+        "institution": "KISTI (한국과학기술정보연구원)",
+        "report_url": "https://scienceon.kisti.re.kr/srch/selectPORSrchReport.do?cn=TRKO202400004288",
+        "description": "엣지-IoT클라우드 기반 스마트팜 데이터 서비스 플랫폼 표준 개발 보고서"
+      }
+    ],
+    "data_categories": ["환경(Environment)", "제어(Control)", "생육(Growth)", "경영(Management)", "이미지(Image)"]
+  },
+
+  "dataset_metadata": {
+    "note": "데이터셋 수준 메타데이터 (카탈로그·검색용)",
+
+    "기본정보": {
+      "데이터셋ID": {
+        "label_en": "datasetId",
+        "type": "string",
+        "obligation": "mandatory"
+      },
+      "데이터셋명": {
+        "label_en": "datasetName",
+        "type": "string",
+        "obligation": "mandatory"
+      },
+      "작물": {
+        "label_en": "crop",
+        "type": "string",
+        "obligation": "mandatory",
+        "example_values": ["토마토", "딸기", "파프리카", "상추", "오이", "멜론"],
+        "controlled_vocabulary": "AGROVOC 권장"
+      },
+      "시설유형": {
+        "label_en": "facilityType",
+        "type": "controlledVocabulary",
+        "allowedValues": ["유리온실", "비닐하우스", "식물공장", "노지", "축사", "양식장"]
+      },
+      "재배방식": {
+        "label_en": "cultivationMethod",
+        "type": "string",
+        "example_values": ["수경재배", "토경재배", "양액재배", "유기농"]
+      },
+      "수집기간": {
+        "label_en": "collectionPeriod",
+        "type": "compound",
+        "subfields": {
+          "시작일": {"type": "date", "format": "YYYY-MM-DD"},
+          "종료일": {"type": "date", "format": "YYYY-MM-DD"}
+        }
+      },
+      "농가정보": {
+        "label_en": "farmInfo",
+        "type": "compound",
+        "subfields": {
+          "지역": {"type": "string", "description": "시도/시군구"},
+          "위도": {"type": "number"},
+          "경도": {"type": "number"},
+          "면적_m2": {"type": "number"}
+        }
+      },
+      "데이터량": {
+        "type": "compound",
+        "subfields": {
+          "총레코드수": {"type": "integer"},
+          "용량": {"type": "string"}
+        }
+      },
+      "파일형식": {"type": "array", "example_values": ["CSV", "JSON", "XML"]},
+      "갱신주기": {
+        "type": "string",
+        "example_values": ["실시간", "1분", "10분", "1시간", "일별", "주별"]
+      },
+      "제공기관": {"type": "string"},
+      "라이선스": {"type": "string", "example": "공공저작물 자유이용허락"},
+      "API접근URL": {"type": "url"}
+    }
+  },
+
+  "environment_data": {
+    "note": "온실 내·외부 환경 센서 데이터 항목",
+    "수집_주기": "1분~10분 단위 시계열",
+
+    "내부환경": {
+      "내부온도": {
+        "label_en": "internalTemperature",
+        "unit": "°C",
+        "type": "float",
+        "sensor": "온도센서"
+      },
+      "내부습도": {
+        "label_en": "internalHumidity",
+        "unit": "%RH",
+        "type": "float",
+        "sensor": "습도센서"
+      },
+      "CO2농도": {
+        "label_en": "co2Concentration",
+        "unit": "ppm",
+        "type": "float",
+        "sensor": "CO₂ 센서"
+      },
+      "조도": {
+        "label_en": "illuminance",
+        "unit": "lux",
+        "type": "float",
+        "sensor": "조도센서"
+      },
+      "일사량": {
+        "label_en": "solarRadiation",
+        "unit": "W/m²",
+        "type": "float"
+      }
+    },
+
+    "토양정보": {
+      "토양온도": {"label_en": "soilTemperature", "unit": "°C", "type": "float"},
+      "토양수분": {"label_en": "soilMoisture", "unit": "%", "type": "float"},
+      "토양EC": {
+        "label_en": "soilEC",
+        "unit": "mS/cm",
+        "type": "float",
+        "description": "전기전도도 (양분 농도 지표)"
+      },
+      "토양pH": {"label_en": "soilPH", "unit": "pH", "type": "float"}
+    },
+
+    "외부환경": {
+      "외부온도": {"label_en": "externalTemperature", "unit": "°C"},
+      "외부습도": {"label_en": "externalHumidity", "unit": "%RH"},
+      "풍속": {"label_en": "windSpeed", "unit": "m/s"},
+      "풍향": {"label_en": "windDirection", "unit": "°"},
+      "강우량": {"label_en": "rainfall", "unit": "mm"},
+      "일조시간": {"label_en": "sunshineDuration", "unit": "h"}
+    }
+  },
+
+  "control_data": {
+    "note": "재배 제어 정보",
+
+    "양액제어": {
+      "양액EC": {"label_en": "nutrientEC", "unit": "mS/cm", "type": "float"},
+      "양액pH": {"label_en": "nutrientPH", "unit": "pH", "type": "float"},
+      "관수량": {"label_en": "irrigationAmount", "unit": "L", "type": "float"},
+      "관수시간": {"label_en": "irrigationDuration", "unit": "min"},
+      "관수횟수": {"label_en": "irrigationFrequency", "unit": "회/일"}
+    },
+
+    "광제어": {
+      "보광시간": {"label_en": "supplementalLightingDuration", "unit": "h"},
+      "보광강도": {"label_en": "supplementalLightingIntensity", "unit": "μmol/m²/s"}
+    },
+
+    "환경제어": {
+      "난방설정온도": {"label_en": "heatingSetpoint", "unit": "°C"},
+      "환기설정온도": {"label_en": "ventilationSetpoint", "unit": "°C"},
+      "CO2공급량": {"label_en": "co2SupplyAmount", "unit": "L/h"}
+    }
+  },
+
+  "growth_data": {
+    "note": "작물 생육 조사 정보 (생육단계별 수동 측정)",
+
+    "작물생육": {
+      "조사일자": {"type": "date", "format": "YYYY-MM-DD"},
+      "생육단계": {
+        "label_en": "growthStage",
+        "type": "string",
+        "example_values": ["발아", "정식", "개화", "착과", "수확"]
+      },
+      "초장": {"label_en": "plantHeight", "unit": "cm", "type": "float"},
+      "엽수": {"label_en": "leafCount", "unit": "매", "type": "integer"},
+      "엽면적": {"label_en": "leafArea", "unit": "cm²", "type": "float"},
+      "줄기직경": {"label_en": "stemDiameter", "unit": "mm", "type": "float"},
+      "착과수": {"label_en": "fruitCount", "unit": "개", "type": "integer"},
+      "수확량": {"label_en": "yield", "unit": "g/주", "type": "float"},
+      "당도": {"label_en": "sugarContent", "unit": "°Brix", "type": "float"}
+    },
+
+    "이미지정보": {
+      "촬영일시": {"type": "datetime", "format": "YYYY-MM-DDThh:mm:ss"},
+      "이미지유형": {
+        "type": "controlledVocabulary",
+        "allowedValues": ["RGB", "적외선(IR)", "근적외선(NIR)", "멀티스펙트럼", "하이퍼스펙트럼"]
+      },
+      "촬영부위": {
+        "type": "string",
+        "example_values": ["전체", "잎", "줄기", "과실", "뿌리"]
+      },
+      "해상도": {"type": "string", "example": "4096x3072"},
+      "라벨링정보": {
+        "type": "compound",
+        "subfields": {
+          "라벨유형": {"type": "string", "example_values": ["병해충", "생육단계", "결함"]},
+          "바운딩박스": {"type": "boolean"},
+          "세그멘테이션": {"type": "boolean"}
+        }
+      }
+    }
+  },
+
+  "livestock_data": {
+    "note": "축산 데이터 항목 (스마트팜 축사 적용)",
+
+    "개체정보": {
+      "개체ID": {"type": "string"},
+      "축종": {
+        "label_en": "livestockType",
+        "type": "controlledVocabulary",
+        "allowedValues": ["한우", "젖소", "돼지", "닭", "오리", "산양"]
+      },
+      "품종": {"type": "string"}
+    },
+
+    "생체정보": {
+      "체온": {"label_en": "bodyTemperature", "unit": "°C"},
+      "체중": {"label_en": "bodyWeight", "unit": "kg"},
+      "활동량": {"label_en": "activityLevel", "unit": "steps/h"},
+      "이동거리": {"label_en": "movementDistance", "unit": "m/h"},
+      "발정탐지": {"label_en": "heatDetection", "type": "boolean"}
+    },
+
+    "급이정보": {
+      "급이량": {"label_en": "feedAmount", "unit": "kg/일"},
+      "급수량": {"label_en": "waterConsumption", "unit": "L/일"},
+      "배설량": {"label_en": "excretionAmount", "unit": "kg/일"}
+    },
+
+    "축사환경": {
+      "축사온도": {"label_en": "barnTemperature", "unit": "°C"},
+      "축사습도": {"label_en": "barnHumidity", "unit": "%RH"},
+      "암모니아농도": {"label_en": "ammoniaConcentration", "unit": "ppm"}
+    }
+  },
+
+  "iot_technical_metadata": {
+    "note": "IoT 센서·장치 기술 메타데이터 (표준 개발 중 - KISTI)",
+    "reference": "https://scienceon.kisti.re.kr/srch/selectPORSrchReport.do?cn=TRKO202400004288",
+    "standardization_status": "국내·국제표준화 진행 중",
+
+    "장치정보": {
+      "deviceID": {"type": "string"},
+      "deviceType": {"type": "string"},
+      "manufacturer": {"type": "string"},
+      "model": {"type": "string"},
+      "firmwareVersion": {"type": "string"},
+      "installationDate": {"type": "date"},
+      "calibrationDate": {"type": "date"}
+    },
+
+    "측정정보": {
+      "samplingInterval": {"type": "integer", "unit": "seconds"},
+      "measurementUnit": {"type": "string"},
+      "accuracyClass": {"type": "string"},
+      "measurementRange": {
+        "min": {"type": "number"},
+        "max": {"type": "number"}
+      }
+    },
+
+    "통신정보": {
+      "protocol": {
+        "type": "controlledVocabulary",
+        "example_values": ["MQTT", "HTTP/REST", "Modbus", "OPC-UA", "LoRaWAN", "Zigbee"]
+      },
+      "dataFormat": {
+        "type": "controlledVocabulary",
+        "example_values": ["JSON", "XML", "CSV", "Protobuf"]
+      }
+    }
+  }
+}

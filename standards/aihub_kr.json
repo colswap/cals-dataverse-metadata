@@ -1,0 +1,135 @@
+{
+  "_meta": {
+    "standard_name": "한국 AI 허브 (AI-Hub) 데이터셋 메타데이터",
+    "version": "인공지능 학습용 데이터 품질관리 가이드라인 v3.1 (2024)",
+    "source": [
+      {
+        "institution": "한국지능정보사회진흥원 (NIA, National Information Society Agency)",
+        "url": "https://aihub.or.kr/",
+        "dataset_catalog_url": "https://www.data.go.kr/data/15135578/fileData.do?recommendDataYn=Y",
+        "retrieved_at": "2026-02-24",
+        "note": "공공데이터포털 공개 데이터셋 정보(CSV) 스니펫 기반 작성"
+      }
+    ],
+    "scope": "인공지능 학습용 데이터셋 목록 및 검색용 메타데이터 (총 845종+, 2024년 기준)"
+  },
+
+  "dataset_catalog_fields": {
+    "note": "공공데이터포털 공개 AI허브 데이터셋 카탈로그 CSV 기반 필드 목록",
+
+    "구축년도": {
+      "label_en": "constructionYear",
+      "type": "varchar(10)",
+      "obligation": "mandatory",
+      "description": "데이터셋 구축 연도 (YYYY)"
+    },
+    "데이터명": {
+      "label_en": "datasetName",
+      "type": "varchar(50)",
+      "obligation": "mandatory",
+      "description": "데이터셋 명칭"
+    },
+    "분야": {
+      "label_en": "domain",
+      "type": "varchar(30)",
+      "obligation": "mandatory",
+      "description": "데이터셋 분야 분류",
+      "controlled_vocabulary": "AI Hub 내부 분류체계",
+      "example_values": ["농업·축산", "의료", "교통", "제조", "안전", "환경", "방송·통신", "스포츠"]
+    },
+    "유형": {
+      "label_en": "dataType",
+      "type": "varchar(30)",
+      "obligation": "mandatory",
+      "description": "데이터셋 유형",
+      "example_values": ["이미지", "텍스트", "음성", "영상", "시계열", "정형"]
+    },
+    "소개": {
+      "label_en": "description",
+      "type": "varchar(200)",
+      "obligation": "mandatory",
+      "description": "데이터셋에 대한 간단한 설명"
+    },
+    "링크": {
+      "label_en": "accessURL",
+      "type": "varchar(100)",
+      "obligation": "mandatory",
+      "description": "AI Hub 내 데이터셋 접속 URL"
+    }
+  },
+
+  "quality_guideline_fields": {
+    "note": "인공지능 학습용 데이터 품질관리 가이드라인 v3.1 (2024) 기반 추가 메타데이터 항목",
+    "source_doc": "https://aihub.or.kr/ (가이드라인 PDF)",
+
+    "데이터셋_기본정보": {
+      "데이터셋ID": {"type": "string", "description": "고유 식별자 (dataSetSn)"},
+      "데이터셋명": {"type": "string", "obligation": "mandatory"},
+      "버전": {"type": "string", "description": "데이터셋 버전"},
+      "생성일자": {"type": "date", "format": "YYYY-MM-DD"},
+      "수정일자": {"type": "date"},
+      "제공기관": {"type": "string", "description": "구축·제공 기관명"},
+      "담당부서": {"type": "string"},
+      "라이선스": {
+        "type": "string",
+        "description": "이용 허락 조건",
+        "example_values": ["공공저작물 출처표시", "CC BY 4.0", "CC BY-NC 4.0"]
+      }
+    },
+
+    "데이터_특성": {
+      "학습용도": {
+        "type": "array",
+        "description": "AI 학습 목적",
+        "example_values": ["객체인식", "분류", "세그멘테이션", "자연어처리", "생성AI"]
+      },
+      "데이터수집방법": {"type": "string"},
+      "수집기간": {
+        "type": "compound",
+        "subfields": {
+          "시작일": {"type": "date"},
+          "종료일": {"type": "date"}
+        }
+      },
+      "데이터량": {
+        "type": "compound",
+        "subfields": {
+          "총건수": {"type": "integer"},
+          "용량": {"type": "string", "example": "15 GB"}
+        }
+      },
+      "파일형식": {
+        "type": "array",
+        "example_values": ["JSON", "CSV", "XML", "JPG", "PNG", "WAV", "MP4"]
+      },
+      "어노테이션형식": {
+        "type": "string",
+        "description": "라벨링 포맷 (이미지 데이터의 경우)",
+        "example_values": ["COCO", "Pascal VOC", "YOLO", "JSON"]
+      }
+    },
+
+    "품질정보": {
+      "구축정확도": {"type": "number", "description": "라벨링 정확도 (%)"},
+      "검수방법": {"type": "string"},
+      "검수비율": {"type": "number"}
+    }
+  },
+
+  "agriculture_datasets_reference": {
+    "note": "AI Hub에서 제공하는 농업 관련 데이터셋 예시 (참고용)",
+    "examples": [
+      {
+        "name": "농작물 병해충 이미지 데이터",
+        "domain": "농업·축산",
+        "type": "이미지",
+        "url": "https://aihub.or.kr/aihubdata/data/view.do?dataSetSn=261"
+      },
+      {
+        "name": "스마트팜 작물 생장 데이터",
+        "domain": "농업·축산",
+        "type": "시계열/이미지"
+      }
+    ]
+  }
+}

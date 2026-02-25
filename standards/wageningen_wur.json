@@ -1,0 +1,131 @@
+{
+  "_meta": {
+    "standard_name": "Wageningen University & Research (WUR) Yoda Metadata / DataCite-based",
+    "version": "Yoda@WUR (DataCite Metadata Schema 4.x 기반)",
+    "source": [
+      {
+        "institution": "Wageningen University & Research (WUR) Data Competence Centre (WDCC)",
+        "url": "https://www.wur.nl/en/value-creation-cooperation/collaborating-with-wur-1/wdcc/research-data-management-wdcc/doing/research-data-documentation.htm",
+        "yoda_publish_url": "https://www.wur.nl/en/show/publish-your-research-data-with-yodawur.htm",
+        "data_portal_url": "https://www.wur.nl/en/value-creation-cooperation/collaborating-with-wur-1/wdcc/data-portal.htm",
+        "research_url": "https://research.wur.nl/en/organisations/data-competence-centre/",
+        "retrieved_at": "2026-02-24",
+        "note": "Wageningen 공식 사이트 스니펫 기반 작성. 농업·식품·환경·건강 분야 세계 최상위 농업연구대학."
+      }
+    ],
+    "focus_domains": ["Agriculture", "Food Science", "Environmental Sciences", "Health", "Agri-Food Technology"],
+    "base_standard": "DataCite Metadata Schema 4.x",
+    "doi_provider": "DataCite (DOI via Yoda publish workflow)"
+  },
+
+  "yoda_metadata_terms": {
+    "note": "WUR WDCC 권고 최소 메타데이터 세트 (DataCite 기반 Yoda 메타데이터 용어). 데이터 패키지에 DOI 부여 시 DataCite에 자동 등록.",
+
+    "mandatory_fields": {
+      "Title": {
+        "obligation": "mandatory",
+        "maps_to": "DataCite Property 3: Title",
+        "description": "데이터 패키지 제목"
+      },
+      "Creator": {
+        "obligation": "mandatory",
+        "maps_to": "DataCite Property 2: Creator",
+        "description": "데이터 생성 주체 (ORCID 식별자 사용 권장)",
+        "subfields": {
+          "Name": {"type": "text"},
+          "Identifier": {
+            "type": "text",
+            "preferred_scheme": "ORCID",
+            "format": "https://orcid.org/XXXX-XXXX-XXXX-XXXX"
+          },
+          "Affiliation": {"type": "text"}
+        }
+      },
+      "Description": {
+        "obligation": "mandatory",
+        "maps_to": "DataCite Property 17: Description (Abstract)",
+        "description": "데이터 추상 설명"
+      },
+      "Discipline": {
+        "obligation": "mandatory",
+        "description": "학문 분야 분류 (NARCIS 분류체계)",
+        "controlled_vocabulary": "NARCIS (Netherlands) Discipline List",
+        "example_values": [
+          "Life Sciences > Plant Sciences",
+          "Life Sciences > Animal Sciences",
+          "Agricultural Sciences",
+          "Environmental Sciences"
+        ]
+      },
+      "Rights": {
+        "obligation": "mandatory",
+        "maps_to": "DataCite Property 16: Rights",
+        "description": "데이터 이용 허락 조건",
+        "preferred_values": ["CC0 1.0", "CC BY 4.0", "WUR Usage Agreement"]
+      }
+    },
+
+    "recommended_fields": {
+      "Contributor": {
+        "obligation": "recommended",
+        "maps_to": "DataCite Property 7: Contributor",
+        "subfields": {
+          "Name": {"type": "text"},
+          "Type": {
+            "type": "controlledVocabulary",
+            "allowedValues": ["ContactPerson", "DataCollector", "DataCurator", "DataManager",
+                              "ProjectLeader", "Researcher", "Supervisor", "Other"]
+          },
+          "Identifier": {"type": "text"}
+        }
+      },
+      "Tag_Keyword": {
+        "obligation": "recommended",
+        "maps_to": "DataCite Property 6: Subject",
+        "description": "주제어 (AGROVOC 등 통제어휘 사용 권장)"
+      },
+      "Related_Datapackage": {
+        "obligation": "recommended",
+        "maps_to": "DataCite Property 12: RelatedIdentifier",
+        "description": "관련 데이터 패키지 (논문, 선행 데이터셋 등)"
+      },
+      "Retention_Period": {
+        "obligation": "recommended",
+        "description": "데이터 보존 기간 (WUR 최소 10년 권고)",
+        "example_values": ["10 years", "25 years", "Indefinitely"]
+      },
+      "Collection_Period": {
+        "obligation": "recommended",
+        "maps_to": "DataCite Property 8: Date (dateType=Collected)",
+        "subfields": {
+          "Start_Date": {"type": "date", "format": "YYYY-MM-DD"},
+          "End_Date": {"type": "date", "format": "YYYY-MM-DD"}
+        }
+      },
+      "GeoLocation": {
+        "obligation": "recommended",
+        "maps_to": "DataCite Property 18: GeoLocation",
+        "description": "데이터 수집 위치 (농장, 실험지 등)",
+        "subfields": {
+          "Place": {"type": "text"},
+          "Longitude": {"type": "number"},
+          "Latitude": {"type": "number"}
+        }
+      }
+    }
+  },
+
+  "wur_agri_research_context": {
+    "note": "WUR 농업연구 데이터 관리 특이사항 및 모범 사례",
+    "key_practices": [
+      "FAIR 원칙 (Findable, Accessible, Interoperable, Reusable) 준수",
+      "실험 데이터는 ELN(전자실험노트)와 연동 권장",
+      "AGROVOC 통제어휘로 주제어 표준화",
+      "데이터 수집 현장(농장/실험지) 좌표 필수 기록",
+      "원시 데이터(raw data)와 처리 데이터(processed data) 구분 저장",
+      "데이터관리계획(DMP) NWO/EU 펀딩 시 의무"
+    ],
+    "data_types_common": ["Field trial data", "Sensor/IoT data", "Genomics data",
+                           "Remote sensing data", "Survey data", "Model outputs"]
+  }
+}
